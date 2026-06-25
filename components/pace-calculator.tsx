@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import { Plus, RotateCcw, Timer, Trash2, Utensils, X } from "lucide-react"
+import { Eye, EyeOff, Plus, RotateCcw, Timer, Trash2, Utensils, X } from "lucide-react"
 import {
   applyLapEdit,
   buildLaps,
@@ -94,6 +94,8 @@ export function PaceCalculator() {
   )
   // índice do trecho -> lista de ids de consumíveis (pode repetir)
   const [actions, setActions] = useState<Record<number, string[]>>({})
+  // esconder trechos sem ação quando a lista fica longa
+  const [collapseEmpty, setCollapseEmpty] = useState(false)
 
   const targetSeconds = parseTime(targetInput) ?? 0
 
@@ -108,6 +110,55 @@ export function PaceCalculator() {
   const nutrition = useMemo(
     () => computeNutrition(actions, consumables),
     [actions, consumables],
+  )
+
+  const COLLAPSE_THRESHOLD = 12
+  const hasAnyAction = useMemo(
+    () =>
+      Object.entries(actions).some(
+        ([key, ids]) => Number(key) < laps.length && ids.length > 0,
+      ),
+    [actions, laps.length],
+  )
+  // Só faz sentido oferecer o recolhimento quando há ações e muitos trechos.
+  const canCollapse =
+    showActions && hasAnyAction && laps.length > COLLAPSE_THRESHOLD
+  const collapsed = canCollapse && collapseEmpty
+
+  // Constrói a sequência de exibição: trechos com ação intercalados por
+  // separadores que indicam quantos trechos sem ação foram suprimidos.
+  const renderItems = useMemo(() => {
+    type Item =
+      | { type: "lap"; index: number }
+      | { type: "gap"; count: number }
+    if (!collapsed) return laps.map((_, index) => ({ type: "lap", index }) as Item)
+    const items: Item[] = []
+    let gap = 0
+    laps.forEach((_, index) => {
+      const has = (actions[index]?.length ?? 0) > 0
+      if (has) {
+        if (gap > 0) {
+          items.push({ type: "gap", count: gap })
+          gap = 0
+        }
+        items.push({ type: "lap", index })
+      } else {
+        gap += 1
+      }
+    })
+    if (gap > 0) items.push({ type: "gap", count: gap })
+    return items
+  }, [collapsed, laps, actions])
+
+  const hiddenCount = useMemo(
+    () =>
+      collapsed
+        ? renderItems.reduce(
+            (a, it) => (it.type === "gap" ? a + it.count : a),
+            0,
+          )
+        : 0,
+    [collapsed, renderItems],
   )
 
   function regenerate(
@@ -388,11 +439,35 @@ export function PaceCalculator() {
         </div>
 
         <Card className="flex flex-col overflow-hidden p-0">
-          <div className="flex shrink-0 items-center gap-2 border-b border-border px-5 py-4">
+          <div className="flex shrink-0 flex-wrap items-center gap-2 border-b border-border px-5 py-4">
             <Timer className="size-4 text-primary" />
             <h2 className="font-semibold">Trecho a trecho</h2>
-            <span className="ml-auto text-sm text-muted-foreground">
-              {laps.length} {laps.length === 1 ? "trecho" : "trechos"}
+            {canCollapse && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setCollapseEmpty((v) => !v)}
+                className="ml-auto h-7 gap-1.5 px-2.5 text-xs"
+              >
+                {collapsed ? (
+                  <>
+                    <Eye className="size-3.5" />
+                    Mostrar todos
+                  </>
+                ) : (
+                  <>
+                    <EyeOff className="size-3.5" />
+                    Só trechos com ação
+                  </>
+                )}
+              </Button>
+            )}
+            <span
+              className={`text-sm text-muted-foreground ${canCollapse ? "" : "ml-auto"}`}
+            >
+              {collapsed
+                ? `${hiddenCount} ocultos`
+                : `${laps.length} ${laps.length === 1 ? "trecho" : "trechos"}`}
             </span>
           </div>
 
@@ -402,24 +477,28 @@ export function PaceCalculator() {
             </p>
           ) : (
             <ul className="divide-y divide-border">
-              {laps.map((lap, index) => (
-                <LapRow
-                  key={index}
-                  index={index}
-                  lap={lap}
-                  cumulative={laps
-                    .slice(0, index + 1)
-                    .reduce((a, l) => a + l.time, 0)}
-                  onCommit={(raw) => commitLap(index, raw)}
-                  showActions={showActions}
-                  consumables={consumables}
-                  lapActions={actions[index] ?? []}
-                  onAddAction={(id) => addAction(index, id)}
-                  onRemoveAction={(actionIndex) =>
-                    removeAction(index, actionIndex)
-                  }
-                />
-              ))}
+              {renderItems.map((item, pos) =>
+                item.type === "gap" ? (
+                  <SuppressedRow key={`gap-${pos}`} count={item.count} />
+                ) : (
+                  <LapRow
+                    key={item.index}
+                    index={item.index}
+                    lap={laps[item.index]}
+                    cumulative={laps
+                      .slice(0, item.index + 1)
+                      .reduce((a, l) => a + l.time, 0)}
+                    onCommit={(raw) => commitLap(item.index, raw)}
+                    showActions={showActions}
+                    consumables={consumables}
+                    lapActions={actions[item.index] ?? []}
+                    onAddAction={(id) => addAction(item.index, id)}
+                    onRemoveAction={(actionIndex) =>
+                      removeAction(item.index, actionIndex)
+                    }
+                  />
+                ),
+              )}
             </ul>
           )}
         </Card>
@@ -459,6 +538,18 @@ function StatCard({
         {value}
       </span>
     </Card>
+  )
+}
+
+function SuppressedRow({ count }: { count: number }) {
+  return (
+    <li className="flex items-center gap-3 px-5 py-2">
+      <span className="h-px flex-1 bg-border" aria-hidden="true" />
+      <span className="shrink-0 text-xs font-medium text-muted-foreground">
+        {count} {count === 1 ? "trecho suprimido" : "trechos suprimidos"}
+      </span>
+      <span className="h-px flex-1 bg-border" aria-hidden="true" />
+    </li>
   )
 }
 
