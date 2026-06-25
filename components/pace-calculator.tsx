@@ -59,6 +59,24 @@ const STRATEGIES: { value: Strategy; label: string; hint: string }[] = [
   },
 ]
 
+type TargetMode = "time" | "pace"
+
+/** Resolve o tempo alvo total (segundos) conforme o modo escolhido. */
+function resolveTargetSeconds(
+  mode: TargetMode,
+  distanceKm: number,
+  timeInput: string,
+  paceInput: string,
+): number | null {
+  if (mode === "pace") {
+    const paceSecs = parseTime(paceInput)
+    if (paceSecs == null || paceSecs <= 0) return null
+    if (!distanceKm || distanceKm <= 0) return null
+    return Math.round(paceSecs * distanceKm)
+  }
+  return parseTime(timeInput)
+}
+
 type Preset = { label: string; distance: number; time: string }
 
 const PRESETS: Preset[] = [
@@ -77,7 +95,9 @@ function newConsumableId() {
 export function PaceCalculator() {
   const [distance, setDistance] = useState(5)
   const [distanceInput, setDistanceInput] = useState("5")
+  const [targetMode, setTargetMode] = useState<TargetMode>("time")
   const [targetInput, setTargetInput] = useState("25:00")
+  const [paceInput, setPaceInput] = useState("5:00")
   const [recalc, setRecalc] = useState(true)
   const [strategy, setStrategy] = useState<Strategy>("constant")
   // Variação máxima de pace entre início e fim, em % do pace médio.
@@ -97,7 +117,8 @@ export function PaceCalculator() {
   // esconder trechos sem ação quando a lista fica longa
   const [collapseEmpty, setCollapseEmpty] = useState(false)
 
-  const targetSeconds = parseTime(targetInput) ?? 0
+  const targetSeconds =
+    resolveTargetSeconds(targetMode, distance, targetInput, paceInput) ?? 0
 
   const totalTime = useMemo(() => laps.reduce((a, l) => a + l.time, 0), [laps])
   const totalDistance = useMemo(
@@ -106,6 +127,10 @@ export function PaceCalculator() {
   )
   const diff = totalTime - targetSeconds
   const avgPace = totalDistance > 0 ? totalTime / totalDistance : 0
+  // No modo pace, a diferença exibida é de ritmo (s/km), não de tempo total.
+  const targetPace =
+    targetMode === "pace" ? (parseTime(paceInput) ?? 0) : 0
+  const paceDiff = avgPace > 0 && targetPace > 0 ? avgPace - targetPace : 0
 
   const nutrition = useMemo(
     () => computeNutrition(actions, consumables),
@@ -166,8 +191,15 @@ export function PaceCalculator() {
     nextTargetInput: string,
     nextStrategy: Strategy = strategy,
     nextSpreadPct: number = spreadPct,
+    nextMode: TargetMode = targetMode,
+    nextPaceInput: string = paceInput,
   ) {
-    const secs = parseTime(nextTargetInput)
+    const secs = resolveTargetSeconds(
+      nextMode,
+      nextDistance,
+      nextTargetInput,
+      nextPaceInput,
+    )
     if (!nextDistance || nextDistance <= 0 || secs == null || secs <= 0) {
       setLaps([])
       return
@@ -187,6 +219,17 @@ export function PaceCalculator() {
   function handleTargetChange(value: string) {
     setTargetInput(value)
     regenerate(distance, value)
+  }
+
+  function handlePaceChange(value: string) {
+    setPaceInput(value)
+    regenerate(distance, targetInput, strategy, spreadPct, "pace", value)
+  }
+
+  function handleTargetModeChange(value: TargetMode) {
+    if (!value || value === targetMode) return
+    setTargetMode(value)
+    regenerate(distance, targetInput, strategy, spreadPct, value, paceInput)
   }
 
   function handleStrategyChange(value: Strategy) {
@@ -215,8 +258,9 @@ export function PaceCalculator() {
   function applyPreset(preset: Preset) {
     setDistance(preset.distance)
     setDistanceInput(String(preset.distance).replace(".", ","))
+    setTargetMode("time")
     setTargetInput(preset.time)
-    regenerate(preset.distance, preset.time)
+    regenerate(preset.distance, preset.time, strategy, spreadPct, "time")
   }
 
   function commitLap(index: number, raw: string) {
@@ -303,14 +347,64 @@ export function PaceCalculator() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="target">Tempo alvo (mm:ss ou h:mm:ss)</Label>
-            <Input
-              id="target"
-              value={targetInput}
-              onChange={(e) => handleTargetChange(e.target.value)}
-              placeholder="25:00"
-            />
+            <Label>Definir alvo por</Label>
+            <div className="grid grid-cols-2 gap-1 rounded-lg bg-muted p-1">
+              <button
+                type="button"
+                onClick={() => handleTargetModeChange("time")}
+                aria-pressed={targetMode === "time"}
+                className={cn(
+                  "rounded-md py-1.5 text-sm font-medium transition-colors",
+                  targetMode === "time"
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                Tempo alvo
+              </button>
+              <button
+                type="button"
+                onClick={() => handleTargetModeChange("pace")}
+                aria-pressed={targetMode === "pace"}
+                className={cn(
+                  "rounded-md py-1.5 text-sm font-medium transition-colors",
+                  targetMode === "pace"
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                Pace alvo
+              </button>
+            </div>
           </div>
+
+          {targetMode === "time" ? (
+            <div className="space-y-2">
+              <Label htmlFor="target">Tempo alvo (mm:ss ou h:mm:ss)</Label>
+              <Input
+                id="target"
+                value={targetInput}
+                onChange={(e) => handleTargetChange(e.target.value)}
+                placeholder="25:00"
+              />
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <Label htmlFor="pace">Pace alvo (mm:ss /km)</Label>
+              <Input
+                id="pace"
+                value={paceInput}
+                onChange={(e) => handlePaceChange(e.target.value)}
+                placeholder="5:00"
+              />
+              <p className="text-xs text-muted-foreground text-pretty">
+                Tempo total estimado:{" "}
+                <span className="font-mono tabular-nums text-foreground">
+                  {targetSeconds > 0 ? formatTime(targetSeconds) : "--"}
+                </span>
+              </p>
+            </div>
+          )}
 
           <div className="space-y-2">
             <Label htmlFor="strategy">Estratégia</Label>
@@ -426,16 +520,35 @@ export function PaceCalculator() {
             label="Pace médio"
             value={avgPace > 0 ? formatPace(avgPace) : "--"}
           />
-          <StatCard
-            label="Diferença do alvo"
-            value={
-              diff === 0
-                ? "no alvo"
-                : `${diff > 0 ? "+" : "-"}${formatTime(Math.abs(diff))}`
-            }
-            tone={diff === 0 ? "ok" : diff > 0 ? "over" : "under"}
-            className="col-span-2 sm:col-span-1"
-          />
+          {targetMode === "pace" ? (
+            <StatCard
+              label="Diferença do alvo"
+              value={
+                Math.round(paceDiff) === 0
+                  ? "no alvo"
+                  : `${paceDiff > 0 ? "+" : "-"}${formatPace(Math.abs(paceDiff))}`
+              }
+              tone={
+                Math.round(paceDiff) === 0
+                  ? "ok"
+                  : paceDiff > 0
+                    ? "over"
+                    : "under"
+              }
+              className="col-span-2 sm:col-span-1"
+            />
+          ) : (
+            <StatCard
+              label="Diferença do alvo"
+              value={
+                diff === 0
+                  ? "no alvo"
+                  : `${diff > 0 ? "+" : "-"}${formatTime(Math.abs(diff))}`
+              }
+              tone={diff === 0 ? "ok" : diff > 0 ? "over" : "under"}
+              className="col-span-2 sm:col-span-1"
+            />
+          )}
         </div>
 
         <Card className="flex flex-col overflow-hidden p-0">
