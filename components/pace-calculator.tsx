@@ -17,7 +17,8 @@ import {
   type Lap,
   type Strategy,
 } from "@/lib/pace"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
@@ -34,9 +35,9 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
@@ -67,6 +68,12 @@ const PRESETS: Preset[] = [
   { label: "42,2 km", distance: 42.2, time: "3:45:00" },
 ]
 
+let consumableSeq = 0
+function newConsumableId() {
+  consumableSeq += 1
+  return `custom-${Date.now()}-${consumableSeq}`
+}
+
 export function PaceCalculator() {
   const [distance, setDistance] = useState(5)
   const [distanceInput, setDistanceInput] = useState("5")
@@ -80,6 +87,14 @@ export function PaceCalculator() {
     buildLaps(5, 25 * 60, "constant", DEFAULT_SPREAD),
   )
 
+  // --- Ações / nutrição ---
+  const [showActions, setShowActions] = useState(false)
+  const [consumables, setConsumables] = useState<Consumable[]>(
+    () => DEFAULT_CONSUMABLES,
+  )
+  // índice do trecho -> lista de ids de consumíveis (pode repetir)
+  const [actions, setActions] = useState<Record<number, string[]>>({})
+
   const targetSeconds = parseTime(targetInput) ?? 0
 
   const totalTime = useMemo(() => laps.reduce((a, l) => a + l.time, 0), [laps])
@@ -89,6 +104,11 @@ export function PaceCalculator() {
   )
   const diff = totalTime - targetSeconds
   const avgPace = totalDistance > 0 ? totalTime / totalDistance : 0
+
+  const nutrition = useMemo(
+    () => computeNutrition(actions, consumables),
+    [actions, consumables],
+  )
 
   function regenerate(
     nextDistance: number,
@@ -158,6 +178,41 @@ export function PaceCalculator() {
     regenerate(distance, targetInput)
   }
 
+  function addAction(lapIndex: number, consumableId: string) {
+    setActions((prev) => ({
+      ...prev,
+      [lapIndex]: [...(prev[lapIndex] ?? []), consumableId],
+    }))
+  }
+
+  function removeAction(lapIndex: number, actionIndex: number) {
+    setActions((prev) => {
+      const current = prev[lapIndex] ?? []
+      const next = current.filter((_, i) => i !== actionIndex)
+      const copy = { ...prev }
+      if (next.length === 0) delete copy[lapIndex]
+      else copy[lapIndex] = next
+      return copy
+    })
+  }
+
+  function addConsumable(c: Omit<Consumable, "id">) {
+    setConsumables((prev) => [...prev, { ...c, id: newConsumableId() }])
+  }
+
+  function removeConsumable(id: string) {
+    setConsumables((prev) => prev.filter((c) => c.id !== id))
+    // remove ações que usam o item excluído
+    setActions((prev) => {
+      const copy: Record<number, string[]> = {}
+      for (const [key, ids] of Object.entries(prev)) {
+        const filtered = ids.filter((i) => i !== id)
+        if (filtered.length > 0) copy[Number(key)] = filtered
+      }
+      return copy
+    })
+  }
+
   return (
     <div className="grid items-start gap-6 lg:grid-cols-[380px_1fr]">
       {/* Painel de configuração */}
@@ -167,7 +222,7 @@ export function PaceCalculator() {
           Informe a distância e o tempo alvo. O ritmo é dividido igualmente
           entre os quilômetros.
         </p>
-        <div className="space-y-2">
+        <div className="mt-4 space-y-2">
           <span className="text-xs font-medium text-muted-foreground">
             Distâncias rápidas
           </span>
@@ -272,6 +327,34 @@ export function PaceCalculator() {
             <Switch id="recalc" checked={recalc} onCheckedChange={setRecalc} />
           </div>
 
+          {/* Ações de nutrição/hidratação */}
+          <div className="space-y-4 rounded-lg border border-border p-4">
+            <div className="flex items-start justify-between gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="show-actions" className="cursor-pointer">
+                  Exibir ações por trecho
+                </Label>
+                <p className="text-xs text-muted-foreground text-pretty">
+                  Permite adicionar consumíveis (gel, sódio, cafeína) a cada
+                  trecho e calcula o total ingerido.
+                </p>
+              </div>
+              <Switch
+                id="show-actions"
+                checked={showActions}
+                onCheckedChange={setShowActions}
+              />
+            </div>
+
+            {showActions && (
+              <ConsumableManager
+                consumables={consumables}
+                onAdd={addConsumable}
+                onRemove={removeConsumable}
+              />
+            )}
+          </div>
+
           <Button
             variant="ghost"
             onClick={reset}
@@ -285,7 +368,7 @@ export function PaceCalculator() {
       </Card>
 
       {/* Resultado */}
-      <div className="flex flex-col gap-4 lg:sticky lg:top-6 lg:h-[calc(100svh-3rem)]">
+      <div className="flex flex-col gap-4">
         <div className="grid shrink-0 grid-cols-2 gap-4 sm:grid-cols-3">
           <StatCard label="Tempo total" value={formatTime(totalTime)} />
           <StatCard
@@ -304,7 +387,7 @@ export function PaceCalculator() {
           />
         </div>
 
-        <Card className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
+        <Card className="flex flex-col overflow-hidden p-0">
           <div className="flex shrink-0 items-center gap-2 border-b border-border px-5 py-4">
             <Timer className="size-4 text-primary" />
             <h2 className="font-semibold">Trecho a trecho</h2>
@@ -314,11 +397,11 @@ export function PaceCalculator() {
           </div>
 
           {laps.length === 0 ? (
-            <p className="flex-1 px-5 py-10 text-center text-sm text-muted-foreground">
+            <p className="px-5 py-10 text-center text-sm text-muted-foreground">
               Informe uma distância e um tempo alvo válidos para ver o plano.
             </p>
           ) : (
-            <ul className="min-h-0 flex-1 divide-y divide-border overflow-y-auto">
+            <ul className="divide-y divide-border">
               {laps.map((lap, index) => (
                 <LapRow
                   key={index}
@@ -328,11 +411,25 @@ export function PaceCalculator() {
                     .slice(0, index + 1)
                     .reduce((a, l) => a + l.time, 0)}
                   onCommit={(raw) => commitLap(index, raw)}
+                  showActions={showActions}
+                  consumables={consumables}
+                  lapActions={actions[index] ?? []}
+                  onAddAction={(id) => addAction(index, id)}
+                  onRemoveAction={(actionIndex) =>
+                    removeAction(index, actionIndex)
+                  }
                 />
               ))}
             </ul>
           )}
         </Card>
+
+        {showActions && (
+          <NutritionSummary
+            nutrition={nutrition}
+            totalSeconds={totalTime}
+          />
+        )}
       </div>
     </div>
   )
@@ -370,44 +467,315 @@ function LapRow({
   lap,
   cumulative,
   onCommit,
+  showActions,
+  consumables,
+  lapActions,
+  onAddAction,
+  onRemoveAction,
 }: {
   index: number
   lap: Lap
   cumulative: number
   onCommit: (raw: string) => void
+  showActions: boolean
+  consumables: Consumable[]
+  lapActions: string[]
+  onAddAction: (id: string) => void
+  onRemoveAction: (actionIndex: number) => void
 }) {
   const display = formatTime(lap.time)
   const isPartial = lap.distance < 1
   const pace = lap.distance > 0 ? lap.time / lap.distance : 0
+  const byId = new Map(consumables.map((c) => [c.id, c]))
 
   return (
-    <li className="flex items-center gap-4 px-5 py-3">
-      <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 font-mono text-sm font-semibold text-primary tabular-nums">
-        {index + 1}
+    <li className="px-5 py-3">
+      <div className="flex items-center gap-4">
+        <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 font-mono text-sm font-semibold text-primary tabular-nums">
+          {index + 1}
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <div className="font-medium">
+            {isPartial
+              ? `Trecho final (${lap.distance.toLocaleString("pt-BR")} km)`
+              : `Quilômetro ${index + 1}`}
+          </div>
+          <div className="text-xs text-muted-foreground">
+            {formatPace(pace)} · acumulado {formatTime(cumulative)}
+          </div>
+        </div>
+
+        <Input
+          key={display}
+          id={`lap-${index}`}
+          defaultValue={display}
+          onBlur={(e) => onCommit(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") (e.target as HTMLInputElement).blur()
+          }}
+          className="w-24 text-center font-mono tabular-nums"
+          aria-label={`Tempo do quilômetro ${index + 1}`}
+        />
       </div>
 
-      <div className="min-w-0 flex-1">
-        <div className="font-medium">
-          {isPartial
-            ? `Trecho final (${lap.distance.toLocaleString("pt-BR")} km)`
-            : `Quilômetro ${index + 1}`}
-        </div>
-        <div className="text-xs text-muted-foreground">
-          {formatPace(pace)} · acumulado {formatTime(cumulative)}
-        </div>
-      </div>
+      {showActions && (
+        <div className="mt-3 flex flex-wrap items-center gap-2 pl-13">
+          {lapActions.map((id, actionIndex) => {
+            const c = byId.get(id)
+            if (!c) return null
+            return (
+              <Badge
+                key={`${id}-${actionIndex}`}
+                variant="secondary"
+                className="gap-1 py-1 pl-2.5 pr-1"
+              >
+                <span className="font-medium">{c.name}</span>
+                <button
+                  type="button"
+                  onClick={() => onRemoveAction(actionIndex)}
+                  className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-foreground/10 hover:text-foreground"
+                  aria-label={`Remover ${c.name}`}
+                >
+                  <X className="size-3" />
+                </button>
+              </Badge>
+            )
+          })}
 
-      <Input
-        key={display}
-        id={`lap-${index}`}
-        defaultValue={display}
-        onBlur={(e) => onCommit(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") (e.target as HTMLInputElement).blur()
-        }}
-        className="w-24 text-center font-mono tabular-nums"
-        aria-label={`Tempo do quilômetro ${index + 1}`}
-      />
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              disabled={consumables.length === 0}
+              className={cn(
+                buttonVariants({ variant: "outline", size: "sm" }),
+                "h-7 gap-1 px-2 text-xs",
+              )}
+            >
+              <Plus className="size-3.5" />
+              Ação
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-64">
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>Adicionar consumível</DropdownMenuLabel>
+                {consumables.map((c) => (
+                  <DropdownMenuItem
+                    key={c.id}
+                    onClick={() => onAddAction(c.id)}
+                    className="flex flex-col items-start gap-0.5"
+                  >
+                    <span className="font-medium">{c.name}</span>
+                    {consumableSummary(c) && (
+                      <span className="text-xs text-muted-foreground">
+                        {consumableSummary(c)}
+                      </span>
+                    )}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      )}
     </li>
+  )
+}
+
+function ConsumableManager({
+  consumables,
+  onAdd,
+  onRemove,
+}: {
+  consumables: Consumable[]
+  onAdd: (c: Omit<Consumable, "id">) => void
+  onRemove: (id: string) => void
+}) {
+  const [name, setName] = useState("")
+  const [carbs, setCarbs] = useState("")
+  const [sodium, setSodium] = useState("")
+  const [caffeine, setCaffeine] = useState("")
+
+  const num = (v: string) => {
+    const n = Number(v.replace(",", "."))
+    return Number.isNaN(n) || n < 0 ? 0 : n
+  }
+
+  function handleAdd() {
+    const trimmed = name.trim()
+    if (trimmed === "") return
+    onAdd({
+      name: trimmed,
+      carbs: num(carbs),
+      sodium: num(sodium),
+      caffeine: num(caffeine),
+    })
+    setName("")
+    setCarbs("")
+    setSodium("")
+    setCaffeine("")
+  }
+
+  return (
+    <div className="space-y-3 border-t border-border pt-4">
+      <div className="flex items-center gap-2">
+        <Utensils className="size-4 text-primary" />
+        <span className="text-sm font-medium">Itens consumíveis</span>
+      </div>
+
+      <ul className="space-y-1.5">
+        {consumables.map((c) => (
+          <li
+            key={c.id}
+            className="flex items-center gap-2 rounded-md bg-muted/50 px-2.5 py-1.5"
+          >
+            <div className="min-w-0 flex-1">
+              <div className="truncate text-sm font-medium">{c.name}</div>
+              {consumableSummary(c) && (
+                <div className="truncate text-xs text-muted-foreground">
+                  {consumableSummary(c)}
+                </div>
+              )}
+            </div>
+            <button
+              type="button"
+              onClick={() => onRemove(c.id)}
+              className="shrink-0 rounded-md p-1 text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
+              aria-label={`Remover ${c.name}`}
+            >
+              <Trash2 className="size-3.5" />
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      <div className="space-y-2 rounded-md border border-dashed border-border p-3">
+        <div className="space-y-1.5">
+          <Label htmlFor="c-name" className="text-xs">
+            Nome do item
+          </Label>
+          <Input
+            id="c-name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Ex.: Bananinha"
+            className="h-8"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleAdd()
+            }}
+          />
+        </div>
+        <div className="grid grid-cols-3 gap-2">
+          <div className="space-y-1.5">
+            <Label htmlFor="c-carbs" className="text-xs">
+              Carbo (g)
+            </Label>
+            <Input
+              id="c-carbs"
+              inputMode="decimal"
+              value={carbs}
+              onChange={(e) => setCarbs(e.target.value)}
+              placeholder="0"
+              className="h-8 text-center font-mono tabular-nums"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="c-sodium" className="text-xs">
+              Sódio (mg)
+            </Label>
+            <Input
+              id="c-sodium"
+              inputMode="decimal"
+              value={sodium}
+              onChange={(e) => setSodium(e.target.value)}
+              placeholder="0"
+              className="h-8 text-center font-mono tabular-nums"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="c-caffeine" className="text-xs">
+              Cafeína (mg)
+            </Label>
+            <Input
+              id="c-caffeine"
+              inputMode="decimal"
+              value={caffeine}
+              onChange={(e) => setCaffeine(e.target.value)}
+              placeholder="0"
+              className="h-8 text-center font-mono tabular-nums"
+            />
+          </div>
+        </div>
+        <Button
+          size="sm"
+          onClick={handleAdd}
+          disabled={name.trim() === ""}
+          className="w-full gap-1.5"
+        >
+          <Plus className="size-4" />
+          Adicionar item
+        </Button>
+      </div>
+    </div>
+  )
+}
+
+function NutritionSummary({
+  nutrition,
+  totalSeconds,
+}: {
+  nutrition: { carbs: number; sodium: number; caffeine: number; count: number }
+  totalSeconds: number
+}) {
+  const fmt = (n: number) =>
+    Number.isInteger(n) ? String(n) : n.toFixed(1)
+
+  const items: { label: string; total: string; rate: string }[] = [
+    {
+      label: "Carboidrato",
+      total: `${fmt(nutrition.carbs)} g`,
+      rate: `${fmt(perHour(nutrition.carbs, totalSeconds))} g/h`,
+    },
+    {
+      label: "Sódio",
+      total: `${fmt(nutrition.sodium)} mg`,
+      rate: `${fmt(perHour(nutrition.sodium, totalSeconds))} mg/h`,
+    },
+    {
+      label: "Cafeína",
+      total: `${fmt(nutrition.caffeine)} mg`,
+      rate: `${fmt(perHour(nutrition.caffeine, totalSeconds))} mg/h`,
+    },
+  ]
+
+  return (
+    <Card className="overflow-hidden p-0">
+      <div className="flex shrink-0 items-center gap-2 border-b border-border px-5 py-4">
+        <Utensils className="size-4 text-primary" />
+        <h2 className="font-semibold">Total consumido</h2>
+        <span className="ml-auto text-sm text-muted-foreground">
+          {nutrition.count} {nutrition.count === 1 ? "item" : "itens"}
+        </span>
+      </div>
+      {nutrition.count === 0 ? (
+        <p className="px-5 py-8 text-center text-sm text-muted-foreground">
+          Adicione ações aos trechos para ver o resumo nutricional.
+        </p>
+      ) : (
+        <div className="grid grid-cols-1 divide-y divide-border sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+          {items.map((item) => (
+            <div key={item.label} className="px-5 py-4">
+              <span className="text-xs font-medium text-muted-foreground">
+                {item.label}
+              </span>
+              <div className="mt-1 font-mono text-2xl font-semibold tabular-nums">
+                {item.total}
+              </div>
+              <div className="mt-0.5 text-sm text-muted-foreground">
+                {item.rate}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </Card>
   )
 }
