@@ -127,6 +127,10 @@ export function PaceCalculator() {
   )
   const diff = totalTime - targetSeconds
   const avgPace = totalDistance > 0 ? totalTime / totalDistance : 0
+  // No modo pace, a diferença exibida é de ritmo (s/km), não de tempo total.
+  const targetPace =
+    targetMode === "pace" ? (parseTime(paceInput) ?? 0) : 0
+  const paceDiff = avgPace > 0 && targetPace > 0 ? avgPace - targetPace : 0
 
   const nutrition = useMemo(
     () => computeNutrition(actions, consumables),
@@ -516,16 +520,35 @@ export function PaceCalculator() {
             label="Pace médio"
             value={avgPace > 0 ? formatPace(avgPace) : "--"}
           />
-          <StatCard
-            label="Diferença do alvo"
-            value={
-              diff === 0
-                ? "no alvo"
-                : `${diff > 0 ? "+" : "-"}${formatTime(Math.abs(diff))}`
-            }
-            tone={diff === 0 ? "ok" : diff > 0 ? "over" : "under"}
-            className="col-span-2 sm:col-span-1"
-          />
+          {targetMode === "pace" ? (
+            <StatCard
+              label="Diferença do alvo"
+              value={
+                Math.round(paceDiff) === 0
+                  ? "no alvo"
+                  : `${paceDiff > 0 ? "+" : "-"}${formatPace(Math.abs(paceDiff))}`
+              }
+              tone={
+                Math.round(paceDiff) === 0
+                  ? "ok"
+                  : paceDiff > 0
+                    ? "over"
+                    : "under"
+              }
+              className="col-span-2 sm:col-span-1"
+            />
+          ) : (
+            <StatCard
+              label="Diferença do alvo"
+              value={
+                diff === 0
+                  ? "no alvo"
+                  : `${diff > 0 ? "+" : "-"}${formatTime(Math.abs(diff))}`
+              }
+              tone={diff === 0 ? "ok" : diff > 0 ? "over" : "under"}
+              className="col-span-2 sm:col-span-1"
+            />
+          )}
         </div>
 
         <Card className="flex flex-col overflow-hidden p-0">
