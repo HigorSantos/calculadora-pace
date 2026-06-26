@@ -36,6 +36,56 @@ export function formatPace(secondsPerKm: number): string {
   return `${formatTime(secondsPerKm)} /km`
 }
 
+/** Formata uma distância em km para exibição. */
+export function formatDistance(value: number): string {
+  return value.toLocaleString("pt-BR", {
+    maximumFractionDigits: 3,
+    minimumFractionDigits: value % 1 === 0 ? 0 : 1,
+  })
+}
+
+/** Formata uma velocidade em km/h para exibição. */
+export function formatSpeed(value: number | null): string {
+  if (value == null) return "--"
+  return `${value.toLocaleString("pt-BR", {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 1,
+  })} km/h`
+}
+
+/** Calcula o tempo total em segundos a partir de distância e pace. */
+export function calculateTimeFromDistanceAndPace(
+  distanceKm: number,
+  paceSecondsPerKm: number,
+): number | null {
+  if (distanceKm <= 0 || paceSecondsPerKm <= 0) return null
+  return Math.round(distanceKm * paceSecondsPerKm)
+}
+
+/** Calcula o pace em segundos por km a partir de distância e tempo total. */
+export function calculatePaceFromDistanceAndTime(
+  distanceKm: number,
+  totalSeconds: number,
+): number | null {
+  if (distanceKm <= 0 || totalSeconds <= 0) return null
+  return totalSeconds / distanceKm
+}
+
+/** Calcula a distância em km a partir de tempo total e pace. */
+export function calculateDistanceFromPaceAndTime(
+  paceSecondsPerKm: number,
+  totalSeconds: number,
+): number | null {
+  if (paceSecondsPerKm <= 0 || totalSeconds <= 0) return null
+  return totalSeconds / paceSecondsPerKm
+}
+
+/** Calcula a velocidade média em km/h a partir do pace em segundos por km. */
+export function paceToSpeed(secondsPerKm: number): number | null {
+  if (secondsPerKm <= 0) return null
+  return 3600 / secondsPerKm
+}
+
 /** Cria os trechos (1 km cada, com último parcial se houver) para uma distância. */
 export function buildDistances(distanceKm: number): number[] {
   if (distanceKm <= 0) return []

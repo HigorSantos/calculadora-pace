@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { SiteFooter, SiteHeader } from '@/components/site-chrome'
 import './globals.css'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
@@ -9,27 +10,41 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 })
 
+const themeInitializer = `
+(() => {
+  try {
+    const theme = window.localStorage.getItem('arsenal-theme')
+    const root = document.documentElement
+
+    root.classList.remove('light', 'dark')
+
+    if (theme === 'light' || theme === 'dark') {
+      root.classList.add(theme)
+    }
+  } catch {}
+})()
+`
+
 export const metadata: Metadata = {
-  title: 'Calculadora de Pace de Corrida',
+  metadataBase: new URL('https://arsenaldocorredor.com.br'),
+  title: {
+    default: 'Arsenal do Corredor',
+    template: '%s | Arsenal do Corredor',
+  },
   description:
-    'Calcule sua estratégia de pace quilômetro a quilômetro a partir de uma distância e tempo alvo.',
-  generator: 'v0.app',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    'Ferramentas para corredores planejarem pace, ritmo, treinos e estratégias de prova com mais clareza.',
+  applicationName: 'Arsenal do Corredor',
+  openGraph: {
+    title: 'Arsenal do Corredor',
+    description:
+      'Ferramentas simples e objetivas para planejar ritmo, treinos e provas.',
+    url: 'https://arsenaldocorredor.com.br/',
+    siteName: 'Arsenal do Corredor',
+    locale: 'pt_BR',
+    type: 'website',
+  },
+  alternates: {
+    canonical: '/',
   },
 }
 
@@ -47,9 +62,20 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR" className={`${geistSans.variable} ${geistMono.variable} bg-background`}>
+    <html
+      lang="pt-BR"
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} bg-background`}
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitializer }} />
+      </head>
       <body className="font-sans antialiased">
-        {children}
+        <div className="flex min-h-svh flex-col">
+          <SiteHeader />
+          <div className="flex-1">{children}</div>
+          <SiteFooter />
+        </div>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
