@@ -12,7 +12,6 @@ Funcionalidades grátis e pagas a serem implementadas seguindo a lógica:
 - Exportar configuração básica;
 - Limitar quantidade de ações (uma por trecho) e limitar quantidade máxima por configuração.
 - Limitar adição de novas ações;
-- Seleção metrico/imperial (inclusive para quantidades g, mg, etc)
 
 ## Médio próxima
 
@@ -37,6 +36,7 @@ Funcionalidades grátis e pagas a serem implementadas seguindo a lógica:
   - Pace por distancia e Tempo
   - Distancia por pace e Tempo
 - Repetir configuração de trechos próximos;
+- Seleção metrico/imperial (inclusive para quantidades g, mg, etc)
 
 https://www.ativo.com/calculadoras-de-performance/tabela-de-ritmo/
 https://www.ativo.com/calculadoras-de-performance/km-a-km/

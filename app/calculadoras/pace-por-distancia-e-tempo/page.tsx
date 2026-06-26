@@ -6,7 +6,7 @@ import {PaceByDistanceTimeCalculator} from "@/components/calculators/pace-by-dis
 export const metadata: Metadata = {
 	title: "Pace por distância e tempo",
 	description:
-		"Calcule o pace médio de uma corrida informando a distância em quilômetros e o tempo total.",
+		"Calcule o pace médio de uma corrida informando a distância planejada e o tempo total.",
 	alternates: {
 		canonical: "/calculadoras/pace-por-distancia-e-tempo",
 	},
@@ -23,7 +23,7 @@ export default function PaceByDistanceTimePage() {
 		<CalculatorShell
 			eyebrow='Calculadoras básicas'
 			title='Pace por distância e tempo'
-			description='Descubra o ritmo médio por quilômetro (pace) a partir da distância percorrida e do tempo total da corrida.'
+			description='Descubra o ritmo médio na unidade selecionada (pace) a partir da distância percorrida e do tempo total da corrida.'
 		>
 			<PaceByDistanceTimeCalculator />
 		</CalculatorShell>

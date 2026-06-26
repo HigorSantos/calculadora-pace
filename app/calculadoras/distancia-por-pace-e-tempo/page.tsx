@@ -23,7 +23,7 @@ export default function DistanceByPaceTimePage() {
 		<CalculatorShell
 			eyebrow='Calculadoras básicas'
 			title='Distância por pace e tempo'
-			description='Estime a distância que você percorrerá a partir do ritmo médio por quilômetro e do tempo total da corrida.'
+			description='Estime a distância que você percorrerá a partir do ritmo médio na unidade selecionada e do tempo total da corrida.'
 		>
 			<DistanceByPaceTimeCalculator />
 		</CalculatorShell>

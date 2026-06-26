@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {Activity, Dumbbell, Gauge, Route, Timer} from "lucide-react";
 import {ThemeSelector} from "@/components/theme-selector";
+import {UnitSystemSelector} from "@/components/unit-system-selector";
 import {Separator} from "@base-ui/react";
 
 const tools = [
@@ -88,6 +89,7 @@ export function SiteHeader() {
 
 					<div className='flex items-center gap-2'>
 						<ThemeSelector />
+						<UnitSystemSelector />
 					</div>
 				</div>
 			</div>

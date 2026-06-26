@@ -16,8 +16,8 @@ export default function Page() {
 						Estratégia de Corrida
 					</h1>
 					<p className='mt-2 max-w-2xl text-muted-foreground text-pretty'>
-						Defina sua distância e tempo alvo para ver o ritmo ideal quilômetro
-						a quilômetro. Ajuste qualquer trecho e deixe o plano se adaptar
+						Defina sua distância e tempo alvo para ver o ritmo ideal trecho
+						a trecho. Ajuste qualquer parcial e deixe o plano se adaptar
 						automaticamente.
 					</p>
 				</header>

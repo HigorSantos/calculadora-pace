@@ -1,6 +1,6 @@
 "use client";
 
-import {type KeyboardEvent, useMemo, useState} from "react";
+import {type KeyboardEvent, useEffect, useMemo, useState} from "react";
 import {
 	Eye,
 	EyeOff,
@@ -16,10 +16,8 @@ import {
 	applyLapEdit,
 	buildLaps,
 	computeNutrition,
-	consumableSummary,
 	DEFAULT_CONSUMABLES,
 	DEFAULT_SPREAD,
-	formatPace,
 	formatTime,
 	parseTime,
 	perHour,
@@ -28,7 +26,21 @@ import {
 	type Strategy,
 } from "@/lib/pace";
 import {Button, buttonVariants} from "@/components/ui/button";
+import {useUnitSystem} from "@/components/unit-system-provider";
+import {useQueryStringState} from "@/hooks/use-query-string-state";
 import {cn} from "@/lib/utils";
+import {
+	distanceUnitLabel,
+	formatDisplayDistance,
+	formatDisplayMass,
+	formatDisplayNumber,
+	fromDisplayPace,
+	paceUnitLabel,
+	parseDisplayDistance,
+	toDisplayDistance,
+	toDisplayPace,
+	type UnitSystem,
+} from "@/lib/units";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {Switch} from "@/components/ui/switch";
@@ -55,7 +67,7 @@ const STRATEGIES: {value: Strategy; label: string; hint: string}[] = [
 	{
 		value: "constant",
 		label: "Split constante",
-		hint: "Mesmo ritmo em todos os quilômetros.",
+		hint: "Mesmo ritmo em todos os trechos.",
 	},
 	{
 		value: "negative",
@@ -71,29 +83,47 @@ const STRATEGIES: {value: Strategy; label: string; hint: string}[] = [
 
 type TargetMode = "time" | "pace";
 
+const DEFAULT_DISTANCE_INPUT = "5";
+const DEFAULT_TARGET_MODE: TargetMode = "time";
+const DEFAULT_TARGET_VALUE = "25:00";
+const DEFAULT_PACE_VALUE = "5:00";
+const DEFAULT_STRATEGY: Strategy = "constant";
+
+function normalizeTargetMode(value: string): TargetMode {
+	return value === "pace" ? "pace" : "time";
+}
+
+function normalizeStrategy(value: string): Strategy {
+	return STRATEGIES.some(strategy => strategy.value === value)
+		? (value as Strategy)
+		: DEFAULT_STRATEGY;
+}
+
 /** Resolve o tempo alvo total (segundos) conforme o modo escolhido. */
 function resolveTargetSeconds(
 	mode: TargetMode,
 	distanceKm: number,
 	timeInput: string,
 	paceInput: string,
+	unitSystem: UnitSystem,
 ): number | null {
 	if (mode === "pace") {
-		const paceSecs = parseTime(paceInput);
-		if (paceSecs == null || paceSecs <= 0) return null;
-		if (!distanceKm || distanceKm <= 0) return null;
-		return Math.round(paceSecs * distanceKm);
+		const displayPace = parseTime(paceInput);
+		const pace =
+			displayPace == null ? null : fromDisplayPace(displayPace, unitSystem);
+		if (pace == null || pace <= 0 || distanceKm <= 0) return null;
+		return Math.round(distanceKm * pace);
 	}
 	return parseTime(timeInput);
 }
 
-type Preset = {label: string; distance: number; time: string};
+type Preset = {distance: number; time: string};
 
 const PRESETS: Preset[] = [
-	{label: "5 km", distance: 5, time: "25:00"},
-	{label: "10 km", distance: 10, time: "50:00"},
-	{label: "21,1 km", distance: 21.1, time: "1:45:00"},
-	{label: "42,2 km", distance: 42.2, time: "3:45:00"},
+	{distance: 5, time: "25:00"},
+	{distance: 10, time: "50:00"},
+	{distance: 21.1, time: "1:45:00"},
+	{distance: 42.2, time: "3:45:00"},
 ];
 
 let consumableSeq = 0;
@@ -108,14 +138,41 @@ function parsePositiveInteger(input: string): number | null {
 	return parsed;
 }
 
+function consumableSummaryForUnit(
+	c: Consumable,
+	unitSystem: UnitSystem,
+): string {
+	const parts: string[] = [];
+	if (c.carbs > 0)
+		parts.push(`${formatDisplayMass(c.carbs, "g", unitSystem)} carbo`);
+	if (c.sodium > 0)
+		parts.push(`${formatDisplayMass(c.sodium, "mg", unitSystem)} sódio`);
+	if (c.caffeine > 0)
+		parts.push(`${formatDisplayMass(c.caffeine, "mg", unitSystem)} cafeína`);
+	return parts.join(" · ");
+}
+
 export function PaceCalculator() {
-	const [distance, setDistance] = useState(5);
-	const [distanceInput, setDistanceInput] = useState("5");
-	const [targetMode, setTargetMode] = useState<TargetMode>("time");
-	const [targetInput, setTargetInput] = useState("25:00");
-	const [paceInput, setPaceInput] = useState("5:00");
+	const {unitSystem} = useUnitSystem();
+	const {values, setValue, setValues, isHydrated} = useQueryStringState({
+		distance: DEFAULT_DISTANCE_INPUT,
+		targetType: DEFAULT_TARGET_MODE,
+		targetValue: DEFAULT_TARGET_VALUE,
+		strategy: DEFAULT_STRATEGY,
+	});
+	const distanceInput = values.distance;
+	const distance = parseDisplayDistance(distanceInput, unitSystem) ?? 0;
+	const targetMode = normalizeTargetMode(values.targetType);
+	const strategy = normalizeStrategy(values.strategy);
+	const [storedTargetValues, setStoredTargetValues] = useState({
+		time: DEFAULT_TARGET_VALUE,
+		pace: DEFAULT_PACE_VALUE,
+	});
+	const targetInput =
+		targetMode === "time" ? values.targetValue : storedTargetValues.time;
+	const paceInput =
+		targetMode === "pace" ? values.targetValue : storedTargetValues.pace;
 	const [recalc, setRecalc] = useState(true);
-	const [strategy, setStrategy] = useState<Strategy>("constant");
 	// Variação máxima de pace entre início e fim, em % do pace médio.
 	const [spreadPct, setSpreadPct] = useState(DEFAULT_SPREAD * 100);
 	const [spreadInput, setSpreadInput] = useState(String(DEFAULT_SPREAD * 100));
@@ -134,7 +191,13 @@ export function PaceCalculator() {
 	const [collapseEmpty, setCollapseEmpty] = useState(false);
 
 	const targetSeconds =
-		resolveTargetSeconds(targetMode, distance, targetInput, paceInput) ?? 0;
+		resolveTargetSeconds(
+			targetMode,
+			distance,
+			targetInput,
+			paceInput,
+			unitSystem,
+		) ?? 0;
 
 	const totalTime = useMemo(() => laps.reduce((a, l) => a + l.time, 0), [laps]);
 	const totalDistance = useMemo(
@@ -143,8 +206,12 @@ export function PaceCalculator() {
 	);
 	const diff = totalTime - targetSeconds;
 	const avgPace = totalDistance > 0 ? totalTime / totalDistance : 0;
-	// No modo pace, a diferença exibida é de ritmo (s/km), não de tempo total.
-	const targetPace = targetMode === "pace" ? (parseTime(paceInput) ?? 0) : 0;
+	// No modo pace, a diferença exibida é de ritmo, não de tempo total.
+	const targetDisplayPace = targetMode === "pace" ? parseTime(paceInput) : null;
+	const targetPace =
+		targetDisplayPace == null
+			? 0
+			: fromDisplayPace(targetDisplayPace, unitSystem);
 	const paceDiff = avgPace > 0 && targetPace > 0 ? avgPace - targetPace : 0;
 
 	const nutrition = useMemo(
@@ -201,6 +268,7 @@ export function PaceCalculator() {
 				: 0,
 		[collapsed, renderItems],
 	);
+	const isLoadingConfig = !isHydrated;
 
 	function regenerate(
 		nextDistance: number,
@@ -215,6 +283,7 @@ export function PaceCalculator() {
 			nextDistance,
 			nextTargetInput,
 			nextPaceInput,
+			unitSystem,
 		);
 		if (!nextDistance || nextDistance <= 0 || secs == null || secs <= 0) {
 			setLaps([]);
@@ -223,35 +292,56 @@ export function PaceCalculator() {
 		setLaps(buildLaps(nextDistance, secs, nextStrategy, nextSpreadPct / 100));
 	}
 
+	useEffect(() => {
+		setStoredTargetValues(currentValues => {
+			if (currentValues[targetMode] === values.targetValue)
+				return currentValues;
+			return {...currentValues, [targetMode]: values.targetValue};
+		});
+	}, [targetMode, values.targetValue]);
+
+	useEffect(() => {
+		regenerate(
+			distance,
+			targetInput,
+			strategy,
+			spreadPct,
+			targetMode,
+			paceInput,
+		);
+	}, [
+		distance,
+		targetInput,
+		strategy,
+		spreadPct,
+		targetMode,
+		paceInput,
+		unitSystem,
+	]);
+
 	function handleDistanceChange(value: string) {
-		setDistanceInput(value);
-		const parsed = Number(value.replace(",", "."));
-		if (!Number.isNaN(parsed)) {
-			setDistance(parsed);
-			regenerate(parsed, targetInput);
-		}
+		setValue("distance", value);
 	}
 
 	function handleTargetChange(value: string) {
-		setTargetInput(value);
-		regenerate(distance, value);
+		setValue("targetValue", value);
 	}
 
 	function handlePaceChange(value: string) {
-		setPaceInput(value);
-		regenerate(distance, targetInput, strategy, spreadPct, "pace", value);
+		setValue("targetValue", value);
 	}
 
 	function handleTargetModeChange(value: TargetMode) {
 		if (!value || value === targetMode) return;
-		setTargetMode(value);
-		regenerate(distance, targetInput, strategy, spreadPct, value, paceInput);
+		setValues({
+			targetType: value,
+			targetValue: storedTargetValues[value],
+		});
 	}
 
 	function handleStrategyChange(value: Strategy | null) {
 		if (!value) return;
-		setStrategy(value);
-		regenerate(distance, targetInput, value);
+		setValue("strategy", value);
 	}
 
 	function applySpread(pct: number) {
@@ -273,11 +363,16 @@ export function PaceCalculator() {
 	}
 
 	function applyPreset(preset: Preset) {
-		setDistance(preset.distance);
-		setDistanceInput(String(preset.distance).replace(".", ","));
-		setTargetMode("time");
-		setTargetInput(preset.time);
-		regenerate(preset.distance, preset.time, strategy, spreadPct, "time");
+		setValues({
+			distance: formatDisplayNumber(
+				toDisplayDistance(preset.distance, unitSystem),
+				{
+					maximumFractionDigits: 3,
+				},
+			).replace(".", ","),
+			targetType: "time",
+			targetValue: preset.time,
+		});
 	}
 
 	function commitLap(index: number, raw: string) {
@@ -383,7 +478,7 @@ export function PaceCalculator() {
 				<h2 className='text-lg font-semibold'>Configuração</h2>
 				<p className='mt-1 text-sm text-muted-foreground text-pretty'>
 					Informe a distância e o tempo alvo. O ritmo é dividido igualmente
-					entre os quilômetros.
+					entre os trechos.
 				</p>
 				<div className='mt-4 space-y-2'>
 					<span className='text-xs font-medium text-muted-foreground'>
@@ -392,19 +487,21 @@ export function PaceCalculator() {
 					<div className='flex flex-wrap gap-2'>
 						{PRESETS.map(preset => (
 							<Button
-								key={preset.label}
+								key={preset.distance}
 								variant='outline'
 								size='sm'
 								onClick={() => applyPreset(preset)}
 							>
-								{preset.label}
+								{formatDisplayDistance(preset.distance, unitSystem)}
 							</Button>
 						))}
 					</div>
 				</div>
 				<div className='mt-6 space-y-5'>
 					<div className='space-y-2'>
-						<Label htmlFor='distance'>Distância (km)</Label>
+						<Label htmlFor='distance'>
+							Distância ({distanceUnitLabel(unitSystem)})
+						</Label>
 						<Input
 							id='distance'
 							inputMode='decimal'
@@ -458,7 +555,9 @@ export function PaceCalculator() {
 						</div>
 					) : (
 						<div className='space-y-2'>
-							<Label htmlFor='pace'>Pace alvo (mm:ss /km)</Label>
+							<Label htmlFor='pace'>
+								Pace alvo (mm:ss {paceUnitLabel(unitSystem)})
+							</Label>
 							<Input
 								id='pace'
 								value={paceInput}
@@ -588,7 +687,11 @@ export function PaceCalculator() {
 					<StatCard label='Tempo total' value={formatTime(totalTime)} />
 					<StatCard
 						label='Pace médio'
-						value={avgPace > 0 ? formatPace(avgPace) : "--"}
+						value={
+							avgPace > 0
+								? `${formatTime(toDisplayPace(avgPace, unitSystem))} ${paceUnitLabel(unitSystem)}`
+								: "--"
+						}
 					/>
 					{targetMode === "pace" ? (
 						<StatCard
@@ -596,7 +699,9 @@ export function PaceCalculator() {
 							value={
 								Math.round(paceDiff) === 0
 									? "no alvo"
-									: `${paceDiff > 0 ? "+" : "-"}${formatPace(Math.abs(paceDiff))}`
+									: `${paceDiff > 0 ? "+" : "-"}${formatTime(
+											toDisplayPace(Math.abs(paceDiff), unitSystem),
+										)} ${paceUnitLabel(unitSystem)}`
 							}
 							tone={
 								Math.round(paceDiff) === 0
@@ -654,44 +759,58 @@ export function PaceCalculator() {
 						</span>
 					</div>
 
-					{laps.length === 0 ? (
-						<p className='px-5 py-10 text-center text-sm text-muted-foreground'>
-							Informe uma distância e um tempo alvo válidos para ver o plano.
-						</p>
-					) : (
-						<ul className='divide-y divide-border'>
-							{renderItems.map((item, pos) =>
-								item.type === "gap" ? (
-									<SuppressedRow key={`gap-${pos}`} count={item.count} />
-								) : (
-									<LapRow
-										key={item.index}
-										index={item.index}
-										lap={laps[item.index]}
-										cumulative={laps
-											.slice(0, item.index + 1)
-											.reduce((a, l) => a + l.time, 0)}
-										totalLaps={laps.length}
-										onCommit={raw => commitLap(item.index, raw)}
-										onRepeatNext={count =>
-											repeatLapValueNext(item.index, count)
-										}
-										onRepeatToEnd={() => repeatLapValueToEnd(item.index)}
-										onCopyPreviousAverage={count =>
-											copyPreviousAverageToLap(item.index, count)
-										}
-										showActions={showActions}
-										consumables={consumables}
-										lapActions={actions[item.index] ?? []}
-										onAddAction={id => addAction(item.index, id)}
-										onRemoveAction={actionIndex =>
-											removeAction(item.index, actionIndex)
-										}
-									/>
-								),
+					<div className='relative'>
+						{isLoadingConfig ? (
+							<div className='absolute inset-0 z-10 flex items-center justify-center bg-background/70 backdrop-blur-sm'>
+								<div className='flex items-center gap-2 rounded-full border border-border/70 bg-background/80 px-3 py-2 text-sm font-medium shadow-sm'>
+									<div className='size-2.5 animate-pulse rounded-full bg-primary' />
+									<span>Carregando trechos...</span>
+								</div>
+							</div>
+						) : null}
+
+						<div className={isLoadingConfig ? "opacity-60 blur-[1px]" : ""}>
+							{laps.length === 0 ? (
+								<p className='px-5 py-10 text-center text-sm text-muted-foreground'>
+									Informe uma distância e um tempo alvo válidos para ver o
+									plano.
+								</p>
+							) : (
+								<ul className='divide-y divide-border'>
+									{renderItems.map((item, pos) =>
+										item.type === "gap" ? (
+											<SuppressedRow key={`gap-${pos}`} count={item.count} />
+										) : (
+											<LapRow
+												key={item.index}
+												index={item.index}
+												lap={laps[item.index]}
+												cumulative={laps
+													.slice(0, item.index + 1)
+													.reduce((a, l) => a + l.time, 0)}
+												totalLaps={laps.length}
+												onCommit={raw => commitLap(item.index, raw)}
+												onRepeatNext={count =>
+													repeatLapValueNext(item.index, count)
+												}
+												onRepeatToEnd={() => repeatLapValueToEnd(item.index)}
+												onCopyPreviousAverage={count =>
+													copyPreviousAverageToLap(item.index, count)
+												}
+												showActions={showActions}
+												consumables={consumables}
+												lapActions={actions[item.index] ?? []}
+												onAddAction={id => addAction(item.index, id)}
+												onRemoveAction={actionIndex =>
+													removeAction(item.index, actionIndex)
+												}
+											/>
+										),
+									)}
+								</ul>
 							)}
-						</ul>
-					)}
+						</div>
+					</div>
 				</Card>
 
 				{showActions && (
@@ -772,6 +891,7 @@ function LapRow({
 	onAddAction: (id: string) => void;
 	onRemoveAction: (actionIndex: number) => void;
 }) {
+	const {unitSystem} = useUnitSystem();
 	const [selected, setSelected] = useState<boolean>(false);
 	const display = formatTime(lap.time);
 	const isPartial = lap.distance < 1;
@@ -790,11 +910,12 @@ function LapRow({
 				<div className='min-w-0 flex-1'>
 					<div className='font-medium'>
 						{isPartial
-							? `Trecho final (${lap.distance.toLocaleString("pt-BR")} km)`
-							: `Quilômetro ${index + 1}`}
+							? `Trecho final (${formatDisplayDistance(lap.distance, unitSystem)})`
+							: `Trecho ${index + 1}`}
 					</div>
 					<div className='text-xs text-muted-foreground'>
-						{formatPace(pace)} · acumulado {formatTime(cumulative)}
+						{`${formatTime(toDisplayPace(pace, unitSystem))} ${paceUnitLabel(unitSystem)}`}{" "}
+						· acumulado {formatTime(cumulative)}
 					</div>
 				</div>
 
@@ -808,7 +929,7 @@ function LapRow({
 							if (e.key === "Enter") (e.target as HTMLInputElement).blur();
 						}}
 						className='w-24 text-center font-mono tabular-nums'
-						aria-label={`Tempo do quilômetro ${index + 1}`}
+						aria-label={`Tempo do trecho ${index + 1}`}
 					/>
 					<LapOptionsMenu
 						onOpenChange={setSelected}
@@ -866,9 +987,9 @@ function LapRow({
 										className='flex flex-col items-start gap-0.5'
 									>
 										<span className='font-medium'>{c.name}</span>
-										{consumableSummary(c) && (
+										{consumableSummaryForUnit(c, unitSystem) && (
 											<span className='text-xs text-muted-foreground'>
-												{consumableSummary(c)}
+												{consumableSummaryForUnit(c, unitSystem)}
 											</span>
 										)}
 									</DropdownMenuItem>
@@ -1025,6 +1146,8 @@ function ConsumableManager({
 		return Number.isNaN(n) || n < 0 ? 0 : n;
 	};
 
+	const {unitSystem} = useUnitSystem();
+
 	function handleAdd() {
 		const trimmed = name.trim();
 		if (trimmed === "") return;
@@ -1055,9 +1178,9 @@ function ConsumableManager({
 					>
 						<div className='min-w-0 flex-1'>
 							<div className='truncate text-sm font-medium'>{c.name}</div>
-							{consumableSummary(c) && (
+							{consumableSummaryForUnit(c, unitSystem) && (
 								<div className='truncate text-xs text-muted-foreground'>
-									{consumableSummary(c)}
+									{consumableSummaryForUnit(c, unitSystem)}
 								</div>
 							)}
 						</div>
@@ -1092,7 +1215,7 @@ function ConsumableManager({
 				<div className='grid grid-cols-3 gap-2'>
 					<div className='space-y-1.5'>
 						<Label htmlFor='c-carbs' className='text-xs'>
-							Carbo (g)
+							Carbo
 						</Label>
 						<Input
 							id='c-carbs'
@@ -1105,7 +1228,7 @@ function ConsumableManager({
 					</div>
 					<div className='space-y-1.5'>
 						<Label htmlFor='c-sodium' className='text-xs'>
-							Sódio (mg)
+							Sódio
 						</Label>
 						<Input
 							id='c-sodium'
@@ -1118,7 +1241,7 @@ function ConsumableManager({
 					</div>
 					<div className='space-y-1.5'>
 						<Label htmlFor='c-caffeine' className='text-xs'>
-							Cafeína (mg)
+							Cafeína
 						</Label>
 						<Input
 							id='c-caffeine'
@@ -1151,23 +1274,35 @@ function NutritionSummary({
 	nutrition: {carbs: number; sodium: number; caffeine: number; count: number};
 	totalSeconds: number;
 }) {
-	const fmt = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
+	const {unitSystem} = useUnitSystem();
 
 	const items: {label: string; total: string; rate: string}[] = [
 		{
 			label: "Carboidrato",
-			total: `${fmt(nutrition.carbs)} g`,
-			rate: `${fmt(perHour(nutrition.carbs, totalSeconds))} g/h`,
+			total: formatDisplayMass(nutrition.carbs, "g", unitSystem),
+			rate: `${formatDisplayMass(
+				perHour(nutrition.carbs, totalSeconds),
+				"g",
+				unitSystem,
+			)}/h`,
 		},
 		{
 			label: "Sódio",
-			total: `${fmt(nutrition.sodium)} mg`,
-			rate: `${fmt(perHour(nutrition.sodium, totalSeconds))} mg/h`,
+			total: formatDisplayMass(nutrition.sodium, "mg", unitSystem),
+			rate: `${formatDisplayMass(
+				perHour(nutrition.sodium, totalSeconds),
+				"mg",
+				unitSystem,
+			)}/h`,
 		},
 		{
 			label: "Cafeína",
-			total: `${fmt(nutrition.caffeine)} mg`,
-			rate: `${fmt(perHour(nutrition.caffeine, totalSeconds))} mg/h`,
+			total: formatDisplayMass(nutrition.caffeine, "mg", unitSystem),
+			rate: `${formatDisplayMass(
+				perHour(nutrition.caffeine, totalSeconds),
+				"mg",
+				unitSystem,
+			)}/h`,
 		},
 	];
 

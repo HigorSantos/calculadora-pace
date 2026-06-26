@@ -6,7 +6,7 @@ import { TimeByDistancePaceCalculator } from "@/components/calculators/time-by-d
 export const metadata: Metadata = {
   title: "Tempo por distância e pace",
   description:
-    "Calcule o tempo final estimado de uma corrida informando a distância em quilômetros e o pace médio por quilômetro.",
+    "Calcule o tempo final estimado de uma corrida informando a distância planejada e o pace médio na unidade selecionada.",
   alternates: {
     canonical: "/calculadoras/tempo-por-distancia-e-pace",
   },
@@ -23,7 +23,7 @@ export default function TimeByDistancePacePage() {
     <CalculatorShell
       eyebrow="Calculadoras básicas"
       title="Tempo por distância e pace"
-      description="Estime o tempo total da corrida a partir da distância planejada e do ritmo médio por quilômetro."
+      description="Estime o tempo total da corrida a partir da distância planejada e do ritmo médio na unidade selecionada."
     >
       <TimeByDistancePaceCalculator />
     </CalculatorShell>

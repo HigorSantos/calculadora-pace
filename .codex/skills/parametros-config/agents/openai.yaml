@@ -1,0 +1,4 @@
+interface:
+  display_name: "Parâmetros Config"
+  short_description: "Sincroniza configurações de ferramentas com query string."
+  default_prompt: "Use o padrão de parâmetros de configuração por query string neste projeto."
