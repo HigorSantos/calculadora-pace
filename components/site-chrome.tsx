@@ -1,5 +1,13 @@
 import Link from "next/link";
-import {Activity, Dumbbell, Gauge, Route, Timer} from "lucide-react";
+import {
+	Activity,
+	Dumbbell,
+	Gauge,
+	Route,
+	SportShoeIcon,
+	Timer,
+} from "lucide-react";
+import {BillingAccessMockSelector} from "@/components/billing-access-mock-selector";
 import {ThemeSelector} from "@/components/theme-selector";
 import {UnitSystemSelector} from "@/components/unit-system-selector";
 import {Separator} from "@base-ui/react";
@@ -46,15 +54,12 @@ function BrandMark() {
 			className='group flex min-w-0 items-center gap-3'
 			aria-label='Arsenal do Corredor'
 		>
-			<span className='flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm shadow-primary/20 transition-transform group-hover:-translate-y-0.5'>
-				<Dumbbell className='size-5' />
-			</span>
-			<span className='min-w-0'>
-				<span className='block truncate text-base font-bold tracking-tight'>
-					Arsenal do Corredor
+			<span className='flex flex-col upp gap-0 min-w-0 text-2xl text-center'>
+				<span className='text-black font-light text-xl dark:text-white text-left'>
+					Arsenal do
 				</span>
-				<span className='block truncate text-xs font-medium text-muted-foreground'>
-					Ferramentas para correr melhor
+				<span className='text-primary font-bold -mt-2'>
+					Corredor <SportShoeIcon className='inline transform -scale-x-100' />
 				</span>
 			</span>
 		</Link>
@@ -63,7 +68,7 @@ function BrandMark() {
 
 export function SiteHeader() {
 	return (
-		<header className='sticky top-0 z-40 border-b border-border/80 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/80'>
+		<header className=' top-0 z-40 border-b border-border/80 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/80'>
 			<div className='mx-auto flex min-h-16 w-full max-w-6xl flex-col gap-3 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:py-0'>
 				<BrandMark />
 
@@ -88,6 +93,7 @@ export function SiteHeader() {
 					</nav>
 
 					<div className='flex items-center gap-2'>
+						{/* <BillingAccessMockSelector /> */}
 						<ThemeSelector />
 						<UnitSystemSelector />
 					</div>
@@ -144,6 +150,14 @@ export function SiteFooter() {
 						sem transformar a rotina em planilha infinita.
 					</p>
 				</div>
+			</div>
+			<div className='mx-auto grid w-full max-w-6xl gap-8 px-4 py-8 sm:px-6'>
+				<p className='text-xs text-muted-foreground'>
+					Todos os nomes de marcas, logotipos e marcas comerciais mencionados
+					neste site, como Z2, Pace It, Dobro®, pertencem aos seus respectivos
+					donos. O site Arsenal do Corredor não possui associação, afiliação ou
+					endosso destas marcas.
+				</p>
 			</div>
 		</footer>
 	);

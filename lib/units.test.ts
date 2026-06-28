@@ -18,7 +18,7 @@ describe("unit display helpers", () => {
 		const speedKmh = paceToSpeed(300);
 
 		assert.equal(formatDisplaySpeed(speedKmh, "metric"), "12,0 km/h");
-		assert.equal(formatDisplaySpeed(speedKmh, "imperial"), "7,5 mph");
+		assert.equal(formatDisplaySpeed(speedKmh, "imperial"), "7,46 mph");
 	});
 
 	it("formats pace in the selected unit system", () => {

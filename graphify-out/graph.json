@@ -100,57 +100,57 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_layout",
-      "community": 8,
+      "community": 17,
       "norm_label": "layout.tsx"
     },
     {
-      "label": "geistSans",
+      "label": "ManropeSans",
       "file_type": "code",
       "source_file": "app/layout.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "_origin": "ast",
-      "id": "app_layout_geistsans",
-      "community": 8,
-      "norm_label": "geistsans"
+      "id": "app_layout_manropesans",
+      "community": 17,
+      "norm_label": "manropesans"
     },
     {
       "label": "geistMono",
       "file_type": "code",
       "source_file": "app/layout.tsx",
-      "source_location": "L9",
+      "source_location": "L13",
       "_origin": "ast",
       "id": "app_layout_geistmono",
-      "community": 8,
+      "community": 17,
       "norm_label": "geistmono"
     },
     {
       "label": "metadata",
       "file_type": "code",
       "source_file": "app/layout.tsx",
-      "source_location": "L29",
+      "source_location": "L33",
       "_origin": "ast",
       "id": "app_layout_metadata",
-      "community": 8,
+      "community": 17,
       "norm_label": "metadata"
     },
     {
       "label": "viewport",
       "file_type": "code",
       "source_file": "app/layout.tsx",
-      "source_location": "L52",
+      "source_location": "L56",
       "_origin": "ast",
       "id": "app_layout_viewport",
-      "community": 8,
+      "community": 17,
       "norm_label": "viewport"
     },
     {
       "label": "RootLayout()",
       "file_type": "code",
       "source_file": "app/layout.tsx",
-      "source_location": "L60",
+      "source_location": "L64",
       "_origin": "ast",
       "id": "app_layout_rootlayout",
-      "community": 8,
+      "community": 17,
       "norm_label": "rootlayout()"
     },
     {
@@ -384,6 +384,86 @@
       "norm_label": "iconlibrary"
     },
     {
+      "label": "billing-access-mock-selector.tsx",
+      "file_type": "code",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_billing_access_mock_selector",
+      "community": 8,
+      "norm_label": "billing-access-mock-selector.tsx"
+    },
+    {
+      "label": "accessModes",
+      "file_type": "code",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "components_billing_access_mock_selector_accessmodes",
+      "community": 8,
+      "norm_label": "accessmodes"
+    },
+    {
+      "label": "BillingAccessMockSelector()",
+      "file_type": "code",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "components_billing_access_mock_selector_billingaccessmockselector",
+      "community": 8,
+      "norm_label": "billingaccessmockselector()"
+    },
+    {
+      "label": "billing-access-provider.tsx",
+      "file_type": "code",
+      "source_file": "components/billing-access-provider.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_billing_access_provider",
+      "community": 17,
+      "norm_label": "billing-access-provider.tsx"
+    },
+    {
+      "label": "BillingAccessContextValue",
+      "file_type": "code",
+      "source_file": "components/billing-access-provider.tsx",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "components_billing_access_provider_billingaccesscontextvalue",
+      "community": 17,
+      "norm_label": "billingaccesscontextvalue"
+    },
+    {
+      "label": "BillingAccessContext",
+      "file_type": "code",
+      "source_file": "components/billing-access-provider.tsx",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "components_billing_access_provider_billingaccesscontext",
+      "community": 17,
+      "norm_label": "billingaccesscontext"
+    },
+    {
+      "label": "BillingAccessProvider()",
+      "file_type": "code",
+      "source_file": "components/billing-access-provider.tsx",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "components_billing_access_provider_billingaccessprovider",
+      "community": 17,
+      "norm_label": "billingaccessprovider()"
+    },
+    {
+      "label": "useBillingAccess()",
+      "file_type": "code",
+      "source_file": "components/billing-access-provider.tsx",
+      "source_location": "L71",
+      "_origin": "ast",
+      "id": "components_billing_access_provider_usebillingaccess",
+      "community": 8,
+      "norm_label": "usebillingaccess()"
+    },
+    {
       "label": "calculator-result-card.tsx",
       "file_type": "code",
       "source_file": "components/calculators/calculator-result-card.tsx",
@@ -574,6 +654,246 @@
       "norm_label": "timebydistancepacecalculator()"
     },
     {
+      "label": "consumable-manager.tsx",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_consumable_manager",
+      "community": 8,
+      "norm_label": "consumable-manager.tsx"
+    },
+    {
+      "label": "ConsumableManager()",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_consumable_manager_consumablemanager",
+      "community": 1,
+      "norm_label": "consumablemanager()"
+    },
+    {
+      "label": "lap-options-menu.tsx",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_lap_options_menu",
+      "community": 8,
+      "norm_label": "lap-options-menu.tsx"
+    },
+    {
+      "label": "LapOptionsMenu()",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_lap_options_menu_lapoptionsmenu",
+      "community": 8,
+      "norm_label": "lapoptionsmenu()"
+    },
+    {
+      "label": "lap-row.tsx",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_lap_row",
+      "community": 8,
+      "norm_label": "lap-row.tsx"
+    },
+    {
+      "label": "SuppressedRow()",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_lap_row_suppressedrow",
+      "community": 1,
+      "norm_label": "suppressedrow()"
+    },
+    {
+      "label": "LapRow()",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_lap_row_laprow",
+      "community": 6,
+      "norm_label": "laprow()"
+    },
+    {
+      "label": "nutrition-summary.tsx",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/nutrition-summary.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_nutrition_summary",
+      "community": 1,
+      "norm_label": "nutrition-summary.tsx"
+    },
+    {
+      "label": "NutritionSummary()",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/nutrition-summary.tsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_nutrition_summary_nutritionsummary",
+      "community": 1,
+      "norm_label": "nutritionsummary()"
+    },
+    {
+      "label": "stat-card.tsx",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/stat-card.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_stat_card",
+      "community": 0,
+      "norm_label": "stat-card.tsx"
+    },
+    {
+      "label": "StatCard()",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/stat-card.tsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_stat_card_statcard",
+      "community": 0,
+      "norm_label": "statcard()"
+    },
+    {
+      "label": "upgrade-dialog.tsx",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/upgrade-dialog.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_upgrade_dialog",
+      "community": 0,
+      "norm_label": "upgrade-dialog.tsx"
+    },
+    {
+      "label": "UpgradeDialog()",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/upgrade-dialog.tsx",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_upgrade_dialog_upgradedialog",
+      "community": 0,
+      "norm_label": "upgradedialog()"
+    },
+    {
+      "label": "utils.ts",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_utils",
+      "community": 1,
+      "norm_label": "utils.ts"
+    },
+    {
+      "label": "STRATEGIES",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_utils_strategies",
+      "community": 1,
+      "norm_label": "strategies"
+    },
+    {
+      "label": "TargetMode",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_utils_targetmode",
+      "community": 1,
+      "norm_label": "targetmode"
+    },
+    {
+      "label": "normalizeTargetMode()",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_utils_normalizetargetmode",
+      "community": 1,
+      "norm_label": "normalizetargetmode()"
+    },
+    {
+      "label": "normalizeStrategy()",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L42",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_utils_normalizestrategy",
+      "community": 1,
+      "norm_label": "normalizestrategy()"
+    },
+    {
+      "label": "resolveTargetSeconds()",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_utils_resolvetargetseconds",
+      "community": 6,
+      "norm_label": "resolvetargetseconds()"
+    },
+    {
+      "label": "Preset",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L65",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_utils_preset",
+      "community": 1,
+      "norm_label": "preset"
+    },
+    {
+      "label": "PRESETS",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L67",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_utils_presets",
+      "community": 1,
+      "norm_label": "presets"
+    },
+    {
+      "label": "newConsumableId()",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L75",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_utils_newconsumableid",
+      "community": 1,
+      "norm_label": "newconsumableid()"
+    },
+    {
+      "label": "parsePositiveInteger()",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L80",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_utils_parsepositiveinteger",
+      "community": 8,
+      "norm_label": "parsepositiveinteger()"
+    },
+    {
+      "label": "consumableSummaryForUnit()",
+      "file_type": "code",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L86",
+      "_origin": "ast",
+      "id": "pace_calculator_parts_utils_consumablesummaryforunit",
+      "community": 8,
+      "norm_label": "consumablesummaryforunit()"
+    },
+    {
       "label": "pace-calculator.tsx",
       "file_type": "code",
       "source_file": "components/pace-calculator.tsx",
@@ -584,174 +904,144 @@
       "norm_label": "pace-calculator.tsx"
     },
     {
-      "label": "STRATEGIES",
+      "label": "PaceQueryValues",
       "file_type": "code",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L66",
+      "source_location": "L79",
       "_origin": "ast",
-      "id": "components_pace_calculator_strategies",
+      "id": "components_pace_calculator_pacequeryvalues",
       "community": 1,
-      "norm_label": "strategies"
+      "norm_label": "pacequeryvalues"
     },
     {
-      "label": "TargetMode",
+      "label": "PaceHistorySnapshot",
       "file_type": "code",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L84",
+      "source_location": "L86",
       "_origin": "ast",
-      "id": "components_pace_calculator_targetmode",
+      "id": "components_pace_calculator_pacehistorysnapshot",
       "community": 1,
-      "norm_label": "targetmode"
+      "norm_label": "pacehistorysnapshot"
     },
     {
-      "label": "normalizeTargetMode()",
+      "label": "PaceHistoryState",
       "file_type": "code",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L92",
+      "source_location": "L101",
       "_origin": "ast",
-      "id": "components_pace_calculator_normalizetargetmode",
+      "id": "components_pace_calculator_pacehistorystate",
       "community": 1,
-      "norm_label": "normalizetargetmode()"
+      "norm_label": "pacehistorystate"
     },
     {
-      "label": "normalizeStrategy()",
+      "label": "StoredPaceHistory",
       "file_type": "code",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L96",
+      "source_location": "L106",
       "_origin": "ast",
-      "id": "components_pace_calculator_normalizestrategy",
+      "id": "components_pace_calculator_storedpacehistory",
       "community": 1,
-      "norm_label": "normalizestrategy()"
+      "norm_label": "storedpacehistory"
     },
     {
-      "label": "resolveTargetSeconds()",
+      "label": "cloneHistoryValue()",
       "file_type": "code",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L103",
+      "source_location": "L115",
       "_origin": "ast",
-      "id": "components_pace_calculator_resolvetargetseconds",
+      "id": "components_pace_calculator_clonehistoryvalue",
       "community": 1,
-      "norm_label": "resolvetargetseconds()"
+      "norm_label": "clonehistoryvalue()"
     },
     {
-      "label": "Preset",
+      "label": "areHistorySnapshotsEqual()",
       "file_type": "code",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L120",
+      "source_location": "L119",
       "_origin": "ast",
-      "id": "components_pace_calculator_preset",
+      "id": "components_pace_calculator_arehistorysnapshotsequal",
       "community": 1,
-      "norm_label": "preset"
+      "norm_label": "arehistorysnapshotsequal()"
     },
     {
-      "label": "PRESETS",
+      "label": "arePaceQueryValuesEqual()",
       "file_type": "code",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L122",
+      "source_location": "L126",
       "_origin": "ast",
-      "id": "components_pace_calculator_presets",
+      "id": "components_pace_calculator_arepacequeryvaluesequal",
       "community": 1,
-      "norm_label": "presets"
+      "norm_label": "arepacequeryvaluesequal()"
     },
     {
-      "label": "newConsumableId()",
+      "label": "isRecord()",
       "file_type": "code",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L130",
+      "source_location": "L138",
       "_origin": "ast",
-      "id": "components_pace_calculator_newconsumableid",
+      "id": "components_pace_calculator_isrecord",
       "community": 1,
-      "norm_label": "newconsumableid()"
+      "norm_label": "isrecord()"
     },
     {
-      "label": "parsePositiveInteger()",
+      "label": "isPaceQueryValues()",
       "file_type": "code",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L135",
+      "source_location": "L142",
       "_origin": "ast",
-      "id": "components_pace_calculator_parsepositiveinteger",
+      "id": "components_pace_calculator_ispacequeryvalues",
       "community": 1,
-      "norm_label": "parsepositiveinteger()"
+      "norm_label": "ispacequeryvalues()"
     },
     {
-      "label": "consumableSummaryForUnit()",
+      "label": "isPaceHistorySnapshot()",
       "file_type": "code",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L141",
+      "source_location": "L152",
       "_origin": "ast",
-      "id": "components_pace_calculator_consumablesummaryforunit",
+      "id": "components_pace_calculator_ispacehistorysnapshot",
       "community": 1,
-      "norm_label": "consumablesummaryforunit()"
+      "norm_label": "ispacehistorysnapshot()"
+    },
+    {
+      "label": "parseStoredPaceHistory()",
+      "file_type": "code",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L174",
+      "_origin": "ast",
+      "id": "components_pace_calculator_parsestoredpacehistory",
+      "community": 1,
+      "norm_label": "parsestoredpacehistory()"
+    },
+    {
+      "label": "defaultSelectedConsumableIds()",
+      "file_type": "code",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L212",
+      "_origin": "ast",
+      "id": "components_pace_calculator_defaultselectedconsumableids",
+      "community": 1,
+      "norm_label": "defaultselectedconsumableids()"
+    },
+    {
+      "label": "parseStoredSelectedConsumables()",
+      "file_type": "code",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L218",
+      "_origin": "ast",
+      "id": "components_pace_calculator_parsestoredselectedconsumables",
+      "community": 1,
+      "norm_label": "parsestoredselectedconsumables()"
     },
     {
       "label": "PaceCalculator()",
       "file_type": "code",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L150",
+      "source_location": "L230",
       "_origin": "ast",
       "id": "components_pace_calculator_pacecalculator",
-      "community": 1,
-      "norm_label": "pacecalculator()"
-    },
-    {
-      "label": "StatCard()",
-      "file_type": "code",
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L793",
-      "_origin": "ast",
-      "id": "components_pace_calculator_statcard",
-      "community": 1,
-      "norm_label": "statcard()"
-    },
-    {
-      "label": "SuppressedRow()",
-      "file_type": "code",
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L822",
-      "_origin": "ast",
-      "id": "components_pace_calculator_suppressedrow",
-      "community": 1,
-      "norm_label": "suppressedrow()"
-    },
-    {
-      "label": "LapRow()",
-      "file_type": "code",
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L834",
-      "_origin": "ast",
-      "id": "components_pace_calculator_laprow",
       "community": 6,
-      "norm_label": "laprow()"
-    },
-    {
-      "label": "LapOptionsMenu()",
-      "file_type": "code",
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L974",
-      "_origin": "ast",
-      "id": "components_pace_calculator_lapoptionsmenu",
-      "community": 1,
-      "norm_label": "lapoptionsmenu()"
-    },
-    {
-      "label": "ConsumableManager()",
-      "file_type": "code",
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L1098",
-      "_origin": "ast",
-      "id": "components_pace_calculator_consumablemanager",
-      "community": 1,
-      "norm_label": "consumablemanager()"
-    },
-    {
-      "label": "NutritionSummary()",
-      "file_type": "code",
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L1238",
-      "_origin": "ast",
-      "id": "components_pace_calculator_nutritionsummary",
-      "community": 1,
-      "norm_label": "nutritionsummary()"
+      "norm_label": "pacecalculator()"
     },
     {
       "label": "site-chrome.tsx",
@@ -767,7 +1057,7 @@
       "label": "tools",
       "file_type": "code",
       "source_file": "components/site-chrome.tsx",
-      "source_location": "L7",
+      "source_location": "L15",
       "_origin": "ast",
       "id": "components_site_chrome_tools",
       "community": 8,
@@ -777,7 +1067,7 @@
       "label": "BrandMark()",
       "file_type": "code",
       "source_file": "components/site-chrome.tsx",
-      "source_location": "L42",
+      "source_location": "L50",
       "_origin": "ast",
       "id": "components_site_chrome_brandmark",
       "community": 8,
@@ -787,17 +1077,17 @@
       "label": "SiteHeader()",
       "file_type": "code",
       "source_file": "components/site-chrome.tsx",
-      "source_location": "L64",
+      "source_location": "L69",
       "_origin": "ast",
       "id": "components_site_chrome_siteheader",
-      "community": 8,
+      "community": 17,
       "norm_label": "siteheader()"
     },
     {
       "label": "SiteFooter()",
       "file_type": "code",
       "source_file": "components/site-chrome.tsx",
-      "source_location": "L100",
+      "source_location": "L106",
       "_origin": "ast",
       "id": "components_site_chrome_sitefooter",
       "community": 8,
@@ -994,6 +1284,116 @@
       "norm_label": "cardfooter()"
     },
     {
+      "label": "dialog.tsx",
+      "file_type": "code",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_dialog",
+      "community": 0,
+      "norm_label": "dialog.tsx"
+    },
+    {
+      "label": "Dialog()",
+      "file_type": "code",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "ui_dialog_dialog",
+      "community": 0,
+      "norm_label": "dialog()"
+    },
+    {
+      "label": "DialogTrigger()",
+      "file_type": "code",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "ui_dialog_dialogtrigger",
+      "community": 0,
+      "norm_label": "dialogtrigger()"
+    },
+    {
+      "label": "DialogPortal()",
+      "file_type": "code",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "ui_dialog_dialogportal",
+      "community": 0,
+      "norm_label": "dialogportal()"
+    },
+    {
+      "label": "DialogClose()",
+      "file_type": "code",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "ui_dialog_dialogclose",
+      "community": 0,
+      "norm_label": "dialogclose()"
+    },
+    {
+      "label": "DialogOverlay()",
+      "file_type": "code",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "ui_dialog_dialogoverlay",
+      "community": 0,
+      "norm_label": "dialogoverlay()"
+    },
+    {
+      "label": "DialogContent()",
+      "file_type": "code",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "ui_dialog_dialogcontent",
+      "community": 0,
+      "norm_label": "dialogcontent()"
+    },
+    {
+      "label": "DialogHeader()",
+      "file_type": "code",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L77",
+      "_origin": "ast",
+      "id": "ui_dialog_dialogheader",
+      "community": 0,
+      "norm_label": "dialogheader()"
+    },
+    {
+      "label": "DialogFooter()",
+      "file_type": "code",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L87",
+      "_origin": "ast",
+      "id": "ui_dialog_dialogfooter",
+      "community": 0,
+      "norm_label": "dialogfooter()"
+    },
+    {
+      "label": "DialogTitle()",
+      "file_type": "code",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L97",
+      "_origin": "ast",
+      "id": "ui_dialog_dialogtitle",
+      "community": 0,
+      "norm_label": "dialogtitle()"
+    },
+    {
+      "label": "DialogDescription()",
+      "file_type": "code",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L107",
+      "_origin": "ast",
+      "id": "ui_dialog_dialogdescription",
+      "community": 0,
+      "norm_label": "dialogdescription()"
+    },
+    {
       "label": "dropdown-menu.tsx",
       "file_type": "code",
       "source_file": "components/ui/dropdown-menu.tsx",
@@ -1050,7 +1450,7 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "ui_dropdown_menu_dropdownmenugroup",
-      "community": 1,
+      "community": 8,
       "norm_label": "dropdownmenugroup()"
     },
     {
@@ -1070,7 +1470,7 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "ui_dropdown_menu_dropdownmenuitem",
-      "community": 1,
+      "community": 8,
       "norm_label": "dropdownmenuitem()"
     },
     {
@@ -1090,7 +1490,7 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "ui_dropdown_menu_dropdownmenusubtrigger",
-      "community": 8,
+      "community": 0,
       "norm_label": "dropdownmenusubtrigger()"
     },
     {
@@ -1100,7 +1500,7 @@
       "source_location": "L127",
       "_origin": "ast",
       "id": "ui_dropdown_menu_dropdownmenusubcontent",
-      "community": 8,
+      "community": 0,
       "norm_label": "dropdownmenusubcontent()"
     },
     {
@@ -1110,7 +1510,7 @@
       "source_location": "L148",
       "_origin": "ast",
       "id": "ui_dropdown_menu_dropdownmenucheckboxitem",
-      "community": 8,
+      "community": 0,
       "norm_label": "dropdownmenucheckboxitem()"
     },
     {
@@ -1140,7 +1540,7 @@
       "source_location": "L223",
       "_origin": "ast",
       "id": "ui_dropdown_menu_dropdownmenuseparator",
-      "community": 8,
+      "community": 0,
       "norm_label": "dropdownmenuseparator()"
     },
     {
@@ -1150,7 +1550,7 @@
       "source_location": "L236",
       "_origin": "ast",
       "id": "ui_dropdown_menu_dropdownmenushortcut",
-      "community": 8,
+      "community": 0,
       "norm_label": "dropdownmenushortcut()"
     },
     {
@@ -1160,7 +1560,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ui_input",
-      "community": 6,
+      "community": 8,
       "norm_label": "input.tsx"
     },
     {
@@ -1170,7 +1570,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "ui_input_input",
-      "community": 6,
+      "community": 8,
       "norm_label": "input()"
     },
     {
@@ -1180,7 +1580,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ui_label",
-      "community": 6,
+      "community": 8,
       "norm_label": "label.tsx"
     },
     {
@@ -1190,7 +1590,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "ui_label_label",
-      "community": 6,
+      "community": 8,
       "norm_label": "label()"
     },
     {
@@ -1340,7 +1740,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_unit_system_provider",
-      "community": 8,
+      "community": 17,
       "norm_label": "unit-system-provider.tsx"
     },
     {
@@ -1350,7 +1750,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "components_unit_system_provider_unitsystemcontextvalue",
-      "community": 8,
+      "community": 17,
       "norm_label": "unitsystemcontextvalue"
     },
     {
@@ -1360,7 +1760,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "components_unit_system_provider_unitsystemcontext",
-      "community": 8,
+      "community": 17,
       "norm_label": "unitsystemcontext"
     },
     {
@@ -1370,7 +1770,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "components_unit_system_provider_unitsystemprovider",
-      "community": 8,
+      "community": 17,
       "norm_label": "unitsystemprovider()"
     },
     {
@@ -1444,30 +1844,270 @@
       "norm_label": "usequerystringstate()"
     },
     {
+      "label": "action-limits.test.ts",
+      "file_type": "code",
+      "source_file": "lib/action-limits.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_action_limits_test",
+      "community": 1,
+      "norm_label": "action-limits.test.ts"
+    },
+    {
+      "label": "action-limits.ts",
+      "file_type": "code",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_action_limits",
+      "community": 1,
+      "norm_label": "action-limits.ts"
+    },
+    {
+      "label": "LapActions",
+      "file_type": "code",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "lib_action_limits_lapactions",
+      "community": 1,
+      "norm_label": "lapactions"
+    },
+    {
+      "label": "maxActionsForLapCount()",
+      "file_type": "code",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "lib_action_limits_maxactionsforlapcount",
+      "community": 1,
+      "norm_label": "maxactionsforlapcount()"
+    },
+    {
+      "label": "countActionsWithinLaps()",
+      "file_type": "code",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "lib_action_limits_countactionswithinlaps",
+      "community": 1,
+      "norm_label": "countactionswithinlaps()"
+    },
+    {
+      "label": "canAddPlanAction()",
+      "file_type": "code",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "lib_action_limits_canaddplanaction",
+      "community": 1,
+      "norm_label": "canaddplanaction()"
+    },
+    {
+      "label": "ConsumableIdentifier",
+      "file_type": "code",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "lib_action_limits_consumableidentifier",
+      "community": 1,
+      "norm_label": "consumableidentifier"
+    },
+    {
+      "label": "isCustomConsumable()",
+      "file_type": "code",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "lib_action_limits_iscustomconsumable",
+      "community": 1,
+      "norm_label": "iscustomconsumable()"
+    },
+    {
+      "label": "countCustomConsumables()",
+      "file_type": "code",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "lib_action_limits_countcustomconsumables",
+      "community": 1,
+      "norm_label": "countcustomconsumables()"
+    },
+    {
+      "label": "canAddCustomConsumable()",
+      "file_type": "code",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L42",
+      "_origin": "ast",
+      "id": "lib_action_limits_canaddcustomconsumable",
+      "community": 1,
+      "norm_label": "canaddcustomconsumable()"
+    },
+    {
+      "label": "limitFreeUndoHistory()",
+      "file_type": "code",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L46",
+      "_origin": "ast",
+      "id": "lib_action_limits_limitfreeundohistory",
+      "community": 1,
+      "norm_label": "limitfreeundohistory()"
+    },
+    {
+      "label": "limitFreeRedoHistory()",
+      "file_type": "code",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L50",
+      "_origin": "ast",
+      "id": "lib_action_limits_limitfreeredohistory",
+      "community": 1,
+      "norm_label": "limitfreeredohistory()"
+    },
+    {
+      "label": "billing-access.test.ts",
+      "file_type": "code",
+      "source_file": "lib/billing-access.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_billing_access_test",
+      "community": 17,
+      "norm_label": "billing-access.test.ts"
+    },
+    {
+      "label": "billing-access.ts",
+      "file_type": "code",
+      "source_file": "lib/billing-access.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_billing_access",
+      "community": 17,
+      "norm_label": "billing-access.ts"
+    },
+    {
+      "label": "BillingAccessMode",
+      "file_type": "code",
+      "source_file": "lib/billing-access.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_billing_access_billingaccessmode",
+      "community": 17,
+      "norm_label": "billingaccessmode"
+    },
+    {
+      "label": "PaidFeature",
+      "file_type": "code",
+      "source_file": "lib/billing-access.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "lib_billing_access_paidfeature",
+      "community": 17,
+      "norm_label": "paidfeature"
+    },
+    {
+      "label": "isBillingAccessMode()",
+      "file_type": "code",
+      "source_file": "lib/billing-access.ts",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "lib_billing_access_isbillingaccessmode",
+      "community": 17,
+      "norm_label": "isbillingaccessmode()"
+    },
+    {
+      "label": "canAccessPaidFeature()",
+      "file_type": "code",
+      "source_file": "lib/billing-access.ts",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "lib_billing_access_canaccesspaidfeature",
+      "community": 17,
+      "norm_label": "canaccesspaidfeature()"
+    },
+    {
+      "label": "canAddLapAction()",
+      "file_type": "code",
+      "source_file": "lib/billing-access.ts",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "lib_billing_access_canaddlapaction",
+      "community": 17,
+      "norm_label": "canaddlapaction()"
+    },
+    {
+      "label": "consumiveis.ts",
+      "file_type": "code",
+      "source_file": "lib/consumiveis.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_consumiveis",
+      "community": 20,
+      "norm_label": "consumiveis.ts"
+    },
+    {
+      "label": "ConsumivelCatalogItem",
+      "file_type": "code",
+      "source_file": "lib/consumiveis.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_consumiveis_consumivelcatalogitem",
+      "community": 20,
+      "norm_label": "consumivelcatalogitem"
+    },
+    {
+      "label": "ConsumiveisPorMarca",
+      "file_type": "code",
+      "source_file": "lib/consumiveis.ts",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "lib_consumiveis_consumiveispormarca",
+      "community": 20,
+      "norm_label": "consumiveispormarca"
+    },
+    {
+      "label": "pace.test.ts",
+      "file_type": "code",
+      "source_file": "lib/pace.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_pace_test",
+      "community": 20,
+      "norm_label": "pace.test.ts"
+    },
+    {
+      "label": "totalTime()",
+      "file_type": "code",
+      "source_file": "lib/pace.test.ts",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "lib_pace_test_totaltime",
+      "community": 20,
+      "norm_label": "totaltime()"
+    },
+    {
       "label": "pace.ts",
       "file_type": "code",
       "source_file": "lib/pace.ts",
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_pace",
-      "community": 1,
+      "community": 20,
       "norm_label": "pace.ts"
     },
     {
       "label": "Lap",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L1",
+      "source_location": "L3",
       "_origin": "ast",
       "id": "lib_pace_lap",
-      "community": 1,
+      "community": 20,
       "norm_label": "lap"
     },
     {
       "label": "formatTime()",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L9",
+      "source_location": "L11",
       "_origin": "ast",
       "id": "lib_pace_formattime",
       "community": 6,
@@ -1477,17 +2117,17 @@
       "label": "parseTime()",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L20",
+      "source_location": "L22",
       "_origin": "ast",
       "id": "lib_pace_parsetime",
-      "community": 1,
+      "community": 6,
       "norm_label": "parsetime()"
     },
     {
       "label": "formatPace()",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L35",
+      "source_location": "L37",
       "_origin": "ast",
       "id": "lib_pace_formatpace",
       "community": 6,
@@ -1497,7 +2137,7 @@
       "label": "formatDistance()",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L40",
+      "source_location": "L42",
       "_origin": "ast",
       "id": "lib_pace_formatdistance",
       "community": 6,
@@ -1507,7 +2147,7 @@
       "label": "formatSpeed()",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L48",
+      "source_location": "L50",
       "_origin": "ast",
       "id": "lib_pace_formatspeed",
       "community": 6,
@@ -1517,37 +2157,37 @@
       "label": "calculateTimeFromDistanceAndPace()",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L57",
+      "source_location": "L59",
       "_origin": "ast",
       "id": "lib_pace_calculatetimefromdistanceandpace",
-      "community": 1,
+      "community": 20,
       "norm_label": "calculatetimefromdistanceandpace()"
     },
     {
       "label": "calculatePaceFromDistanceAndTime()",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L66",
+      "source_location": "L68",
       "_origin": "ast",
       "id": "lib_pace_calculatepacefromdistanceandtime",
-      "community": 1,
+      "community": 20,
       "norm_label": "calculatepacefromdistanceandtime()"
     },
     {
       "label": "calculateDistanceFromPaceAndTime()",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L75",
+      "source_location": "L77",
       "_origin": "ast",
       "id": "lib_pace_calculatedistancefrompaceandtime",
-      "community": 1,
+      "community": 20,
       "norm_label": "calculatedistancefrompaceandtime()"
     },
     {
       "label": "paceToSpeed()",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L84",
+      "source_location": "L86",
       "_origin": "ast",
       "id": "lib_pace_pacetospeed",
       "community": 6,
@@ -1557,97 +2197,147 @@
       "label": "buildDistances()",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L90",
+      "source_location": "L92",
       "_origin": "ast",
       "id": "lib_pace_builddistances",
-      "community": 1,
+      "community": 20,
       "norm_label": "builddistances()"
     },
     {
       "label": "Strategy",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L101",
+      "source_location": "L103",
       "_origin": "ast",
       "id": "lib_pace_strategy",
       "community": 1,
       "norm_label": "strategy"
     },
     {
+      "label": "deriveFinalPaceFromInitialPace()",
+      "file_type": "code",
+      "source_file": "lib/pace.ts",
+      "source_location": "L121",
+      "_origin": "ast",
+      "id": "lib_pace_derivefinalpacefrominitialpace",
+      "community": 20,
+      "norm_label": "derivefinalpacefrominitialpace()"
+    },
+    {
+      "label": "buildLapsFromInitialPace()",
+      "file_type": "code",
+      "source_file": "lib/pace.ts",
+      "source_location": "L147",
+      "_origin": "ast",
+      "id": "lib_pace_buildlapsfrominitialpace",
+      "community": 20,
+      "norm_label": "buildlapsfrominitialpace()"
+    },
+    {
       "label": "buildLaps()",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L119",
+      "source_location": "L174",
       "_origin": "ast",
       "id": "lib_pace_buildlaps",
-      "community": 1,
+      "community": 20,
       "norm_label": "buildlaps()"
     },
     {
       "label": "buildEqualLaps()",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L150",
+      "source_location": "L219",
       "_origin": "ast",
       "id": "lib_pace_buildequallaps",
-      "community": 1,
+      "community": 20,
       "norm_label": "buildequallaps()"
     },
     {
       "label": "Consumable",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L167",
+      "source_location": "L239",
       "_origin": "ast",
       "id": "lib_pace_consumable",
-      "community": 1,
+      "community": 8,
       "norm_label": "consumable"
+    },
+    {
+      "label": "slugify()",
+      "file_type": "code",
+      "source_file": "lib/pace.ts",
+      "source_location": "L258",
+      "_origin": "ast",
+      "id": "lib_pace_slugify",
+      "community": 20,
+      "norm_label": "slugify()"
+    },
+    {
+      "label": "GENERIC_CONSUMABLES",
+      "file_type": "code",
+      "source_file": "lib/pace.ts",
+      "source_location": "L267",
+      "_origin": "ast",
+      "id": "lib_pace_generic_consumables",
+      "community": 20,
+      "norm_label": "generic_consumables"
+    },
+    {
+      "label": "BRANDED_CONSUMABLES",
+      "file_type": "code",
+      "source_file": "lib/pace.ts",
+      "source_location": "L306",
+      "_origin": "ast",
+      "id": "lib_pace_branded_consumables",
+      "community": 20,
+      "norm_label": "branded_consumables"
     },
     {
       "label": "DEFAULT_CONSUMABLES",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L179",
+      "source_location": "L322",
       "_origin": "ast",
       "id": "lib_pace_default_consumables",
-      "community": 1,
+      "community": 20,
       "norm_label": "default_consumables"
     },
     {
       "label": "consumableSummary()",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L189",
+      "source_location": "L328",
       "_origin": "ast",
       "id": "lib_pace_consumablesummary",
-      "community": 1,
+      "community": 20,
       "norm_label": "consumablesummary()"
     },
     {
       "label": "Nutrition",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L197",
+      "source_location": "L336",
       "_origin": "ast",
       "id": "lib_pace_nutrition",
-      "community": 1,
+      "community": 20,
       "norm_label": "nutrition"
     },
     {
       "label": "computeNutrition()",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L211",
+      "source_location": "L350",
       "_origin": "ast",
       "id": "lib_pace_computenutrition",
-      "community": 1,
+      "community": 20,
       "norm_label": "computenutrition()"
     },
     {
       "label": "perHour()",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L231",
+      "source_location": "L370",
       "_origin": "ast",
       "id": "lib_pace_perhour",
       "community": 1,
@@ -1657,10 +2347,10 @@
       "label": "applyLapEdit()",
       "file_type": "code",
       "source_file": "lib/pace.ts",
-      "source_location": "L236",
+      "source_location": "L375",
       "_origin": "ast",
       "id": "lib_pace_applylapedit",
-      "community": 1,
+      "community": 20,
       "norm_label": "applylapedit()"
     },
     {
@@ -1690,7 +2380,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_units_unitsystem",
-      "community": 8,
+      "community": 17,
       "norm_label": "unitsystem"
     },
     {
@@ -1710,7 +2400,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "lib_units_isunitsystem",
-      "community": 8,
+      "community": 17,
       "norm_label": "isunitsystem()"
     },
     {
@@ -1780,7 +2470,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "lib_units_fromdisplaypace",
-      "community": 1,
+      "community": 6,
       "norm_label": "fromdisplaypace()"
     },
     {
@@ -1880,7 +2570,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_utils",
-      "community": 0,
+      "community": 8,
       "norm_label": "utils.ts"
     },
     {
@@ -2564,6 +3254,16 @@
       "norm_label": "graphify"
     },
     {
+      "label": "Comunica\u00e7\u00e3o de limites",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "agents_comunica\u00e7\u00e3o_de_limites",
+      "community": 13,
+      "norm_label": "comunicacao de limites"
+    },
+    {
       "label": "README.md",
       "file_type": "document",
       "source_file": "README.md",
@@ -2774,6 +3474,116 @@
       "norm_label": "instructions"
     },
     {
+      "label": "area-paga.md",
+      "file_type": "document",
+      "source_file": "docs/area-paga.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_area_paga",
+      "community": 18,
+      "norm_label": "area-paga.md"
+    },
+    {
+      "label": "\u00c1rea paga",
+      "file_type": "document",
+      "source_file": "docs/area-paga.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_area_paga_\u00e1rea_paga",
+      "community": 18,
+      "norm_label": "area paga"
+    },
+    {
+      "label": "Camadas",
+      "file_type": "document",
+      "source_file": "docs/area-paga.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "docs_area_paga_camadas",
+      "community": 18,
+      "norm_label": "camadas"
+    },
+    {
+      "label": "Regra de implementa\u00e7\u00e3o",
+      "file_type": "document",
+      "source_file": "docs/area-paga.md",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "docs_area_paga_regra_de_implementa\u00e7\u00e3o",
+      "community": 18,
+      "norm_label": "regra de implementacao"
+    },
+    {
+      "label": "Consum\u00edveis",
+      "file_type": "document",
+      "source_file": "docs/area-paga.md",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "docs_area_paga_consum\u00edveis",
+      "community": 18,
+      "norm_label": "consumiveis"
+    },
+    {
+      "label": "Hist\u00f3rico",
+      "file_type": "document",
+      "source_file": "docs/area-paga.md",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "docs_area_paga_hist\u00f3rico",
+      "community": 18,
+      "norm_label": "historico"
+    },
+    {
+      "label": "limites-acoes.md",
+      "file_type": "document",
+      "source_file": "docs/limites-acoes.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_limites_acoes",
+      "community": 19,
+      "norm_label": "limites-acoes.md"
+    },
+    {
+      "label": "Limites de a\u00e7\u00f5es e consum\u00edveis",
+      "file_type": "document",
+      "source_file": "docs/limites-acoes.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_limites_acoes_limites_de_a\u00e7\u00f5es_e_consum\u00edveis",
+      "community": 19,
+      "norm_label": "limites de acoes e consumiveis"
+    },
+    {
+      "label": "A\u00e7\u00f5es por plano",
+      "file_type": "document",
+      "source_file": "docs/limites-acoes.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "docs_limites_acoes_a\u00e7\u00f5es_por_plano",
+      "community": 19,
+      "norm_label": "acoes por plano"
+    },
+    {
+      "label": "Consum\u00edveis personalizados",
+      "file_type": "document",
+      "source_file": "docs/limites-acoes.md",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "docs_limites_acoes_consum\u00edveis_personalizados",
+      "community": 19,
+      "norm_label": "consumiveis personalizados"
+    },
+    {
+      "label": "Hist\u00f3rico",
+      "file_type": "document",
+      "source_file": "docs/limites-acoes.md",
+      "source_location": "L39",
+      "_origin": "ast",
+      "id": "docs_limites_acoes_hist\u00f3rico",
+      "community": 19,
+      "norm_label": "historico"
+    },
+    {
       "label": "sistema-de-medidas.md",
       "file_type": "document",
       "source_file": "docs/sistema-de-medidas.md",
@@ -2837,7 +3647,7 @@
       "label": "M\u00e9dio pr\u00f3xima",
       "file_type": "document",
       "source_file": "roadmap.md",
-      "source_location": "L17",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "roadmap_m\u00e9dio_pr\u00f3xima",
       "community": 11,
@@ -2847,7 +3657,7 @@
       "label": "Sem prazo",
       "file_type": "document",
       "source_file": "roadmap.md",
-      "source_location": "L28",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "roadmap_sem_prazo",
       "community": 11,
@@ -2857,7 +3667,7 @@
       "label": "J\u00e1 implementado",
       "file_type": "document",
       "source_file": "roadmap.md",
-      "source_location": "L33",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "roadmap_j\u00e1_implementado",
       "community": 11,
@@ -3093,11 +3903,11 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/layout.tsx",
-      "source_location": "L6",
+      "source_location": "L9",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "app_layout",
-      "target": "app_layout_geistsans"
+      "target": "app_layout_manropesans"
     },
     {
       "relation": "contains",
@@ -3128,6 +3938,28 @@
       "confidence_score": 1.0,
       "source": "app_layout",
       "target": "app_layout_viewport"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/layout.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_layout",
+      "target": "components_billing_access_provider"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/layout.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_layout",
+      "target": "components_billing_access_provider_billingaccessprovider"
     },
     {
       "relation": "imports_from",
@@ -3405,6 +4237,330 @@
       "confidence_score": 1.0,
       "source": "components_aliases",
       "target": "components_aliases_utils"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_mock_selector",
+      "target": "components_billing_access_mock_selector_accessmodes"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_mock_selector",
+      "target": "components_billing_access_mock_selector_billingaccessmockselector"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_mock_selector",
+      "target": "components_billing_access_provider"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_mock_selector",
+      "target": "components_billing_access_provider_usebillingaccess"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_mock_selector",
+      "target": "lib_billing_access"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_mock_selector",
+      "target": "lib_billing_access_billingaccessmode"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_mock_selector",
+      "target": "ui_button"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_mock_selector",
+      "target": "ui_button_button"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_mock_selector",
+      "target": "ui_dropdown_menu"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_mock_selector",
+      "target": "ui_dropdown_menu_dropdownmenu"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_mock_selector",
+      "target": "ui_dropdown_menu_dropdownmenucontent"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_mock_selector",
+      "target": "ui_dropdown_menu_dropdownmenulabel"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_mock_selector",
+      "target": "ui_dropdown_menu_dropdownmenuradiogroup"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_mock_selector",
+      "target": "ui_dropdown_menu_dropdownmenuradioitem"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_mock_selector",
+      "target": "ui_dropdown_menu_dropdownmenutrigger"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/site-chrome.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_site_chrome",
+      "target": "components_billing_access_mock_selector"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/billing-access-mock-selector.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "components_billing_access_mock_selector_billingaccessmockselector",
+      "target": "components_billing_access_provider_usebillingaccess"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/site-chrome.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_site_chrome",
+      "target": "components_billing_access_mock_selector_billingaccessmockselector"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-provider.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_provider",
+      "target": "components_billing_access_provider_billingaccesscontext"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-provider.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_provider",
+      "target": "components_billing_access_provider_billingaccesscontextvalue"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-provider.tsx",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_provider",
+      "target": "components_billing_access_provider_billingaccessprovider"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-provider.tsx",
+      "source_location": "L68",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_provider",
+      "target": "components_billing_access_provider_usebillingaccess"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-provider.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_provider",
+      "target": "lib_billing_access"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-provider.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_provider",
+      "target": "lib_billing_access_billingaccessmode"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-provider.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_provider",
+      "target": "lib_billing_access_canaccesspaidfeature"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-provider.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_provider",
+      "target": "lib_billing_access_isbillingaccessmode"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/billing-access-provider.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_billing_access_provider",
+      "target": "lib_billing_access_paidfeature"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "components_billing_access_provider"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "components_billing_access_provider_usebillingaccess"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L158",
+      "weight": 1.0,
+      "source": "components_pace_calculator_pacecalculator",
+      "target": "components_billing_access_provider_usebillingaccess"
     },
     {
       "relation": "contains",
@@ -3728,9 +4884,9 @@
       "source_file": "components/calculators/distance-by-pace-time-calculator.tsx",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "calculators_distance_by_pace_time_calculator",
-      "target": "lib_units_formatdisplaypace",
-      "confidence_score": 1.0
+      "target": "lib_units_formatdisplaypace"
     },
     {
       "relation": "imports",
@@ -3739,9 +4895,9 @@
       "source_file": "components/calculators/distance-by-pace-time-calculator.tsx",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "calculators_distance_by_pace_time_calculator",
-      "target": "lib_units_formatdisplayspeed",
-      "confidence_score": 1.0
+      "target": "lib_units_formatdisplayspeed"
     },
     {
       "relation": "imports",
@@ -4013,9 +5169,9 @@
       "source_file": "components/calculators/pace-by-distance-time-calculator.tsx",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "calculators_pace_by_distance_time_calculator",
-      "target": "calculators_pace_by_distance_time_calculator_formatdisplaydistanceinput",
-      "confidence_score": 1.0
+      "target": "calculators_pace_by_distance_time_calculator_formatdisplaydistanceinput"
     },
     {
       "relation": "contains",
@@ -4240,9 +5396,9 @@
       "source_file": "components/calculators/pace-by-distance-time-calculator.tsx",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "calculators_pace_by_distance_time_calculator",
-      "target": "lib_units_formatdisplaypace",
-      "confidence_score": 1.0
+      "target": "lib_units_formatdisplaypace"
     },
     {
       "relation": "imports",
@@ -4251,9 +5407,9 @@
       "source_file": "components/calculators/pace-by-distance-time-calculator.tsx",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "calculators_pace_by_distance_time_calculator",
-      "target": "lib_units_formatdisplayspeed",
-      "confidence_score": 1.0
+      "target": "lib_units_formatdisplayspeed"
     },
     {
       "relation": "imports",
@@ -4262,9 +5418,9 @@
       "source_file": "components/calculators/pace-by-distance-time-calculator.tsx",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "calculators_pace_by_distance_time_calculator",
-      "target": "lib_units_fromdisplaydistance",
-      "confidence_score": 1.0
+      "target": "lib_units_fromdisplaydistance"
     },
     {
       "relation": "imports",
@@ -4405,9 +5561,9 @@
       "source_file": "components/calculators/pace-by-distance-time-calculator.tsx",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "calculators_pace_by_distance_time_calculator_formatdisplaydistanceinput",
-      "target": "lib_units_formatdisplaynumber",
-      "confidence_score": 1.0
+      "target": "lib_units_formatdisplaynumber"
     },
     {
       "relation": "calls",
@@ -4416,9 +5572,9 @@
       "source_file": "components/calculators/pace-by-distance-time-calculator.tsx",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "calculators_pace_by_distance_time_calculator_formatdisplaydistanceinput",
-      "target": "lib_units_todisplaydistance",
-      "confidence_score": 1.0
+      "target": "lib_units_todisplaydistance"
     },
     {
       "relation": "calls",
@@ -4427,9 +5583,9 @@
       "source_file": "components/calculators/pace-by-distance-time-calculator.tsx",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "calculators_pace_by_distance_time_calculator_formatpresetdistanceinput",
-      "target": "calculators_pace_by_distance_time_calculator_formatdisplaydistanceinput",
-      "confidence_score": 1.0
+      "target": "calculators_pace_by_distance_time_calculator_formatdisplaydistanceinput"
     },
     {
       "relation": "calls",
@@ -4624,9 +5780,9 @@
       "source_file": "components/calculators/time-by-distance-pace-calculator.tsx",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "calculators_time_by_distance_pace_calculator",
-      "target": "calculators_time_by_distance_pace_calculator_formatdisplaydistanceinput",
-      "confidence_score": 1.0
+      "target": "calculators_time_by_distance_pace_calculator_formatdisplaydistanceinput"
     },
     {
       "relation": "contains",
@@ -4851,9 +6007,9 @@
       "source_file": "components/calculators/time-by-distance-pace-calculator.tsx",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "calculators_time_by_distance_pace_calculator",
-      "target": "lib_units_formatdisplaypace",
-      "confidence_score": 1.0
+      "target": "lib_units_formatdisplaypace"
     },
     {
       "relation": "imports",
@@ -4862,9 +6018,9 @@
       "source_file": "components/calculators/time-by-distance-pace-calculator.tsx",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "calculators_time_by_distance_pace_calculator",
-      "target": "lib_units_formatdisplayspeed",
-      "confidence_score": 1.0
+      "target": "lib_units_formatdisplayspeed"
     },
     {
       "relation": "imports",
@@ -4873,9 +6029,9 @@
       "source_file": "components/calculators/time-by-distance-pace-calculator.tsx",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "calculators_time_by_distance_pace_calculator",
-      "target": "lib_units_fromdisplaydistance",
-      "confidence_score": 1.0
+      "target": "lib_units_fromdisplaydistance"
     },
     {
       "relation": "imports",
@@ -5049,9 +6205,9 @@
       "source_file": "components/calculators/time-by-distance-pace-calculator.tsx",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "calculators_time_by_distance_pace_calculator_formatdisplaydistanceinput",
-      "target": "lib_units_formatdisplaynumber",
-      "confidence_score": 1.0
+      "target": "lib_units_formatdisplaynumber"
     },
     {
       "relation": "calls",
@@ -5060,9 +6216,9 @@
       "source_file": "components/calculators/time-by-distance-pace-calculator.tsx",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "calculators_time_by_distance_pace_calculator_formatdisplaydistanceinput",
-      "target": "lib_units_todisplaydistance",
-      "confidence_score": 1.0
+      "target": "lib_units_todisplaydistance"
     },
     {
       "relation": "calls",
@@ -5071,9 +6227,9 @@
       "source_file": "components/calculators/time-by-distance-pace-calculator.tsx",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "calculators_time_by_distance_pace_calculator_formatpresetdistanceinput",
-      "target": "calculators_time_by_distance_pace_calculator_formatdisplaydistanceinput",
-      "confidence_score": 1.0
+      "target": "calculators_time_by_distance_pace_calculator_formatdisplaydistanceinput"
     },
     {
       "relation": "calls",
@@ -5263,90 +6419,1702 @@
       "target": "lib_units_todisplayspeed"
     },
     {
-      "relation": "contains",
+      "relation": "imports_from",
+      "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L787",
+      "source_location": "L7",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "components_pace_calculator",
-      "target": "components_pace_calculator_consumablemanager"
+      "target": "pace_calculator_parts_consumable_manager"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_consumable_manager",
+      "target": "components_unit_system_provider"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_consumable_manager",
+      "target": "components_unit_system_provider_useunitsystem"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_consumable_manager",
+      "target": "lib_action_limits"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_consumable_manager",
+      "target": "lib_action_limits_canaddcustomconsumable"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_consumable_manager",
+      "target": "lib_pace"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_consumable_manager",
+      "target": "lib_pace_consumable"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_consumable_manager",
+      "target": "lib_utils"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_consumable_manager",
+      "target": "lib_utils_cn"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_consumable_manager",
+      "target": "pace_calculator_parts_consumable_manager_consumablemanager"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_consumable_manager",
+      "target": "pace_calculator_parts_utils"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_consumable_manager",
+      "target": "pace_calculator_parts_utils_consumablesummaryforunit"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_consumable_manager",
+      "target": "ui_button"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_consumable_manager",
+      "target": "ui_button_button"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_consumable_manager",
+      "target": "ui_input"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_consumable_manager",
+      "target": "ui_input_input"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_consumable_manager",
+      "target": "ui_label"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_consumable_manager",
+      "target": "ui_label_label"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L141",
+      "source_location": "L7",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "components_pace_calculator",
-      "target": "components_pace_calculator_consumablesummaryforunit"
+      "target": "pace_calculator_parts_consumable_manager_consumablemanager"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_consumable_manager_consumablemanager",
+      "target": "components_unit_system_provider_useunitsystem"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/consumable-manager.tsx",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_consumable_manager_consumablemanager",
+      "target": "lib_action_limits_canaddcustomconsumable"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "lib_utils"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "lib_utils_cn"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "pace_calculator_parts_lap_options_menu_lapoptionsmenu"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "pace_calculator_parts_utils"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "pace_calculator_parts_utils_parsepositiveinteger"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "ui_button"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "ui_button_button"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "ui_button_buttonvariants"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "ui_dropdown_menu"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "ui_dropdown_menu_dropdownmenu"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "ui_dropdown_menu_dropdownmenucontent"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "ui_dropdown_menu_dropdownmenugroup"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "ui_dropdown_menu_dropdownmenuitem"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "ui_dropdown_menu_dropdownmenulabel"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "ui_dropdown_menu_dropdownmenutrigger"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "ui_input"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "ui_input_input"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "ui_label"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu",
+      "target": "ui_label_label"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "pace_calculator_parts_lap_options_menu"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu_lapoptionsmenu",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu_lapoptionsmenu",
+      "target": "pace_calculator_parts_utils_parsepositiveinteger"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/lap-options-menu.tsx",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_lap_options_menu_lapoptionsmenu",
+      "target": "ui_button_buttonvariants"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "pace_calculator_parts_lap_options_menu_lapoptionsmenu"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L883",
+      "source_location": "L8",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "components_pace_calculator",
-      "target": "components_pace_calculator_lapoptionsmenu"
+      "target": "pace_calculator_parts_lap_row"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "components_unit_system_provider"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "components_unit_system_provider_useunitsystem"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "lib_pace"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "lib_pace_consumable"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "lib_pace_formattime"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "lib_pace_lap"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "lib_units"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "lib_units_formatdisplaydistance"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "lib_units_paceunitlabel"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "lib_units_todisplaypace"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "lib_utils"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "lib_utils_cn"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L669",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L39",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "components_pace_calculator",
-      "target": "components_pace_calculator_laprow"
+      "source": "pace_calculator_parts_lap_row",
+      "target": "pace_calculator_parts_lap_row_laprow"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "pace_calculator_parts_lap_row_suppressedrow"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "pace_calculator_parts_utils"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "pace_calculator_parts_utils_consumablesummaryforunit"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "ui_badge"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "ui_badge_badge"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "ui_button"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "ui_button_button"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "ui_button_buttonvariants"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "ui_dropdown_menu"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "ui_dropdown_menu_dropdownmenu"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "ui_dropdown_menu_dropdownmenucontent"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "ui_dropdown_menu_dropdownmenugroup"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "ui_dropdown_menu_dropdownmenuitem"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "ui_dropdown_menu_dropdownmenulabel"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "ui_dropdown_menu_dropdownmenutrigger"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "ui_input"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_lap_row",
+      "target": "ui_input_input"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L90",
+      "source_location": "L8",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "components_pace_calculator",
-      "target": "components_pace_calculator_newconsumableid"
+      "target": "pace_calculator_parts_lap_row_suppressedrow"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "pace_calculator_parts_lap_row_laprow"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L74",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_lap_row_laprow",
+      "target": "components_unit_system_provider_useunitsystem"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_lap_row_laprow",
+      "target": "lib_pace_formattime"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L95",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_lap_row_laprow",
+      "target": "lib_units_formatdisplaydistance"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L99",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_lap_row_laprow",
+      "target": "lib_units_paceunitlabel"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L99",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_lap_row_laprow",
+      "target": "lib_units_todisplaypace"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L154",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_lap_row_laprow",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/lap-row.tsx",
+      "source_location": "L155",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_lap_row_laprow",
+      "target": "ui_button_buttonvariants"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "pace_calculator_parts_nutrition_summary"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/nutrition-summary.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_nutrition_summary",
+      "target": "components_unit_system_provider"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/nutrition-summary.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_nutrition_summary",
+      "target": "components_unit_system_provider_useunitsystem"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/nutrition-summary.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_nutrition_summary",
+      "target": "lib_pace"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/nutrition-summary.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_nutrition_summary",
+      "target": "lib_pace_perhour"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/nutrition-summary.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_nutrition_summary",
+      "target": "lib_units"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/nutrition-summary.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_nutrition_summary",
+      "target": "lib_units_formatdisplaymass"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/nutrition-summary.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_nutrition_summary",
+      "target": "pace_calculator_parts_nutrition_summary_nutritionsummary"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/nutrition-summary.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_nutrition_summary",
+      "target": "ui_card"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/nutrition-summary.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_nutrition_summary",
+      "target": "ui_card_card"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "pace_calculator_parts_nutrition_summary_nutritionsummary"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/nutrition-summary.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_nutrition_summary_nutritionsummary",
+      "target": "components_unit_system_provider_useunitsystem"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/nutrition-summary.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_nutrition_summary_nutritionsummary",
+      "target": "lib_pace_perhour"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/nutrition-summary.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_nutrition_summary_nutritionsummary",
+      "target": "lib_units_formatdisplaymass"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "pace_calculator_parts_stat_card"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/stat-card.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_stat_card",
+      "target": "pace_calculator_parts_stat_card_statcard"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/stat-card.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_stat_card",
+      "target": "ui_card"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/stat-card.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_stat_card",
+      "target": "ui_card_card"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "pace_calculator_parts_stat_card_statcard"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "pace_calculator_parts_upgrade_dialog"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/upgrade-dialog.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_upgrade_dialog",
+      "target": "pace_calculator_parts_upgrade_dialog_upgradedialog"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/upgrade-dialog.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_upgrade_dialog",
+      "target": "ui_button"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/upgrade-dialog.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_upgrade_dialog",
+      "target": "ui_button_button"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/upgrade-dialog.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_upgrade_dialog",
+      "target": "ui_dialog"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/upgrade-dialog.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_upgrade_dialog",
+      "target": "ui_dialog_dialog"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/upgrade-dialog.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_upgrade_dialog",
+      "target": "ui_dialog_dialogcontent"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/upgrade-dialog.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_upgrade_dialog",
+      "target": "ui_dialog_dialogdescription"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/upgrade-dialog.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_upgrade_dialog",
+      "target": "ui_dialog_dialogfooter"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/upgrade-dialog.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_upgrade_dialog",
+      "target": "ui_dialog_dialogheader"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/upgrade-dialog.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_upgrade_dialog",
+      "target": "ui_dialog_dialogtitle"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "pace_calculator_parts_upgrade_dialog_upgradedialog"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "pace_calculator_parts_utils"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "lib_pace"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "lib_pace_consumable"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "lib_pace_parsetime"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "lib_pace_strategy"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "lib_units"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "lib_units_formatdisplaymass"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "lib_units_fromdisplaypace"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "lib_units_unitsystem"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L86",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "pace_calculator_parts_utils_consumablesummaryforunit"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L75",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "pace_calculator_parts_utils_newconsumableid"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L42",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "pace_calculator_parts_utils_normalizestrategy"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "pace_calculator_parts_utils_normalizetargetmode"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L80",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "pace_calculator_parts_utils_parsepositiveinteger"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L65",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "pace_calculator_parts_utils_preset"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L67",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "pace_calculator_parts_utils_presets"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L48",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "pace_calculator_parts_utils_resolvetargetseconds"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "pace_calculator_parts_utils_strategies"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pace_calculator_parts_utils",
+      "target": "pace_calculator_parts_utils_targetmode"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "pace_calculator_parts_utils_strategies"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "pace_calculator_parts_utils_targetmode"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "pace_calculator_parts_utils_normalizetargetmode"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L84",
+      "weight": 1.0,
+      "source": "components_pace_calculator_pacecalculator",
+      "target": "pace_calculator_parts_utils_normalizetargetmode"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "pace_calculator_parts_utils_normalizestrategy"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
       "source_file": "components/pace-calculator.tsx",
       "source_location": "L85",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_pace_calculator",
-      "target": "components_pace_calculator_normalizestrategy"
+      "source": "components_pace_calculator_pacecalculator",
+      "target": "pace_calculator_parts_utils_normalizestrategy"
     },
     {
-      "relation": "contains",
+      "relation": "imports",
+      "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L81",
+      "source_location": "L12",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "components_pace_calculator",
-      "target": "components_pace_calculator_normalizetargetmode"
+      "target": "pace_calculator_parts_utils_resolvetargetseconds"
     },
     {
-      "relation": "contains",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L113",
+      "weight": 1.0,
+      "source": "components_pace_calculator_pacecalculator",
+      "target": "pace_calculator_parts_utils_resolvetargetseconds"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_utils_resolvetargetseconds",
+      "target": "lib_pace_parsetime"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_utils_resolvetargetseconds",
+      "target": "lib_units_fromdisplaypace"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L925",
+      "source_location": "L12",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "components_pace_calculator",
-      "target": "components_pace_calculator_nutritionsummary"
+      "target": "pace_calculator_parts_utils_preset"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "pace_calculator_parts_utils_presets"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "pace_calculator_parts_utils_newconsumableid"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator-parts/utils.ts",
+      "source_location": "L92",
+      "weight": 1.0,
+      "source": "pace_calculator_parts_utils_consumablesummaryforunit",
+      "target": "lib_units_formatdisplaymass"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L95",
+      "source_location": "L104",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "components_pace_calculator_arehistorysnapshotsequal"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L121",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "components_pace_calculator_arepacequeryvaluesequal"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L100",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "components_pace_calculator_clonehistoryvalue"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L212",
+      "weight": 1.0,
+      "source": "components_pace_calculator",
+      "target": "components_pace_calculator_defaultselectedconsumableids",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L147",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "components_pace_calculator_ispacehistorysnapshot"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L137",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "components_pace_calculator_ispacequeryvalues"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L133",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "components_pace_calculator_isrecord"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L157",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "components_pace_calculator",
@@ -5356,81 +8124,61 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L105",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_pace_calculator",
-      "target": "components_pace_calculator_parsepositiveinteger"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L80",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_pace_calculator",
-      "target": "components_pace_calculator_preset"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pace-calculator.tsx",
       "source_location": "L82",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "components_pace_calculator",
-      "target": "components_pace_calculator_presets"
+      "target": "components_pace_calculator_pacehistorysnapshot"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L65",
+      "source_location": "L95",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "components_pace_calculator",
-      "target": "components_pace_calculator_resolvetargetseconds"
+      "target": "components_pace_calculator_pacehistorystate"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L630",
+      "source_location": "L75",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "components_pace_calculator",
-      "target": "components_pace_calculator_statcard"
+      "target": "components_pace_calculator_pacequeryvalues"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L44",
+      "source_location": "L165",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "components_pace_calculator",
-      "target": "components_pace_calculator_strategies"
+      "target": "components_pace_calculator_parsestoredpacehistory"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L657",
+      "source_location": "L218",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "components_pace_calculator",
-      "target": "components_pace_calculator_suppressedrow"
+      "target": "components_pace_calculator_parsestoredselectedconsumables",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L62",
+      "source_location": "L102",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "components_pace_calculator",
-      "target": "components_pace_calculator_targetmode"
+      "target": "components_pace_calculator_storedpacehistory"
     },
     {
       "relation": "imports_from",
@@ -5481,6 +8229,105 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "lib_action_limits"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "lib_action_limits_canaddcustomconsumable"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "lib_action_limits_canaddplanaction"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "lib_action_limits_countactionswithinlaps"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L44",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "lib_action_limits_limitfreeredohistory"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L44",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "lib_action_limits_limitfreeundohistory"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "lib_action_limits_maxactionsforlapcount"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "lib_billing_access"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "lib_billing_access_canaddlapaction"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
       "source_location": "L5",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -5497,6 +8344,17 @@
       "confidence_score": 1.0,
       "source": "components_pace_calculator",
       "target": "lib_pace_applylapedit"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L53",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "lib_pace_builddistances"
     },
     {
       "relation": "imports",
@@ -5552,6 +8410,17 @@
       "confidence_score": 1.0,
       "source": "components_pace_calculator",
       "target": "lib_pace_default_consumables"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L53",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "lib_pace_derivefinalpacefrominitialpace"
     },
     {
       "relation": "imports",
@@ -5844,6 +8713,83 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "ui_dialog"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "ui_dialog_dialog"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "ui_dialog_dialogcontent"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "ui_dialog_dialogdescription"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "ui_dialog_dialogfooter"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "ui_dialog_dialogheader"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pace_calculator",
+      "target": "ui_dialog_dialogtitle"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pace-calculator.tsx",
       "source_location": "L35",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -6064,165 +9010,55 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L142",
+      "source_location": "L149",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "components_pace_calculator_pacecalculator",
-      "target": "components_pace_calculator_normalizetargetmode"
+      "source": "components_pace_calculator_ispacehistorysnapshot",
+      "target": "components_pace_calculator_isrecord"
     },
     {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L143",
+      "source_location": "L139",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "components_pace_calculator_pacecalculator",
-      "target": "components_pace_calculator_normalizestrategy"
+      "source": "components_pace_calculator_ispacequeryvalues",
+      "target": "components_pace_calculator_isrecord"
     },
     {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L121",
+      "source_location": "L170",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "components_pace_calculator_pacecalculator",
-      "target": "components_pace_calculator_resolvetargetseconds"
+      "source": "components_pace_calculator_parsestoredpacehistory",
+      "target": "components_pace_calculator_isrecord"
     },
     {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L72",
+      "source_location": "L150",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "components_pace_calculator_resolvetargetseconds",
-      "target": "lib_pace_parsetime"
+      "source": "components_pace_calculator_ispacehistorysnapshot",
+      "target": "components_pace_calculator_ispacequeryvalues"
     },
     {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L113",
+      "source_location": "L171",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "components_pace_calculator_resolvetargetseconds",
-      "target": "lib_units_fromdisplaypace"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L898",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_pace_calculator_lapoptionsmenu",
-      "target": "components_pace_calculator_parsepositiveinteger"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L143",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_pace_calculator_consumablesummaryforunit",
-      "target": "lib_units_formatdisplaymass"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L151",
-      "weight": 1.0,
-      "source": "components_pace_calculator_pacecalculator",
-      "target": "components_unit_system_provider_useunitsystem"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L134",
-      "weight": 1.0,
-      "source": "components_pace_calculator_pacecalculator",
-      "target": "hooks_use_query_string_state_usequerystringstate"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L521",
-      "weight": 1.0,
-      "source": "components_pace_calculator_pacecalculator",
-      "target": "lib_pace_formatpace"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L403",
-      "weight": 1.0,
-      "source": "components_pace_calculator_pacecalculator",
-      "target": "lib_pace_formattime"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L132",
-      "weight": 1.0,
-      "source": "components_pace_calculator_pacecalculator",
-      "target": "lib_pace_parsetime"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L476",
-      "weight": 1.0,
-      "source": "components_pace_calculator_pacecalculator",
-      "target": "lib_units_distanceunitlabel"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L207",
-      "weight": 1.0,
-      "source": "components_pace_calculator_pacecalculator",
-      "target": "lib_units_fromdisplaypace"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L530",
-      "weight": 1.0,
-      "source": "components_pace_calculator_pacecalculator",
-      "target": "lib_units_paceunitlabel"
+      "source": "components_pace_calculator_parsestoredpacehistory",
+      "target": "components_pace_calculator_ispacehistorysnapshot"
     },
     {
       "relation": "calls",
@@ -6233,39 +9069,6 @@
       "source_location": "L159",
       "weight": 1.0,
       "source": "components_pace_calculator_pacecalculator",
-      "target": "lib_units_parsedisplaydistance"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L662",
-      "weight": 1.0,
-      "source": "components_pace_calculator_pacecalculator",
-      "target": "lib_units_todisplaypace"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L356",
-      "weight": 1.0,
-      "source": "components_pace_calculator_pacecalculator",
-      "target": "lib_utils_cn"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L863",
-      "weight": 1.0,
-      "source": "components_pace_calculator_laprow",
       "target": "components_unit_system_provider_useunitsystem"
     },
     {
@@ -6274,10 +9077,10 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L709",
+      "source_location": "L160",
       "weight": 1.0,
-      "source": "components_pace_calculator_laprow",
-      "target": "lib_pace_formatpace"
+      "source": "components_pace_calculator_pacecalculator",
+      "target": "hooks_use_query_string_state_usequerystringstate"
     },
     {
       "relation": "calls",
@@ -6285,9 +9088,42 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L690",
+      "source_location": "L235",
       "weight": 1.0,
-      "source": "components_pace_calculator_laprow",
+      "source": "components_pace_calculator_pacecalculator",
+      "target": "lib_action_limits_countactionswithinlaps"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L234",
+      "weight": 1.0,
+      "source": "components_pace_calculator_pacecalculator",
+      "target": "lib_action_limits_maxactionsforlapcount"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L365",
+      "weight": 1.0,
+      "source": "components_pace_calculator_pacecalculator",
+      "target": "lib_pace_derivefinalpacefrominitialpace"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L587",
+      "weight": 1.0,
+      "source": "components_pace_calculator_pacecalculator",
       "target": "lib_pace_formattime"
     },
     {
@@ -6296,10 +9132,10 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L882",
+      "source_location": "L213",
       "weight": 1.0,
-      "source": "components_pace_calculator_laprow",
-      "target": "lib_units_formatdisplaydistance"
+      "source": "components_pace_calculator_pacecalculator",
+      "target": "lib_pace_parsetime"
     },
     {
       "relation": "calls",
@@ -6307,9 +9143,31 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L886",
+      "source_location": "L520",
       "weight": 1.0,
-      "source": "components_pace_calculator_laprow",
+      "source": "components_pace_calculator_pacecalculator",
+      "target": "lib_units_distanceunitlabel"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L217",
+      "weight": 1.0,
+      "source": "components_pace_calculator_pacecalculator",
+      "target": "lib_units_fromdisplaypace"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L576",
+      "weight": 1.0,
+      "source": "components_pace_calculator_pacecalculator",
       "target": "lib_units_paceunitlabel"
     },
     {
@@ -6318,9 +9176,20 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L886",
+      "source_location": "L167",
       "weight": 1.0,
-      "source": "components_pace_calculator_laprow",
+      "source": "components_pace_calculator_pacecalculator",
+      "target": "lib_units_parsedisplaydistance"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pace-calculator.tsx",
+      "source_location": "L706",
+      "weight": 1.0,
+      "source": "components_pace_calculator_pacecalculator",
       "target": "lib_units_todisplaypace"
     },
     {
@@ -6329,87 +9198,10 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/pace-calculator.tsx",
-      "source_location": "L753",
+      "source_location": "L538",
       "weight": 1.0,
-      "source": "components_pace_calculator_laprow",
+      "source": "components_pace_calculator_pacecalculator",
       "target": "lib_utils_cn"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L754",
-      "weight": 1.0,
-      "source": "components_pace_calculator_laprow",
-      "target": "ui_button_buttonvariants"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L908",
-      "weight": 1.0,
-      "source": "components_pace_calculator_lapoptionsmenu",
-      "target": "lib_utils_cn"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L909",
-      "weight": 1.0,
-      "source": "components_pace_calculator_lapoptionsmenu",
-      "target": "ui_button_buttonvariants"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L1117",
-      "weight": 1.0,
-      "source": "components_pace_calculator_consumablemanager",
-      "target": "components_unit_system_provider_useunitsystem"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L1245",
-      "weight": 1.0,
-      "source": "components_pace_calculator_nutritionsummary",
-      "target": "components_unit_system_provider_useunitsystem"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L939",
-      "weight": 1.0,
-      "source": "components_pace_calculator_nutritionsummary",
-      "target": "lib_pace_perhour"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pace-calculator.tsx",
-      "source_location": "L1250",
-      "weight": 1.0,
-      "source": "components_pace_calculator_nutritionsummary",
-      "target": "lib_units_formatdisplaymass"
     },
     {
       "relation": "contains",
@@ -7017,6 +9809,194 @@
       "source_location": "L86",
       "weight": 1.0,
       "source": "ui_card_cardfooter",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "ui_dialog",
+      "target": "lib_utils"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "ui_dialog",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "ui_dialog",
+      "target": "ui_dialog_dialog"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "ui_dialog",
+      "target": "ui_dialog_dialogclose"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "ui_dialog",
+      "target": "ui_dialog_dialogcontent"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L107",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "ui_dialog",
+      "target": "ui_dialog_dialogdescription"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L87",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "ui_dialog",
+      "target": "ui_dialog_dialogfooter"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L77",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "ui_dialog",
+      "target": "ui_dialog_dialogheader"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "ui_dialog",
+      "target": "ui_dialog_dialogoverlay"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "ui_dialog",
+      "target": "ui_dialog_dialogportal"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L97",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "ui_dialog",
+      "target": "ui_dialog_dialogtitle"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "ui_dialog",
+      "target": "ui_dialog_dialogtrigger"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "ui_dialog_dialogoverlay",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "ui_dialog_dialogcontent",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "ui_dialog_dialogheader",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L91",
+      "weight": 1.0,
+      "source": "ui_dialog_dialogfooter",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "ui_dialog_dialogtitle",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L114",
+      "weight": 1.0,
+      "source": "ui_dialog_dialogdescription",
       "target": "lib_utils_cn"
     },
     {
@@ -7919,6 +10899,439 @@
       "target": "hooks_use_query_string_state_usequerystringstate"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits_test",
+      "target": "lib_action_limits"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits_test",
+      "target": "lib_action_limits_canaddcustomconsumable"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits_test",
+      "target": "lib_action_limits_canaddplanaction"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits_test",
+      "target": "lib_action_limits_countactionswithinlaps"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits_test",
+      "target": "lib_action_limits_countcustomconsumables"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits_test",
+      "target": "lib_action_limits_limitfreeredohistory"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits_test",
+      "target": "lib_action_limits_limitfreeundohistory"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits_test",
+      "target": "lib_action_limits_maxactionsforlapcount"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits",
+      "target": "lib_action_limits_canaddcustomconsumable"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits",
+      "target": "lib_action_limits_canaddplanaction"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits",
+      "target": "lib_action_limits_consumableidentifier"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits",
+      "target": "lib_action_limits_countactionswithinlaps"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits",
+      "target": "lib_action_limits_countcustomconsumables"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits",
+      "target": "lib_action_limits_iscustomconsumable"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits",
+      "target": "lib_action_limits_lapactions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L48",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits",
+      "target": "lib_action_limits_limitfreeredohistory"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L44",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits",
+      "target": "lib_action_limits_limitfreeundohistory"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits",
+      "target": "lib_action_limits_maxactionsforlapcount"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L23",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits_canaddplanaction",
+      "target": "lib_action_limits_maxactionsforlapcount"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L23",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits_canaddplanaction",
+      "target": "lib_action_limits_countactionswithinlaps"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/action-limits.ts",
+      "source_location": "L39",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_action_limits_canaddcustomconsumable",
+      "target": "lib_action_limits_countcustomconsumables"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/billing-access.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_billing_access_test",
+      "target": "lib_billing_access"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/billing-access.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_billing_access_test",
+      "target": "lib_billing_access_canaccesspaidfeature"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/billing-access.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_billing_access_test",
+      "target": "lib_billing_access_canaddlapaction"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/billing-access.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_billing_access_test",
+      "target": "lib_billing_access_isbillingaccessmode"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/billing-access.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_billing_access",
+      "target": "lib_billing_access_billingaccessmode"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/billing-access.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_billing_access",
+      "target": "lib_billing_access_canaccesspaidfeature"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/billing-access.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_billing_access",
+      "target": "lib_billing_access_canaddlapaction"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/billing-access.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_billing_access",
+      "target": "lib_billing_access_isbillingaccessmode"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/billing-access.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_billing_access",
+      "target": "lib_billing_access_paidfeature"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/billing-access.ts",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_billing_access_canaddlapaction",
+      "target": "lib_billing_access_canaccesspaidfeature"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/consumiveis.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_consumiveis",
+      "target": "lib_consumiveis_consumiveispormarca"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/consumiveis.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "lib_consumiveis",
+      "target": "lib_consumiveis_consumivelcatalogitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pace.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "lib_pace",
+      "target": "lib_consumiveis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pace.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "lib_pace",
+      "target": "lib_consumiveis_consumiveispormarca",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pace.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_pace_test",
+      "target": "lib_pace"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pace.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_pace_test",
+      "target": "lib_pace_builddistances"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pace.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_pace_test",
+      "target": "lib_pace_buildlaps"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pace.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "lib_pace_test",
+      "target": "lib_pace_default_consumables",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pace.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_pace_test",
+      "target": "lib_pace_derivefinalpacefrominitialpace"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pace.test.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_pace_test",
+      "target": "lib_pace_test_totaltime"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/pace.ts",
@@ -7927,6 +11340,16 @@
       "confidence_score": 1.0,
       "source": "lib_pace",
       "target": "lib_pace_applylapedit"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pace.ts",
+      "source_location": "L306",
+      "weight": 1.0,
+      "source": "lib_pace",
+      "target": "lib_pace_branded_consumables",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -7957,6 +11380,16 @@
       "confidence_score": 1.0,
       "source": "lib_pace",
       "target": "lib_pace_buildlaps"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pace.ts",
+      "source_location": "L145",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_pace",
+      "target": "lib_pace_buildlapsfrominitialpace"
     },
     {
       "relation": "contains",
@@ -8032,6 +11465,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/pace.ts",
+      "source_location": "L119",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_pace",
+      "target": "lib_pace_derivefinalpacefrominitialpace"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pace.ts",
       "source_location": "L40",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -8067,6 +11510,16 @@
       "confidence_score": 1.0,
       "source": "lib_pace",
       "target": "lib_pace_formattime"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pace.ts",
+      "source_location": "L267",
+      "weight": 1.0,
+      "source": "lib_pace",
+      "target": "lib_pace_generic_consumables",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -8122,6 +11575,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/pace.ts",
+      "source_location": "L258",
+      "weight": 1.0,
+      "source": "lib_pace",
+      "target": "lib_pace_slugify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pace.ts",
       "source_location": "L51",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -8135,9 +11598,9 @@
       "source_file": "lib/units.test.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units_test",
-      "target": "lib_pace",
-      "confidence_score": 1.0
+      "target": "lib_pace"
     },
     {
       "relation": "calls",
@@ -8157,9 +11620,9 @@
       "source_file": "lib/units.test.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units_test",
-      "target": "lib_pace_pacetospeed",
-      "confidence_score": 1.0
+      "target": "lib_pace_pacetospeed"
     },
     {
       "relation": "calls",
@@ -8171,6 +11634,28 @@
       "confidence_score": 1.0,
       "source": "lib_pace_buildlaps",
       "target": "lib_pace_builddistances"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pace.ts",
+      "source_location": "L151",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_pace_buildlapsfrominitialpace",
+      "target": "lib_pace_derivefinalpacefrominitialpace"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pace.ts",
+      "source_location": "L188",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_pace_buildlaps",
+      "target": "lib_pace_buildlapsfrominitialpace"
     },
     {
       "relation": "calls",
@@ -8190,9 +11675,9 @@
       "source_file": "lib/units.test.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units_test",
-      "target": "lib_units",
-      "confidence_score": 1.0
+      "target": "lib_units"
     },
     {
       "relation": "imports",
@@ -8201,9 +11686,9 @@
       "source_file": "lib/units.test.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units_test",
-      "target": "lib_units_formatdisplaydistance",
-      "confidence_score": 1.0
+      "target": "lib_units_formatdisplaydistance"
     },
     {
       "relation": "imports",
@@ -8212,9 +11697,9 @@
       "source_file": "lib/units.test.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units_test",
-      "target": "lib_units_formatdisplaymass",
-      "confidence_score": 1.0
+      "target": "lib_units_formatdisplaymass"
     },
     {
       "relation": "imports",
@@ -8223,9 +11708,9 @@
       "source_file": "lib/units.test.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units_test",
-      "target": "lib_units_formatdisplaypace",
-      "confidence_score": 1.0
+      "target": "lib_units_formatdisplaypace"
     },
     {
       "relation": "imports",
@@ -8234,9 +11719,9 @@
       "source_file": "lib/units.test.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units_test",
-      "target": "lib_units_formatdisplayspeed",
-      "confidence_score": 1.0
+      "target": "lib_units_formatdisplayspeed"
     },
     {
       "relation": "imports",
@@ -8245,9 +11730,9 @@
       "source_file": "lib/units.test.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units_test",
-      "target": "lib_units_fromdisplaypace",
-      "confidence_score": 1.0
+      "target": "lib_units_fromdisplaypace"
     },
     {
       "relation": "imports",
@@ -8256,9 +11741,9 @@
       "source_file": "lib/units.test.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units_test",
-      "target": "lib_units_parsedisplaydistance",
-      "confidence_score": 1.0
+      "target": "lib_units_parsedisplaydistance"
     },
     {
       "relation": "imports",
@@ -8267,9 +11752,9 @@
       "source_file": "lib/units.test.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units_test",
-      "target": "lib_units_todisplaydistance",
-      "confidence_score": 1.0
+      "target": "lib_units_todisplaydistance"
     },
     {
       "relation": "imports",
@@ -8278,9 +11763,9 @@
       "source_file": "lib/units.test.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units_test",
-      "target": "lib_units_todisplaypace",
-      "confidence_score": 1.0
+      "target": "lib_units_todisplaypace"
     },
     {
       "relation": "contains",
@@ -8328,9 +11813,9 @@
       "source_file": "lib/units.ts",
       "source_location": "L92",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units",
-      "target": "lib_units_formatdisplaypace",
-      "confidence_score": 1.0
+      "target": "lib_units_formatdisplaypace"
     },
     {
       "relation": "contains",
@@ -8338,9 +11823,9 @@
       "source_file": "lib/units.ts",
       "source_location": "L98",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units",
-      "target": "lib_units_formatdisplayspeed",
-      "confidence_score": 1.0
+      "target": "lib_units_formatdisplayspeed"
     },
     {
       "relation": "contains",
@@ -8348,9 +11833,9 @@
       "source_file": "lib/units.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units",
-      "target": "lib_units_formatunittime",
-      "confidence_score": 1.0
+      "target": "lib_units_formatunittime"
     },
     {
       "relation": "contains",
@@ -8479,9 +11964,9 @@
       "source_file": "lib/units.ts",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units_formatdisplaypace",
-      "target": "lib_units_formatunittime",
-      "confidence_score": 1.0
+      "target": "lib_units_formatunittime"
     },
     {
       "relation": "calls",
@@ -8501,9 +11986,9 @@
       "source_file": "lib/units.ts",
       "source_location": "L103",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units_formatdisplayspeed",
-      "target": "lib_units_speedunitlabel",
-      "confidence_score": 1.0
+      "target": "lib_units_speedunitlabel"
     },
     {
       "relation": "calls",
@@ -8512,9 +11997,9 @@
       "source_file": "lib/units.ts",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units_formatdisplaypace",
-      "target": "lib_units_paceunitlabel",
-      "confidence_score": 1.0
+      "target": "lib_units_paceunitlabel"
     },
     {
       "relation": "calls",
@@ -8545,9 +12030,9 @@
       "source_file": "lib/units.ts",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units_formatdisplaypace",
-      "target": "lib_units_todisplaypace",
-      "confidence_score": 1.0
+      "target": "lib_units_todisplaypace"
     },
     {
       "relation": "calls",
@@ -8556,9 +12041,9 @@
       "source_file": "lib/units.ts",
       "source_location": "L100",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units_formatdisplayspeed",
-      "target": "lib_units_todisplayspeed",
-      "confidence_score": 1.0
+      "target": "lib_units_todisplayspeed"
     },
     {
       "relation": "calls",
@@ -8611,9 +12096,9 @@
       "source_file": "lib/units.ts",
       "source_location": "L100",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_units_formatdisplayspeed",
-      "target": "lib_units_formatdisplaynumber",
-      "confidence_score": 1.0
+      "target": "lib_units_formatdisplaynumber"
     },
     {
       "relation": "contains",
@@ -8751,9 +12236,9 @@
       "source_file": "package.json",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_scripts",
-      "target": "package_scripts_test",
-      "confidence_score": 1.0
+      "target": "package_scripts_test"
     },
     {
       "relation": "contains",
@@ -9001,9 +12486,9 @@
       "source_file": "tsconfig.json",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_allowimportingtsextensions",
-      "confidence_score": 1.0
+      "target": "tsconfig_compileroptions_allowimportingtsextensions"
     },
     {
       "relation": "contains",
@@ -9219,6 +12704,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents",
+      "target": "agents_comunica\u00e7\u00e3o_de_limites"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "AGENTS.md",
       "source_location": "L1",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -9418,6 +12913,96 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "docs/area-paga.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_area_paga",
+      "target": "docs_area_paga_\u00e1rea_paga"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/area-paga.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_area_paga_\u00e1rea_paga",
+      "target": "docs_area_paga_camadas"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/area-paga.md",
+      "source_location": "L26",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_area_paga_\u00e1rea_paga",
+      "target": "docs_area_paga_consum\u00edveis"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/area-paga.md",
+      "source_location": "L34",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_area_paga_\u00e1rea_paga",
+      "target": "docs_area_paga_hist\u00f3rico"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/area-paga.md",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_area_paga_\u00e1rea_paga",
+      "target": "docs_area_paga_regra_de_implementa\u00e7\u00e3o"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/limites-acoes.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_limites_acoes",
+      "target": "docs_limites_acoes_limites_de_a\u00e7\u00f5es_e_consum\u00edveis"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/limites-acoes.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_limites_acoes_limites_de_a\u00e7\u00f5es_e_consum\u00edveis",
+      "target": "docs_limites_acoes_a\u00e7\u00f5es_por_plano"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/limites-acoes.md",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_limites_acoes_limites_de_a\u00e7\u00f5es_e_consum\u00edveis",
+      "target": "docs_limites_acoes_consum\u00edveis_personalizados"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/limites-acoes.md",
+      "source_location": "L37",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_limites_acoes_limites_de_a\u00e7\u00f5es_e_consum\u00edveis",
+      "target": "docs_limites_acoes_hist\u00f3rico"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "docs/sistema-de-medidas.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -9487,5 +13072,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "4ab554129dda91a1874620a83013eee6e37ba792"
+  "built_at_commit": "d6ec759d0b7f31abeb73dd29a00d5279b36c18f4"
 }

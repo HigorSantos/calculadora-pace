@@ -1,12 +1,12 @@
 {
   "app/layout.tsx": {
-    "mtime": 1782514742.6543083,
-    "ast_hash": "3366c6568298fda13963cc5b3142219d",
+    "mtime": 1782560216.7048411,
+    "ast_hash": "90e1967f5def7a707c5255b8ffac7c8d",
     "semantic_hash": ""
   },
   "app/page.tsx": {
-    "mtime": 1782515104.9815168,
-    "ast_hash": "e9c62ca1e068610aa98709e516475c5b",
+    "mtime": 1782518768.0759268,
+    "ast_hash": "7850cc215fc1ba62d8281f06614e9201",
     "semantic_hash": ""
   },
   "components.json": {
@@ -15,8 +15,8 @@
     "semantic_hash": ""
   },
   "components/pace-calculator.tsx": {
-    "mtime": 1782515104.9826293,
-    "ast_hash": "1756014c8776109030ce4dd1d61f6685",
+    "mtime": 1782602143.4009378,
+    "ast_hash": "55e0981bc067f2dfc4cd5a075ebae08a",
     "semantic_hash": ""
   },
   "components/ui/badge.tsx": {
@@ -25,8 +25,8 @@
     "semantic_hash": ""
   },
   "components/ui/button.tsx": {
-    "mtime": 1782387969.1261241,
-    "ast_hash": "63cfaae37f8d5e0fa4451635ccc521b4",
+    "mtime": 1782557451.559176,
+    "ast_hash": "ffc9da3a53b6869ffab97d232cc8ebf8",
     "semantic_hash": ""
   },
   "components/ui/card.tsx": {
@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "lib/pace.ts": {
-    "mtime": 1782498488.0009136,
-    "ast_hash": "7511f9378ca1bd306ed1634d5f964107",
+    "mtime": 1782602069.2518046,
+    "ast_hash": "b8b5ee7d8c6ac6ab9fa034ba3b8aa654",
     "semantic_hash": ""
   },
   "lib/utils.ts": {
@@ -80,7 +80,7 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1782515856.7159011,
+    "mtime": 1782517655.5907812,
     "ast_hash": "525eed4c52e39e022437c783425c3349",
     "semantic_hash": ""
   },
@@ -90,7 +90,7 @@
     "semantic_hash": ""
   },
   "tsconfig.json": {
-    "mtime": 1782516192.6859133,
+    "mtime": 1782517655.5959506,
     "ast_hash": "09ecf07aea3bd8d517eaeec8f00c9124",
     "semantic_hash": ""
   },
@@ -100,18 +100,18 @@
     "semantic_hash": ""
   },
   ".codex/hooks.json": {
-    "mtime": 1782422123.3093936,
+    "mtime": 1782517655.4664655,
     "ast_hash": "934d653c79cda5f1af56fdeae5e62bd1",
     "semantic_hash": ""
   },
   "components/site-chrome.tsx": {
-    "mtime": 1782514754.0890186,
-    "ast_hash": "1ffcf6b2b7957dc707325ffd02c1fbb1",
+    "mtime": 1782585192.0706673,
+    "ast_hash": "cd44c38ec2fc43541e079191810464a2",
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1782496229.1769443,
-    "ast_hash": "62c05a2bf20bf036a0b2633478663e64",
+    "mtime": 1782525024.8829644,
+    "ast_hash": "3a7b33e61ed7a12b8f2fd195395ac7a3",
     "semantic_hash": ""
   },
   "SKILL.md": {
@@ -120,12 +120,12 @@
     "semantic_hash": ""
   },
   "roadmap.md": {
-    "mtime": 1782496229.2209442,
-    "ast_hash": "57043a43d3d7ea549a4e892423d8592c",
+    "mtime": 1782597247.2313828,
+    "ast_hash": "155fce6577ec902ec3fe99eeee879bac",
     "semantic_hash": ""
   },
   "app/calculadoras/tempo-por-distancia-e-pace/page.tsx": {
-    "mtime": 1782515104.9820545,
+    "mtime": 1782517655.4919505,
     "ast_hash": "a6b4998bd78bb0e40dbde45b38625acd",
     "semantic_hash": ""
   },
@@ -135,7 +135,7 @@
     "semantic_hash": ""
   },
   "components/calculators/time-by-distance-pace-calculator.tsx": {
-    "mtime": 1782515819.675527,
+    "mtime": 1782517655.509644,
     "ast_hash": "89fc436bd81a098801b915221962128f",
     "semantic_hash": ""
   },
@@ -145,8 +145,8 @@
     "semantic_hash": ""
   },
   "components/theme-selector.tsx": {
-    "mtime": 1782496229.2009442,
-    "ast_hash": "ac9b6f6448c656bdf0c5fc7febc140e6",
+    "mtime": 1782594514.0927007,
+    "ast_hash": "a228bcdf31caa52a12d4dde347de40fe",
     "semantic_hash": ""
   },
   "components/calculators/calculator-result-card.tsx": {
@@ -155,22 +155,22 @@
     "semantic_hash": ""
   },
   "app/calculadoras/pace-por-distancia-e-tempo/page.tsx": {
-    "mtime": 1782515104.9819229,
+    "mtime": 1782517655.48371,
     "ast_hash": "2cc9f360e7b207fe21b8f3015034ef1f",
     "semantic_hash": ""
   },
   "components/calculators/pace-by-distance-time-calculator.tsx": {
-    "mtime": 1782515819.6775515,
+    "mtime": 1782517655.5028267,
     "ast_hash": "416dea3507f12f01432a91b7c09dd6c5",
     "semantic_hash": ""
   },
   "app/calculadoras/distancia-por-pace-e-tempo/page.tsx": {
-    "mtime": 1782515104.9817457,
+    "mtime": 1782517655.4831865,
     "ast_hash": "7eccb882f13b78604878c51ccef981d1",
     "semantic_hash": ""
   },
   "components/calculators/distance-by-pace-time-calculator.tsx": {
-    "mtime": 1782515819.678546,
+    "mtime": 1782517655.5012953,
     "ast_hash": "73688720bb44ac701e539a38d08cc793",
     "semantic_hash": ""
   },
@@ -180,43 +180,138 @@
     "semantic_hash": ""
   },
   "hooks/use-query-string-state.ts": {
-    "mtime": 1782499966.4806147,
+    "mtime": 1782517655.5719507,
     "ast_hash": "0a3ffecda2a6e2233176a683b3949aa1",
     "semantic_hash": ""
   },
   ".codex/skills/parametros-config/SKILL.md": {
-    "mtime": 1782498640.4924755,
+    "mtime": 1782517655.4719505,
     "ast_hash": "f97ca1e7c476e16c447ccaa8cfddf000",
     "semantic_hash": ""
   },
   ".codex/skills/parametros-config/agents/openai.yaml": {
-    "mtime": 1782498615.5541773,
+    "mtime": 1782517655.4799507,
     "ast_hash": "dd8145aa667ebaa4be0613b86dc223ff",
     "semantic_hash": ""
   },
   "components/unit-system-provider.tsx": {
-    "mtime": 1782514703.2319987,
+    "mtime": 1782517655.5191212,
     "ast_hash": "11c52dc059da5f3df857415aa2a82fc8",
     "semantic_hash": ""
   },
   "components/unit-system-selector.tsx": {
-    "mtime": 1782514720.4668994,
+    "mtime": 1782517655.5199606,
     "ast_hash": "d9b193254d7f0d0fc4d5552dff6e946a",
     "semantic_hash": ""
   },
   "lib/units.ts": {
-    "mtime": 1782516192.675499,
+    "mtime": 1782517655.582158,
     "ast_hash": "3b1a50017b5123a10545b558e29646ac",
     "semantic_hash": ""
   },
   "docs/sistema-de-medidas.md": {
-    "mtime": 1782516207.9691827,
+    "mtime": 1782517655.520428,
     "ast_hash": "bb5a6d692da910091a7b78f3b1dcc151",
     "semantic_hash": ""
   },
   "lib/units.test.ts": {
-    "mtime": 1782516192.6760352,
-    "ast_hash": "8b5b8356bca3366a2dcb3df309577494",
+    "mtime": 1782558852.541488,
+    "ast_hash": "58af15efdf8c0b3be815a4f8897ce907",
+    "semantic_hash": ""
+  },
+  "components/billing-access-mock-selector.tsx": {
+    "mtime": 1782518280.6599474,
+    "ast_hash": "492c2de64d7fd43b865af25abc59dbe4",
+    "semantic_hash": ""
+  },
+  "components/billing-access-provider.tsx": {
+    "mtime": 1782595479.785697,
+    "ast_hash": "a20b923948c09de56e00e14d80f5bd76",
+    "semantic_hash": ""
+  },
+  "lib/billing-access.test.ts": {
+    "mtime": 1782594778.7351236,
+    "ast_hash": "58f643e6eb3b8a8a58dd6629ff211b50",
+    "semantic_hash": ""
+  },
+  "lib/billing-access.ts": {
+    "mtime": 1782594778.7348754,
+    "ast_hash": "35d60cffc5255183079c318a9a01d00c",
+    "semantic_hash": ""
+  },
+  "docs/area-paga.md": {
+    "mtime": 1782595479.7862382,
+    "ast_hash": "3adfeed60027b6115f605e8568f66d69",
+    "semantic_hash": ""
+  },
+  "lib/action-limits.test.ts": {
+    "mtime": 1782597443.8569236,
+    "ast_hash": "188fb877e67ea028ea072ef50b98915e",
+    "semantic_hash": ""
+  },
+  "lib/action-limits.ts": {
+    "mtime": 1782597443.8567145,
+    "ast_hash": "e9aef58eaf06625942c07b727f292504",
+    "semantic_hash": ""
+  },
+  "docs/limites-acoes.md": {
+    "mtime": 1782597443.8583336,
+    "ast_hash": "886e88fe4f8f83ac954c7ca4b6bb10ae",
+    "semantic_hash": ""
+  },
+  "components/ui/dialog.tsx": {
+    "mtime": 1782556875.43681,
+    "ast_hash": "ef3b76d3fc3d13301bc325499b02efb5",
+    "semantic_hash": ""
+  },
+  "components/pace-calculator-parts/consumable-manager.tsx": {
+    "mtime": 1782601868.0624049,
+    "ast_hash": "4f47a289aee4347a8fdbf5ca0f9d7e66",
+    "semantic_hash": ""
+  },
+  "components/pace-calculator-parts/lap-options-menu.tsx": {
+    "mtime": 1782558359.1592414,
+    "ast_hash": "833b666123539a36a8994304f44b3fbb",
+    "semantic_hash": ""
+  },
+  "components/pace-calculator-parts/lap-row.tsx": {
+    "mtime": 1782601801.9947956,
+    "ast_hash": "4e3ce47990fa7b009044b30461e0fec2",
+    "semantic_hash": ""
+  },
+  "components/pace-calculator-parts/nutrition-summary.tsx": {
+    "mtime": 1782558471.3054538,
+    "ast_hash": "0a84f637fd994a62058bd46de847d2ff",
+    "semantic_hash": ""
+  },
+  "components/pace-calculator-parts/stat-card.tsx": {
+    "mtime": 1782558359.1591406,
+    "ast_hash": "9b7191f290b0b1f9d793913d76903d44",
+    "semantic_hash": ""
+  },
+  "components/pace-calculator-parts/upgrade-dialog.tsx": {
+    "mtime": 1782558359.1592107,
+    "ast_hash": "c332aecb38c6f494962f3a5754cb9b6b",
+    "semantic_hash": ""
+  },
+  "components/pace-calculator-parts/utils.ts": {
+    "mtime": 1782558359.1590908,
+    "ast_hash": "e3c895f031b15f0a3fb6c9a5e2690425",
+    "semantic_hash": ""
+  },
+  "lib/consumiveis.ts": {
+    "mtime": 1782601667.3805683,
+    "ast_hash": "ab881165d25a2cf4af678ee744b61d2e",
+    "semantic_hash": ""
+  },
+  "app/icon.png": {
+    "mtime": 1782595386.2910116,
+    "ast_hash": "3bf274238aed555a9f9d6f5368e47f22",
+    "semantic_hash": ""
+  },
+  "lib/pace.test.ts": {
+    "mtime": 1782602008.6263876,
+    "ast_hash": "6a50954011f4abeab9fc3fafacfa0ee8",
     "semantic_hash": ""
   }
 }

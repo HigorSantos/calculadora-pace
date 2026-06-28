@@ -1,3 +1,5 @@
+import {consumiveisPorMarca} from "./consumiveis.ts";
+
 export type Lap = {
 	/** distância do trecho em km (geralmente 1, menos no último parcial) */
 	distance: number;
@@ -116,15 +118,82 @@ export const DEFAULT_SPREAD = 0.08;
  * O gradiente é aplicado de forma linear pela posição do trecho e depois
  * normalizado para que a soma dos tempos seja exatamente o tempo alvo.
  */
+export function deriveFinalPaceFromInitialPace(
+	distances: number[],
+	targetSeconds: number,
+	initialPaceSecondsPerKm: number,
+): number | null {
+	if (distances.length < 2) return null;
+	if (targetSeconds <= 0 || initialPaceSecondsPerKm <= 0) return null;
+
+	const lastIndex = distances.length - 1;
+	const weights = distances.reduce(
+		(acc, distance, index) => {
+			const progress = index / lastIndex;
+			return {
+				start: acc.start + distance * (1 - progress),
+				end: acc.end + distance * progress,
+			};
+		},
+		{start: 0, end: 0},
+	);
+	if (weights.end <= 0) return null;
+
+	const finalPace =
+		(targetSeconds - initialPaceSecondsPerKm * weights.start) / weights.end;
+	return finalPace > 0 ? finalPace : null;
+}
+
+function buildLapsFromInitialPace(
+	distances: number[],
+	targetSeconds: number,
+	strategy: Strategy,
+	initialPaceSecondsPerKm: number,
+): Lap[] {
+	const finalPace = deriveFinalPaceFromInitialPace(
+		distances,
+		targetSeconds,
+		initialPaceSecondsPerKm,
+	);
+	if (finalPace == null) return [];
+	if (strategy === "negative" && finalPace >= initialPaceSecondsPerKm) return [];
+	if (strategy === "positive" && finalPace <= initialPaceSecondsPerKm) return [];
+
+	const lastIndex = distances.length - 1;
+	return distances.map((distance, index) => {
+		const progress = index / lastIndex;
+		const pace =
+			initialPaceSecondsPerKm + (finalPace - initialPaceSecondsPerKm) * progress;
+		return {
+			distance,
+			time: Math.round(distance * pace),
+		};
+	});
+}
+
 export function buildLaps(
 	distanceKm: number,
 	targetSeconds: number,
 	strategy: Strategy = "constant",
 	spread: number = DEFAULT_SPREAD,
+	initialPaceSecondsPerKm?: number | null,
 ): Lap[] {
 	const distances = buildDistances(distanceKm);
 	const total = distances.reduce((a, b) => a + b, 0);
 	if (total === 0) return [];
+
+	if (
+		strategy !== "constant" &&
+		initialPaceSecondsPerKm != null &&
+		initialPaceSecondsPerKm > 0
+	) {
+		return buildLapsFromInitialPace(
+			distances,
+			targetSeconds,
+			strategy,
+			initialPaceSecondsPerKm,
+		);
+	}
 
 	// Tempo "bruto" de cada trecho com o fator de pace da estratégia.
 	let covered = 0;
@@ -170,65 +239,89 @@ export function buildEqualLaps(
 export type Consumable = {
 	id: string;
 	name: string;
+	brand: string;
 	/** carboidrato em gramas */
 	carbs: number;
 	/** sódio em miligramas */
 	sodium: number;
 	/** cafeína em miligramas */
 	caffeine: number;
+	/** taurina em miligramas */
+	taurina_mg?: number;
+	/** nitrato em miligramas */
+	nitrato_mg?: number;
+	/** tamanho do sachê em gramas */
+	tamanho_sache_g?: number;
 	paid?: boolean;
 };
 
-/** Ações padrão disponíveis para adicionar aos trechos. */
-export const DEFAULT_CONSUMABLES: Consumable[] = [
+function slugify(value: string) {
+	return value
+		.normalize("NFD")
+		.replace(/[\u0300-\u036f]/g, "")
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/^-+|-+$/g, "");
+}
+
+const GENERIC_CONSUMABLES: Consumable[] = [
 	{
-		id: "gel-carbo-20",
+		id: "genericos-gel-carbo-20g",
 		name: "Gel carbo 20g",
+		brand: "Genéricos",
 		carbs: 20,
 		sodium: 0,
 		caffeine: 0,
 		paid: false,
 	},
 	{
-		id: "gel-carbo-30",
+		id: "genericos-gel-carbo-30g",
 		name: "Gel carbo 30g",
+		brand: "Genéricos",
 		carbs: 30,
 		sodium: 0,
 		caffeine: 0,
 		paid: false,
 	},
 	{
-		id: "gel-carbo-40",
+		id: "genericos-gel-carbo-40g",
 		name: "Gel carbo 40g",
+		brand: "Genéricos",
 		carbs: 40,
 		sodium: 0,
 		caffeine: 0,
 		paid: false,
 	},
 	{
-		paid: true,
-		id: "gel-carbo-30-sodio-200",
-		name: "Gel carbo 30g + sódio 200mg",
-		carbs: 30,
-		sodium: 200,
-		caffeine: 0,
-	},
-	{
-		paid: true,
-		id: "gel-carbo-30-cafeina-150-sodio-300",
-		name: "Gel carbo 30g + cafeína 150mg + sódio 300mg",
-		carbs: 30,
-		sodium: 300,
-		caffeine: 150,
-	},
-	{
-		paid: true,
-		id: "capsula-sal-300",
+		id: "genericos-capsula-sal-300mg",
 		name: "Cápsula de sal 300mg",
+		brand: "Genéricos",
 		carbs: 0,
 		sodium: 300,
 		caffeine: 0,
+		paid: true,
 	},
+];
+
+const BRANDED_CONSUMABLES: Consumable[] = consumiveisPorMarca.flatMap(brand =>
+	brand.produtos.map(product => ({
+		id: `${slugify(brand.marca)}-${slugify(product.nome)}`,
+		name: product.nome,
+		brand: brand.marca,
+		carbs: product.carboidratos_g,
+		sodium: product.sodio_mg,
+		caffeine: product.cafeina_mg ?? 0,
+		taurina_mg: product.taurina_mg ?? undefined,
+		nitrato_mg: product.nitrato_mg ?? undefined,
+		tamanho_sache_g: product.tamanho_sache_g,
+		paid: false,
+	})),
+);
+
+/** Ações padrão disponíveis para adicionar aos trechos. */
+export const DEFAULT_CONSUMABLES: Consumable[] = [
+	...GENERIC_CONSUMABLES,
+	...BRANDED_CONSUMABLES,
 ];
 
 /** Monta um resumo curto dos elementos de um consumível (ex.: "30g carbo · 200mg sódio"). */
