@@ -1,16 +1,10 @@
 import Link from "next/link";
-import {
-	Activity,
-	Dumbbell,
-	Gauge,
-	Route,
-	SportShoeIcon,
-	Timer,
-} from "lucide-react";
+import {Activity, Gauge, Route, SportShoeIcon, Timer} from "lucide-react";
+import {AuthMenuAction} from "@/components/auth-menu-action";
 import {BillingAccessMockSelector} from "@/components/billing-access-mock-selector";
+import {MobileHeaderMenu} from "@/components/mobile-header-menu";
 import {ThemeSelector} from "@/components/theme-selector";
 import {UnitSystemSelector} from "@/components/unit-system-selector";
-import {Separator} from "@base-ui/react";
 
 const tools = [
 	{
@@ -19,6 +13,7 @@ const tools = [
 		href: "/#estrategia-corrida",
 		status: null,
 		icon: Timer,
+		iconName: "timer",
 		destaque: true,
 	},
 	{
@@ -27,6 +22,7 @@ const tools = [
 		href: "/calculadoras/tempo-por-distancia-e-pace",
 		status: null,
 		icon: Activity,
+		iconName: "activity",
 		destaque: false,
 	},
 	{
@@ -35,6 +31,7 @@ const tools = [
 		href: "/calculadoras/pace-por-distancia-e-tempo",
 		status: null,
 		icon: Gauge,
+		iconName: "gauge",
 		destaque: false,
 	},
 	{
@@ -43,6 +40,7 @@ const tools = [
 		href: "/calculadoras/distancia-por-pace-e-tempo",
 		status: null,
 		icon: Route,
+		iconName: "route",
 		destaque: false,
 	},
 ];
@@ -54,12 +52,13 @@ function BrandMark() {
 			className='group flex min-w-0 items-center gap-3'
 			aria-label='Arsenal do Corredor'
 		>
-			<span className='flex flex-col upp gap-0 min-w-0 text-2xl text-center'>
-				<span className='text-black font-light text-xl dark:text-white text-left'>
+			<span className='flex flex-col upp gap-0 min-w-0 text-xl sm:text-2xl text-center'>
+				<span className='text-black font-light text-lg sm:text-xl dark:text-white text-left'>
 					Arsenal do
 				</span>
-				<span className='text-primary font-bold -mt-2'>
-					Corredor <SportShoeIcon className='inline transform -scale-x-100' />
+				<span className='text-primary font-bold -mt-2 whitespace-nowrap'>
+					Corredor{" "}
+					<SportShoeIcon className='inline size-5 -mt-1.5 sm:size-6 transform -scale-x-100' />
 				</span>
 			</span>
 		</Link>
@@ -67,36 +66,56 @@ function BrandMark() {
 }
 
 export function SiteHeader() {
+	const primaryTool = tools.find(tool => tool.destaque) ?? tools[0];
+	const secondaryTools = tools.filter(tool => tool !== primaryTool);
+	const mobileTools = secondaryTools.map(({label, href, iconName}) => ({
+		label,
+		href,
+		iconName,
+	}));
+
 	return (
 		<header className=' top-0 z-40 border-b border-border/80 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/80'>
-			<div className='mx-auto flex min-h-16 w-full max-w-6xl flex-col gap-3 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:py-0'>
+			<div className='mx-auto flex min-h-16 w-full max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:py-0'>
 				<BrandMark />
 
-				<div className='flex flex-col gap-3 lg:flex-row lg:items-center'>
+				<div className='flex items-center gap-2 lg:gap-3'>
 					<nav
 						aria-label='Ferramentas'
-						className='flex flex-wrap items-center gap-1 text-sm font-medium'
+						className='flex items-center gap-1 text-sm font-medium'
 					>
-						{tools.map(tool => (
+						<Link
+							href={primaryTool.href}
+							className='inline-flex h-8 items-center gap-1.5 rounded-lg px-2.5 text-muted-foreground transition-colors hover:bg-muted'
+							title={primaryTool.label}
+						>
+							<primaryTool.icon className='size-4 text-primary' />
+							<span className='inline whitespace-nowrap'>
+								{primaryTool.label}
+							</span>
+						</Link>
+						{secondaryTools.map(tool => (
 							<Link
 								key={tool.label}
 								href={tool.href}
-								className='inline-flex h-8 items-center gap-1.5 rounded-lg px-2.5 text-muted-foreground transition-colors hover:bg-muted'
+								className='hidden h-8 items-center gap-1.5 rounded-lg px-2.5 text-muted-foreground transition-colors hover:bg-muted lg:inline-flex'
 								title={tool.label}
 							>
-								<tool.icon
-									className={`size-4 ${tool.destaque ? "text-primary" : ""}`}
-								/>
+								<tool.icon className='size-4' />
 								{tool.shortLabel ? tool.shortLabel : tool.label}
 							</Link>
 						))}
 					</nav>
 
-					<div className='flex items-center gap-2'>
-						{/* <BillingAccessMockSelector /> */}
+					<div className='hidden items-center gap-2 lg:flex'>
+						{process.env.NODE_ENV === "development" && (
+							<BillingAccessMockSelector />
+						)}
 						<ThemeSelector />
 						<UnitSystemSelector />
+						<AuthMenuAction variant='button' />
 					</div>
+					<MobileHeaderMenu tools={mobileTools} />
 				</div>
 			</div>
 		</header>
@@ -149,6 +168,12 @@ export function SiteFooter() {
 						Construído para corredores que querem trocar improviso por plano,
 						sem transformar a rotina em planilha infinita.
 					</p>
+					<Link
+						href='/politica-de-privacidade'
+						className='mt-3 inline-flex text-sm font-medium text-primary hover:underline'
+					>
+						Política de privacidade
+					</Link>
 				</div>
 			</div>
 			<div className='mx-auto grid w-full max-w-6xl gap-8 px-4 py-8 sm:px-6'>

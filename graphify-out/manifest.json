@@ -1,11 +1,11 @@
 {
   "app/layout.tsx": {
-    "mtime": 1782560216.7048411,
+    "mtime": 1782670649.8991096,
     "ast_hash": "90e1967f5def7a707c5255b8ffac7c8d",
     "semantic_hash": ""
   },
   "app/page.tsx": {
-    "mtime": 1782518768.0759268,
+    "mtime": 1782670649.8997452,
     "ast_hash": "7850cc215fc1ba62d8281f06614e9201",
     "semantic_hash": ""
   },
@@ -15,8 +15,8 @@
     "semantic_hash": ""
   },
   "components/pace-calculator.tsx": {
-    "mtime": 1782602143.4009378,
-    "ast_hash": "55e0981bc067f2dfc4cd5a075ebae08a",
+    "mtime": 1783036295.088918,
+    "ast_hash": "6f65dba4005a33f3064b2a2a6557eeaa",
     "semantic_hash": ""
   },
   "components/ui/badge.tsx": {
@@ -25,8 +25,8 @@
     "semantic_hash": ""
   },
   "components/ui/button.tsx": {
-    "mtime": 1782557451.559176,
-    "ast_hash": "ffc9da3a53b6869ffab97d232cc8ebf8",
+    "mtime": 1782923528.4045343,
+    "ast_hash": "d77700eafe083347a8751c053706cf06",
     "semantic_hash": ""
   },
   "components/ui/card.tsx": {
@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "lib/pace.ts": {
-    "mtime": 1782602069.2518046,
-    "ast_hash": "b8b5ee7d8c6ac6ab9fa034ba3b8aa654",
+    "mtime": 1782923999.041612,
+    "ast_hash": "9f02eba377a91403568aca1806c4b1b4",
     "semantic_hash": ""
   },
   "lib/utils.ts": {
@@ -80,8 +80,8 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1782517655.5907812,
-    "ast_hash": "525eed4c52e39e022437c783425c3349",
+    "mtime": 1782866157.7142305,
+    "ast_hash": "681377c0d978c45655ad49a9fd58f72a",
     "semantic_hash": ""
   },
   "postcss.config.mjs": {
@@ -105,12 +105,12 @@
     "semantic_hash": ""
   },
   "components/site-chrome.tsx": {
-    "mtime": 1782585192.0706673,
-    "ast_hash": "cd44c38ec2fc43541e079191810464a2",
+    "mtime": 1782905925.4316945,
+    "ast_hash": "c87f416ad98a7cb0f7ef5bf302b0cb81",
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1782525024.8829644,
+    "mtime": 1782670649.8975658,
     "ast_hash": "3a7b33e61ed7a12b8f2fd195395ac7a3",
     "semantic_hash": ""
   },
@@ -120,8 +120,8 @@
     "semantic_hash": ""
   },
   "roadmap.md": {
-    "mtime": 1782597247.2313828,
-    "ast_hash": "155fce6577ec902ec3fe99eeee879bac",
+    "mtime": 1782905419.0458057,
+    "ast_hash": "cb70d371a2bfb55e5a20fa264e27f1a9",
     "semantic_hash": ""
   },
   "app/calculadoras/tempo-por-distancia-e-pace/page.tsx": {
@@ -145,8 +145,8 @@
     "semantic_hash": ""
   },
   "components/theme-selector.tsx": {
-    "mtime": 1782594514.0927007,
-    "ast_hash": "a228bcdf31caa52a12d4dde347de40fe",
+    "mtime": 1782670649.9013133,
+    "ast_hash": "fd2f56b4ddf18ad2b6b87ce9e941e275",
     "semantic_hash": ""
   },
   "components/calculators/calculator-result-card.tsx": {
@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "app/sitemap.ts": {
-    "mtime": 1782496229.188944,
-    "ast_hash": "92f8ef7bed480a42058ba92424f89b2b",
+    "mtime": 1782844892.6217237,
+    "ast_hash": "58f0f751e0460cd3a61f6a1e5bd9e66c",
     "semantic_hash": ""
   },
   "hooks/use-query-string-state.ts": {
@@ -215,7 +215,7 @@
     "semantic_hash": ""
   },
   "lib/units.test.ts": {
-    "mtime": 1782558852.541488,
+    "mtime": 1782670649.9094563,
     "ast_hash": "58af15efdf8c0b3be815a4f8897ce907",
     "semantic_hash": ""
   },
@@ -225,33 +225,33 @@
     "semantic_hash": ""
   },
   "components/billing-access-provider.tsx": {
-    "mtime": 1782595479.785697,
-    "ast_hash": "a20b923948c09de56e00e14d80f5bd76",
+    "mtime": 1783037018.4743426,
+    "ast_hash": "38ced117c7d23a77ed2bd4ca5d6974e4",
     "semantic_hash": ""
   },
   "lib/billing-access.test.ts": {
-    "mtime": 1782594778.7351236,
-    "ast_hash": "58f643e6eb3b8a8a58dd6629ff211b50",
+    "mtime": 1783033349.0862706,
+    "ast_hash": "da1bf0061a7909f6871c90b4bffbad67",
     "semantic_hash": ""
   },
   "lib/billing-access.ts": {
-    "mtime": 1782594778.7348754,
-    "ast_hash": "35d60cffc5255183079c318a9a01d00c",
+    "mtime": 1783033349.0857291,
+    "ast_hash": "ee38a99ee6131b48ea6ed6665af75e10",
     "semantic_hash": ""
   },
   "docs/area-paga.md": {
-    "mtime": 1782595479.7862382,
-    "ast_hash": "3adfeed60027b6115f605e8568f66d69",
+    "mtime": 1782905191.96231,
+    "ast_hash": "5e34458027c097339c1d030f55df7100",
     "semantic_hash": ""
   },
   "lib/action-limits.test.ts": {
-    "mtime": 1782597443.8569236,
-    "ast_hash": "188fb877e67ea028ea072ef50b98915e",
+    "mtime": 1783033349.086678,
+    "ast_hash": "0f20454496df73d52b0e14036bf2a05b",
     "semantic_hash": ""
   },
   "lib/action-limits.ts": {
-    "mtime": 1782597443.8567145,
-    "ast_hash": "e9aef58eaf06625942c07b727f292504",
+    "mtime": 1783033332.704193,
+    "ast_hash": "46efbc43ec5c9338a276259aea75d03e",
     "semantic_hash": ""
   },
   "docs/limites-acoes.md": {
@@ -265,8 +265,8 @@
     "semantic_hash": ""
   },
   "components/pace-calculator-parts/consumable-manager.tsx": {
-    "mtime": 1782601868.0624049,
-    "ast_hash": "4f47a289aee4347a8fdbf5ca0f9d7e66",
+    "mtime": 1782603341.6710196,
+    "ast_hash": "9c4a284df791798744d6ef0532eef79e",
     "semantic_hash": ""
   },
   "components/pace-calculator-parts/lap-options-menu.tsx": {
@@ -275,8 +275,8 @@
     "semantic_hash": ""
   },
   "components/pace-calculator-parts/lap-row.tsx": {
-    "mtime": 1782601801.9947956,
-    "ast_hash": "4e3ce47990fa7b009044b30461e0fec2",
+    "mtime": 1782906389.8438385,
+    "ast_hash": "262f8e79c71cbba20513ca598aa514c3",
     "semantic_hash": ""
   },
   "components/pace-calculator-parts/nutrition-summary.tsx": {
@@ -285,13 +285,13 @@
     "semantic_hash": ""
   },
   "components/pace-calculator-parts/stat-card.tsx": {
-    "mtime": 1782558359.1591406,
-    "ast_hash": "9b7191f290b0b1f9d793913d76903d44",
+    "mtime": 1783036438.6412206,
+    "ast_hash": "37cbfb52cb7889de82243e7a9de6933e",
     "semantic_hash": ""
   },
   "components/pace-calculator-parts/upgrade-dialog.tsx": {
-    "mtime": 1782558359.1592107,
-    "ast_hash": "c332aecb38c6f494962f3a5754cb9b6b",
+    "mtime": 1782935870.8307652,
+    "ast_hash": "6aca2d15b403ad1f3d4684086c044d7d",
     "semantic_hash": ""
   },
   "components/pace-calculator-parts/utils.ts": {
@@ -300,8 +300,8 @@
     "semantic_hash": ""
   },
   "lib/consumiveis.ts": {
-    "mtime": 1782601667.3805683,
-    "ast_hash": "ab881165d25a2cf4af678ee744b61d2e",
+    "mtime": 1782603606.267942,
+    "ast_hash": "b701a6b8cfa2ef1489fe5b5f88991772",
     "semantic_hash": ""
   },
   "app/icon.png": {
@@ -310,8 +310,118 @@
     "semantic_hash": ""
   },
   "lib/pace.test.ts": {
-    "mtime": 1782602008.6263876,
-    "ast_hash": "6a50954011f4abeab9fc3fafacfa0ee8",
+    "mtime": 1782924081.3816187,
+    "ast_hash": "3526688f5c971b2b3b45a45ccaad1509",
+    "semantic_hash": ""
+  },
+  "app/api/admin/activate/route.ts": {
+    "mtime": 1783037076.3090994,
+    "ast_hash": "c12a3524e3e4cfc4f2402fead5537b90",
+    "semantic_hash": ""
+  },
+  "app/api/auth/identify/route.ts": {
+    "mtime": 1783037076.3085368,
+    "ast_hash": "3b53d1e7be2877e4399bae33151838ae",
+    "semantic_hash": ""
+  },
+  "app/api/auth/me/route.ts": {
+    "mtime": 1783037076.308134,
+    "ast_hash": "9bcfe01cdae7aa3a2c84af20c6b1ef66",
+    "semantic_hash": ""
+  },
+  "app/api/webhooks/infinite-pay/route.ts": {
+    "mtime": 1783037076.3113666,
+    "ast_hash": "93aa5c2512efa0459d5c5704717e64e0",
+    "semantic_hash": ""
+  },
+  "lib/customer-cookie.ts": {
+    "mtime": 1782844970.0009568,
+    "ast_hash": "ff030b51e67486d1c856a513eaad088b",
+    "semantic_hash": ""
+  },
+  "lib/customer.ts": {
+    "mtime": 1782931444.729322,
+    "ast_hash": "b57686aa86c7f7b3d93ceaa68a82a18a",
+    "semantic_hash": ""
+  },
+  "lib/mongodb.ts": {
+    "mtime": 1782676561.4973953,
+    "ast_hash": "3d109eb3dd6afc388de8a07a1ab15b21",
+    "semantic_hash": ""
+  },
+  "app/api/checkout/infinite-pay/start/route.ts": {
+    "mtime": 1783037076.310132,
+    "ast_hash": "9c81c318b68365bfe5b32c678328236e",
+    "semantic_hash": ""
+  },
+  "app/politica-de-privacidade/page.tsx": {
+    "mtime": 1782845162.1458902,
+    "ast_hash": "4d02ed113b6c872f3d6c2a184ff3d4e1",
+    "semantic_hash": ""
+  },
+  "lib/customer-cookie.test.ts": {
+    "mtime": 1782844970.0026126,
+    "ast_hash": "3cfd4bdedd34dacbb7f6d8812df4b46f",
+    "semantic_hash": ""
+  },
+  "app/api/auth/login/route.ts": {
+    "mtime": 1783037076.3066936,
+    "ast_hash": "414f3a8b696e441b570f940329b1222d",
+    "semantic_hash": ""
+  },
+  "app/auth/callback/route.ts": {
+    "mtime": 1783037076.3068585,
+    "ast_hash": "3b440951398c690d62812f85396422e8",
+    "semantic_hash": ""
+  },
+  "app/registrar/page.tsx": {
+    "mtime": 1783037076.3057187,
+    "ast_hash": "8499be3ba559f7903d109bc7acd9fce8",
+    "semantic_hash": ""
+  },
+  "lib/auth0.ts": {
+    "mtime": 1782905191.960668,
+    "ast_hash": "9946056aa15054bbdb56891c242833cf",
+    "semantic_hash": ""
+  },
+  "public/full.svg": {
+    "mtime": 1782849955.259331,
+    "ast_hash": "dfb8ba4dfa7bdace4a74902d68e1f475",
+    "semantic_hash": ""
+  },
+  "public/mini.png": {
+    "mtime": 1782850005.5108674,
+    "ast_hash": "5266b92e01b600459873e39ee81a2e2e",
+    "semantic_hash": ""
+  },
+  "public/mini.svg": {
+    "mtime": 1782849936.746219,
+    "ast_hash": "0b9d1874024eb0e2584e976998d37813",
+    "semantic_hash": ""
+  },
+  "components/mobile-header-menu.tsx": {
+    "mtime": 1782904364.7371995,
+    "ast_hash": "f01b166a0a3bb4dc71cb9ac9c32b7d82",
+    "semantic_hash": ""
+  },
+  "app/api/auth/logout/route.ts": {
+    "mtime": 1783037076.3088453,
+    "ast_hash": "f981bd5117185e41c9dde4d2ab98be98",
+    "semantic_hash": ""
+  },
+  "components/auth-menu-action.tsx": {
+    "mtime": 1783037088.1234155,
+    "ast_hash": "a4ca64a0b9ed5fc13648b486038e4ce9",
+    "semantic_hash": ""
+  },
+  "components/pace-calculator-parts/lap-division.tsx": {
+    "mtime": 1783035152.305337,
+    "ast_hash": "0c0907df084ce28991fca80b39851a52",
+    "semantic_hash": ""
+  },
+  "lib/payment-auth.ts": {
+    "mtime": 1783036979.7894528,
+    "ast_hash": "d43bf4358f2def8b18d91d987d74bb23",
     "semantic_hash": ""
   }
 }

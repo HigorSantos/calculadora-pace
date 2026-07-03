@@ -1,10 +1,15 @@
 "use client";
 
-import {useEffect, useMemo, useRef, useState} from "react";
+import {Fragment, useEffect, useMemo, useRef, useState} from "react";
 import {Eye, EyeOff, Redo2, RotateCcw, Timer, Undo2} from "lucide-react";
 
 import {useBillingAccess} from "@/components/billing-access-provider";
 import {ConsumableManager} from "@/components/pace-calculator-parts/consumable-manager";
+import {
+	LapBlockHeader,
+	LapDivisionBoundary,
+	type LapBlock,
+} from "@/components/pace-calculator-parts/lap-division";
 import {
 	LapRow,
 	SuppressedRow,
@@ -43,6 +48,7 @@ import {useUnitSystem} from "@/components/unit-system-provider";
 import {useQueryStringState} from "@/hooks/use-query-string-state";
 import {
 	canAddCustomConsumable,
+	canAddFreePlanDivision,
 	canAddPlanAction,
 	countActionsWithinLaps,
 	limitFreeRedoHistory,
@@ -55,9 +61,10 @@ import {
 	buildDistances,
 	buildLaps,
 	computeNutrition,
-	deriveFinalPaceFromInitialPace,
 	DEFAULT_CONSUMABLES,
 	DEFAULT_SPREAD,
+	deriveConstantPaceAfterInitialSegments,
+	deriveFinalPaceFromInitialPace,
 	formatTime,
 	parseTime,
 	type Consumable,
@@ -81,6 +88,13 @@ type PaceQueryValues = {
 	targetType: TargetMode;
 	targetValue: string;
 	strategy: Strategy;
+	initialPace: string;
+	initialPaceSegments: string;
+};
+
+type LapDivisionConfig = {
+	breaks: number[];
+	descriptions: Record<number, string>;
 };
 
 type PaceHistorySnapshot = {
@@ -89,8 +103,9 @@ type PaceHistorySnapshot = {
 	recalc: boolean;
 	spreadPct: number;
 	spreadInput: string;
-	initialPaceInput: string;
+	initialPaceInput?: string;
 	laps: Lap[];
+	lapDivisions?: LapDivisionConfig;
 	showActions: boolean;
 	consumables: Consumable[];
 	selectedConsumableIds: string[];
@@ -131,7 +146,9 @@ function arePaceQueryValuesEqual(
 		left.distance === right.distance &&
 		left.targetType === right.targetType &&
 		left.targetValue === right.targetValue &&
-		left.strategy === right.strategy
+		left.strategy === right.strategy &&
+		left.initialPace === right.initialPace &&
+		left.initialPaceSegments === right.initialPaceSegments
 	);
 }
 
@@ -145,7 +162,11 @@ function isPaceQueryValues(value: unknown): value is PaceQueryValues {
 		typeof value.distance === "string" &&
 		typeof value.targetType === "string" &&
 		typeof value.targetValue === "string" &&
-		typeof value.strategy === "string"
+		typeof value.strategy === "string" &&
+		(value.initialPace === undefined ||
+			typeof value.initialPace === "string") &&
+		(value.initialPaceSegments === undefined ||
+			typeof value.initialPaceSegments === "string")
 	);
 }
 
@@ -162,6 +183,7 @@ function isPaceHistorySnapshot(value: unknown): value is PaceHistorySnapshot {
 		(value.initialPaceInput === undefined ||
 			typeof value.initialPaceInput === "string") &&
 		Array.isArray(value.laps) &&
+		(value.lapDivisions === undefined || isRecord(value.lapDivisions)) &&
 		typeof value.showActions === "boolean" &&
 		Array.isArray(value.consumables) &&
 		(value.selectedConsumableIds === undefined ||
@@ -169,6 +191,117 @@ function isPaceHistorySnapshot(value: unknown): value is PaceHistorySnapshot {
 		isRecord(value.actions) &&
 		typeof value.collapseEmpty === "boolean"
 	);
+}
+
+function restoreConsumablesFromSnapshot(snapshot: PaceHistorySnapshot) {
+	const defaultIds = new Set(
+		DEFAULT_CONSUMABLES.map(consumable => consumable.id),
+	);
+	const customConsumables = snapshot.consumables.filter(
+		consumable =>
+			consumable.id.startsWith("custom-") && !defaultIds.has(consumable.id),
+	);
+
+	return [...DEFAULT_CONSUMABLES, ...customConsumables];
+}
+
+function filterIdsByConsumables(ids: string[], consumables: Consumable[]) {
+	const validIds = new Set(consumables.map(consumable => consumable.id));
+	return ids.filter(id => validIds.has(id));
+}
+
+function defaultLapDivisions(): LapDivisionConfig {
+	return {breaks: [], descriptions: {0: ""}};
+}
+
+function normalizeLapDivisions(
+	value: unknown,
+	lapCount: number,
+): LapDivisionConfig {
+	if (!isRecord(value)) return defaultLapDivisions();
+
+	const maxBreakIndex = lapCount - 2;
+	const breaks = Array.isArray(value.breaks)
+		? Array.from(
+				new Set(
+					value.breaks.filter(
+						(item): item is number =>
+							Number.isInteger(item) && item >= 0 && item <= maxBreakIndex,
+					),
+				),
+			).sort((a, b) => a - b)
+		: [];
+	const blockCount = breaks.length + 1;
+	const descriptions: Record<number, string> = {0: ""};
+
+	if (isRecord(value.descriptions)) {
+		for (const [key, description] of Object.entries(value.descriptions)) {
+			const index = Number(key);
+			if (
+				Number.isInteger(index) &&
+				index >= 0 &&
+				index < blockCount &&
+				typeof description === "string"
+			) {
+				descriptions[index] = description;
+			}
+		}
+	}
+
+	for (let index = 0; index < blockCount; index += 1) {
+		descriptions[index] ??= "";
+	}
+
+	return {breaks, descriptions};
+}
+
+function buildLapDivisionSummaries(
+	laps: Lap[],
+	breaks: number[],
+): {initial: LapBlock; byBreakIndex: Map<number, LapBlock>} {
+	const byBreakIndex = new Map<number, LapBlock>();
+	const initial = {index: 0, isInitial: true};
+	if (laps.length === 0) return {initial, byBreakIndex};
+
+	let previousBreakIndex: number | null = null;
+	breaks.forEach((breakIndex, position) => {
+		const startIndex = previousBreakIndex == null ? 0 : previousBreakIndex + 1;
+		const startLabel = previousBreakIndex == null ? 1 : previousBreakIndex + 1;
+		const endExclusive = breakIndex + 1;
+		const blockSeconds = laps
+			.slice(startIndex, endExclusive)
+			.reduce((sum, lap) => sum + lap.time, 0);
+		const cumulativeSeconds = laps
+			.slice(0, endExclusive)
+			.reduce((sum, lap) => sum + lap.time, 0);
+
+		byBreakIndex.set(breakIndex, {
+			index: position + 1,
+			startLabel,
+			endLabel: breakIndex + 1,
+			blockSeconds,
+			cumulativeSeconds,
+		});
+		previousBreakIndex = breakIndex;
+	});
+
+	return {initial, byBreakIndex};
+}
+
+function filterActionsByConsumables(
+	actions: Record<number, string[]>,
+	consumables: Consumable[],
+) {
+	const validIds = new Set(consumables.map(consumable => consumable.id));
+	const filteredActions: Record<number, string[]> = {};
+
+	for (const [key, ids] of Object.entries(actions)) {
+		const validActionIds = ids.filter(id => validIds.has(id));
+		if (validActionIds.length > 0)
+			filteredActions[Number(key)] = validActionIds;
+	}
+
+	return filteredActions;
 }
 
 function parseStoredPaceHistory(raw: string | null): StoredPaceHistory | null {
@@ -182,15 +315,37 @@ function parseStoredPaceHistory(raw: string | null): StoredPaceHistory | null {
 		if (!Array.isArray(parsed.history.past)) return null;
 		if (!Array.isArray(parsed.history.future)) return null;
 
-		const normalizeSnapshot = (snapshot: PaceHistorySnapshot) => ({
-			...snapshot,
-			initialPaceInput: snapshot.initialPaceInput ?? "",
-			selectedConsumableIds: Array.isArray(snapshot.selectedConsumableIds)
+		const normalizeSnapshot = (snapshot: PaceHistorySnapshot) => {
+			const values = {
+				...snapshot.values,
+				initialPace:
+					snapshot.values.initialPace ?? snapshot.initialPaceInput ?? "",
+				initialPaceSegments: snapshot.values.initialPaceSegments ?? "1",
+			};
+			const consumables = restoreConsumablesFromSnapshot(snapshot);
+			const selectedConsumableIds = Array.isArray(
+				snapshot.selectedConsumableIds,
+			)
 				? snapshot.selectedConsumableIds.filter(
 						(id): id is string => typeof id === "string",
 					)
-				: defaultSelectedConsumableIds(DEFAULT_CONSUMABLES),
-		});
+				: defaultSelectedConsumableIds(DEFAULT_CONSUMABLES);
+
+			return {
+				...snapshot,
+				values,
+				lapDivisions: normalizeLapDivisions(
+					snapshot.lapDivisions,
+					snapshot.laps.length,
+				),
+				consumables,
+				selectedConsumableIds: filterIdsByConsumables(
+					selectedConsumableIds,
+					consumables,
+				),
+				actions: filterActionsByConsumables(snapshot.actions, consumables),
+			};
+		};
 
 		return {
 			version: 1,
@@ -240,6 +395,8 @@ export function PaceCalculator() {
 		targetType: DEFAULT_TARGET_MODE,
 		targetValue: DEFAULT_TARGET_VALUE,
 		strategy: DEFAULT_STRATEGY,
+		initialPace: "",
+		initialPaceSegments: "1",
 	});
 	const distanceInput = values.distance;
 	const distance = parseDisplayDistance(distanceInput, unitSystem) ?? 0;
@@ -253,13 +410,17 @@ export function PaceCalculator() {
 		targetMode === "time" ? values.targetValue : storedTargetValues.time;
 	const paceInput =
 		targetMode === "pace" ? values.targetValue : storedTargetValues.pace;
+	const initialPaceInput = values.initialPace;
+	const initialPaceSegmentInput = values.initialPaceSegments;
 	const [recalc, setRecalc] = useState(true);
 	// Variação máxima de pace entre início e fim, em % do pace médio.
 	const [spreadPct, setSpreadPct] = useState(DEFAULT_SPREAD * 100);
 	const [spreadInput, setSpreadInput] = useState(String(DEFAULT_SPREAD * 100));
-	const [initialPaceInput, setInitialPaceInput] = useState("");
 	const [laps, setLaps] = useState<Lap[]>(() =>
 		buildLaps(5, 25 * 60, "constant", DEFAULT_SPREAD),
+	);
+	const [lapDivisions, setLapDivisions] = useState<LapDivisionConfig>(() =>
+		defaultLapDivisions(),
 	);
 
 	// --- Ações / nutrição ---
@@ -274,6 +435,7 @@ export function PaceCalculator() {
 	const [actions, setActions] = useState<Record<number, string[]>>({});
 	// esconder trechos sem ação quando a lista fica longa
 	const [collapseEmpty, setCollapseEmpty] = useState(false);
+	const [showLapDivisionOptions, setShowLapDivisionOptions] = useState(true);
 	const [history, setHistory] = useState<PaceHistoryState>({
 		past: [],
 		future: [],
@@ -317,6 +479,7 @@ export function PaceCalculator() {
 	);
 	const canUseCustomSplitSpread = canAccess("custom-split-spread");
 	const canUseUnlimitedHistory = canAccess("unlimited-history");
+	const canUseUnlimitedPlanDivisions = canAccess("unlimited-plan-divisions");
 
 	const selectedConsumableIdSet = useMemo(
 		() => new Set(selectedConsumableIds),
@@ -331,8 +494,15 @@ export function PaceCalculator() {
 	);
 	const actionLimit = maxActionsForLapCount(laps.length);
 	const actionCount = countActionsWithinLaps(actions, laps.length);
+	const normalizedLapDivisions = useMemo(
+		() => normalizeLapDivisions(lapDivisions, laps.length),
+		[lapDivisions, laps.length],
+	);
 	const canAddMorePlanActions =
 		canUseUnlimitedPlanActions || actionCount < actionLimit;
+	const canAddMoreLapDivisions =
+		canUseUnlimitedPlanDivisions ||
+		canAddFreePlanDivision(normalizedLapDivisions.breaks.length);
 	const nutrition = useMemo(
 		() => computeNutrition(actions, consumables),
 		[actions, consumables],
@@ -378,6 +548,15 @@ export function PaceCalculator() {
 		return items;
 	}, [collapsed, laps, actions]);
 
+	const lapDivisionSummaries = useMemo(
+		() => buildLapDivisionSummaries(laps, normalizedLapDivisions.breaks),
+		[laps, normalizedLapDivisions.breaks],
+	);
+	const lapDivisionBreakSet = useMemo(
+		() => new Set(normalizedLapDivisions.breaks),
+		[normalizedLapDivisions.breaks],
+	);
+
 	const hiddenCount = useMemo(
 		() =>
 			collapsed
@@ -391,25 +570,43 @@ export function PaceCalculator() {
 	const isLoadingConfig = !isHydrated;
 	const canUndo = history.past.length > 0;
 	const canRedo = history.future.length > 0;
-	const strategyUsesInitialPace = strategy !== "constant";
-	const initialDisplayPace = strategyUsesInitialPace
-		? parseTime(initialPaceInput)
-		: null;
+	const initialDisplayPace = parseTime(initialPaceInput);
 	const initialPaceSeconds =
 		initialDisplayPace == null
 			? null
 			: fromDisplayPace(initialDisplayPace, unitSystem);
 	const strategyDistances = useMemo(() => buildDistances(distance), [distance]);
+	const parsedInitialPaceSegments = Number.parseInt(
+		initialPaceSegmentInput,
+		10,
+	);
+	const initialPaceSegments = Number.isFinite(parsedInitialPaceSegments)
+		? parsedInitialPaceSegments
+		: 1;
+	const maxInitialPaceSegments = Math.max(1, strategyDistances.length - 1);
+	const initialPaceSegmentsAreInvalid =
+		initialPaceSegmentInput.trim() === "" ||
+		!Number.isFinite(parsedInitialPaceSegments) ||
+		parsedInitialPaceSegments < 1 ||
+		parsedInitialPaceSegments > maxInitialPaceSegments;
 	const finalPaceFromInitial =
-		strategyUsesInitialPace && initialPaceSeconds != null
-			? deriveFinalPaceFromInitialPace(
-					strategyDistances,
-					targetSeconds,
-					initialPaceSeconds,
-				)
+		initialPaceSeconds != null
+			? strategy === "constant"
+				? deriveConstantPaceAfterInitialSegments(
+						strategyDistances,
+						targetSeconds,
+						initialPaceSeconds,
+						initialPaceSegments,
+					)
+				: deriveFinalPaceFromInitialPace(
+						strategyDistances,
+						targetSeconds,
+						initialPaceSeconds,
+						initialPaceSegments,
+					)
 			: null;
 	const initialPaceDirectionIsValid =
-		!strategyUsesInitialPace ||
+		strategy === "constant" ||
 		initialPaceSeconds == null ||
 		finalPaceFromInitial == null ||
 		(strategy === "negative"
@@ -417,9 +614,9 @@ export function PaceCalculator() {
 			: finalPaceFromInitial > initialPaceSeconds);
 	const hasInitialPaceInput = initialPaceInput.trim() !== "";
 	const initialPaceIsInvalid =
-		strategyUsesInitialPace &&
 		hasInitialPaceInput &&
 		(initialPaceSeconds == null ||
+			initialPaceSegmentsAreInvalid ||
 			finalPaceFromInitial == null ||
 			!initialPaceDirectionIsValid);
 
@@ -430,8 +627,8 @@ export function PaceCalculator() {
 			recalc,
 			spreadPct,
 			spreadInput,
-			initialPaceInput,
 			laps,
+			lapDivisions: normalizedLapDivisions,
 			showActions,
 			consumables,
 			selectedConsumableIds,
@@ -486,8 +683,10 @@ export function PaceCalculator() {
 		setRecalc(snapshot.recalc);
 		setSpreadPct(snapshot.spreadPct);
 		setSpreadInput(snapshot.spreadInput);
-		setInitialPaceInput(snapshot.initialPaceInput);
 		setLaps(snapshot.laps);
+		setLapDivisions(
+			normalizeLapDivisions(snapshot.lapDivisions, snapshot.laps.length),
+		);
 		setShowActions(snapshot.showActions);
 		setConsumables(snapshot.consumables);
 		setSelectedConsumableIds(snapshot.selectedConsumableIds);
@@ -528,6 +727,7 @@ export function PaceCalculator() {
 		nextMode: TargetMode = targetMode,
 		nextPaceInput: string = paceInput,
 		nextInitialPaceInput: string = initialPaceInput,
+		nextInitialPaceSegments: number = initialPaceSegments,
 	) {
 		const secs = resolveTargetSeconds(
 			nextMode,
@@ -541,7 +741,7 @@ export function PaceCalculator() {
 			return;
 		}
 		const displayInitialPace =
-			nextStrategy === "constant" || nextInitialPaceInput.trim() === ""
+			nextInitialPaceInput.trim() === ""
 				? null
 				: parseTime(nextInitialPaceInput);
 		const initialPace =
@@ -555,6 +755,7 @@ export function PaceCalculator() {
 				nextStrategy,
 				nextSpreadPct / 100,
 				initialPace,
+				nextInitialPaceSegments,
 			),
 		);
 	}
@@ -581,6 +782,7 @@ export function PaceCalculator() {
 			targetMode,
 			paceInput,
 			initialPaceInput,
+			initialPaceSegments,
 		);
 	}, [
 		distance,
@@ -590,6 +792,7 @@ export function PaceCalculator() {
 		targetMode,
 		paceInput,
 		initialPaceInput,
+		initialPaceSegments,
 		unitSystem,
 	]);
 
@@ -667,14 +870,27 @@ export function PaceCalculator() {
 		recalc,
 		spreadPct,
 		spreadInput,
-		initialPaceInput,
 		laps,
+		normalizedLapDivisions,
 		showActions,
 		consumables,
 		selectedConsumableIds,
 		actions,
 		collapseEmpty,
 	]);
+
+	useEffect(() => {
+		setLapDivisions(currentDivisions => {
+			const nextDivisions = normalizeLapDivisions(
+				currentDivisions,
+				laps.length,
+			);
+			if (JSON.stringify(nextDivisions) === JSON.stringify(currentDivisions)) {
+				return currentDivisions;
+			}
+			return nextDivisions;
+		});
+	}, [laps.length]);
 
 	useEffect(() => {
 		if (!isHydrated) return;
@@ -721,7 +937,11 @@ export function PaceCalculator() {
 	}
 
 	function handleInitialPaceChange(value: string) {
-		setInitialPaceInput(value);
+		setValue("initialPace", value);
+	}
+
+	function handleInitialPaceSegmentsChange(value: string) {
+		setValue("initialPaceSegments", value);
 	}
 
 	function handleTargetModeChange(value: TargetMode) {
@@ -754,6 +974,7 @@ export function PaceCalculator() {
 			targetMode,
 			paceInput,
 			initialPaceInput,
+			initialPaceSegments,
 		);
 	}
 
@@ -775,6 +996,7 @@ export function PaceCalculator() {
 				targetMode,
 				paceInput,
 				initialPaceInput,
+				initialPaceSegments,
 			);
 		}
 	}
@@ -878,6 +1100,75 @@ export function PaceCalculator() {
 		setActions(prev => ({
 			...prev,
 			[lapIndex]: [...(prev[lapIndex] ?? []), consumableId],
+		}));
+	}
+
+	function addLapDivision(afterLapIndex: number) {
+		if (afterLapIndex < 0 || afterLapIndex >= laps.length - 1) return;
+		if (normalizedLapDivisions.breaks.includes(afterLapIndex)) return;
+		if (!canAddMoreLapDivisions) {
+			setUpgradeDialogOpen(true);
+			return;
+		}
+
+		markHistoryChange();
+		setLapDivisions(currentDivisions => {
+			const current = normalizeLapDivisions(currentDivisions, laps.length);
+			const insertIndex = current.breaks.filter(
+				item => item < afterLapIndex,
+			).length;
+			const descriptions: Record<number, string> = {};
+
+			for (const [key, description] of Object.entries(current.descriptions)) {
+				const index = Number(key);
+				if (!Number.isInteger(index)) continue;
+				descriptions[index <= insertIndex ? index : index + 1] = description;
+			}
+
+			descriptions[insertIndex + 1] = "";
+			return normalizeLapDivisions(
+				{
+					breaks: [...current.breaks, afterLapIndex],
+					descriptions,
+				},
+				laps.length,
+			);
+		});
+	}
+
+	function removeLapDivision(afterLapIndex: number) {
+		if (!normalizedLapDivisions.breaks.includes(afterLapIndex)) return;
+
+		markHistoryChange();
+		setLapDivisions(currentDivisions => {
+			const current = normalizeLapDivisions(currentDivisions, laps.length);
+			const removeIndex = current.breaks.indexOf(afterLapIndex);
+			if (removeIndex < 0) return current;
+
+			const descriptions: Record<number, string> = {};
+			for (const [key, description] of Object.entries(current.descriptions)) {
+				const index = Number(key);
+				if (!Number.isInteger(index) || index === removeIndex + 1) continue;
+				descriptions[index > removeIndex + 1 ? index - 1 : index] = description;
+			}
+
+			return normalizeLapDivisions(
+				{
+					breaks: current.breaks.filter(item => item !== afterLapIndex),
+					descriptions,
+				},
+				laps.length,
+			);
+		});
+	}
+
+	function updateLapDivisionDescription(index: number, description: string) {
+		setLapDivisions(currentDivisions => ({
+			...currentDivisions,
+			descriptions: {
+				...currentDivisions.descriptions,
+				[index]: description,
+			},
 		}));
 	}
 
@@ -1089,9 +1380,9 @@ export function PaceCalculator() {
 						</p>
 					</div>
 
-					{strategyUsesInitialPace && (
-						<div className='space-y-2 rounded-lg border border-border p-4'>
-							<div className='flex items-center justify-between gap-2'>
+					<div className='space-y-3 rounded-lg border border-border p-4'>
+						<div className='grid gap-3 sm:grid-cols-[1fr_auto]'>
+							<div className='space-y-1.5'>
 								<Label htmlFor='initial-pace'>
 									Pace inicial ({paceUnitLabel(unitSystem)})
 								</Label>
@@ -1101,28 +1392,55 @@ export function PaceCalculator() {
 									onFocus={rememberFieldHistorySnapshot}
 									onChange={e => handleInitialPaceChange(e.target.value)}
 									onBlur={commitFocusedFieldHistorySnapshot}
-									placeholder={strategy === "negative" ? "5:20" : "4:40"}
+									placeholder={
+										strategy === "negative"
+											? "5:20"
+											: strategy === "positive"
+												? "4:40"
+												: "5:00"
+									}
 									aria-invalid={initialPaceIsInvalid}
-									className='h-8 w-24 text-center font-mono tabular-nums'
+									className='h-8 text-center font-mono tabular-nums sm:w-24'
 								/>
 							</div>
-							{initialPaceIsInvalid ? (
-								<p className='text-xs text-destructive text-pretty'>
-									Esse pace inicial não bate com a estratégia e o tempo alvo.
-								</p>
-							) : finalPaceFromInitial != null && initialPaceSeconds != null ? (
-								<p className='text-xs text-muted-foreground text-pretty'>
-									Pace final estimado:{" "}
-									{formatTime(toDisplayPace(finalPaceFromInitial, unitSystem))}{" "}
-									{paceUnitLabel(unitSystem)}.
-								</p>
-							) : (
-								<p className='text-xs text-muted-foreground text-pretty'>
-									Se vazio, a divisão usa a variação percentual atual.
-								</p>
-							)}
+							<div className='space-y-1.5'>
+								<Label htmlFor='initial-pace-segments'>Trechos</Label>
+								<Input
+									id='initial-pace-segments'
+									inputMode='numeric'
+									value={initialPaceSegmentInput}
+									onFocus={rememberFieldHistorySnapshot}
+									onChange={e =>
+										handleInitialPaceSegmentsChange(e.target.value)
+									}
+									onBlur={commitFocusedFieldHistorySnapshot}
+									aria-invalid={
+										hasInitialPaceInput && initialPaceSegmentsAreInvalid
+									}
+									className='h-8 text-center font-mono tabular-nums sm:w-20'
+									min={1}
+									max={maxInitialPaceSegments}
+								/>
+							</div>
 						</div>
-					)}
+						{initialPaceIsInvalid ? (
+							<p className='text-xs text-destructive text-pretty'>
+								Esse pace inicial ou quantidade de trechos não bate com o alvo.
+							</p>
+						) : finalPaceFromInitial != null && initialPaceSeconds != null ? (
+							<p className='text-xs text-muted-foreground text-pretty'>
+								{strategy === "constant"
+									? "Pace dos trechos restantes estimado"
+									: "Pace final estimado"}
+								: {formatTime(toDisplayPace(finalPaceFromInitial, unitSystem))}{" "}
+								{paceUnitLabel(unitSystem)}.
+							</p>
+						) : (
+							<p className='text-xs text-muted-foreground text-pretty'>
+								Se vazio, a divisão usa apenas a estratégia selecionada.
+							</p>
+						)}
+					</div>
 
 					<div
 						className={`space-y-3 ${!VARIACAO_PACE_HABILITADA ? "opacity-50" : ""}`}
@@ -1173,7 +1491,7 @@ export function PaceCalculator() {
 								variant={"link"}
 								onClick={() => setUpgradeDialogOpen(true)}
 							>
-								Habilitar variação customizada
+								Desbloquear controle de ritmo
 							</Button>
 						)}
 					</div>
@@ -1254,8 +1572,19 @@ export function PaceCalculator() {
 
 			{/* Resultado */}
 			<div className='flex flex-col gap-4'>
-				<div className='grid shrink-0 grid-cols-2 gap-4 sm:grid-cols-3'>
-					<StatCard label='Tempo total' value={formatTime(totalTime)} />
+				<div className='grid shrink-0 gap-4 grid-cols-2'>
+					<StatCard
+						label='Tempo total'
+						value={formatTime(totalTime)}
+						detail={
+							targetMode === "time"
+								? diff === 0
+									? "no alvo"
+									: `${diff > 0 ? "+" : "-"}${formatTime(Math.abs(diff))} do alvo`
+								: undefined
+						}
+						detailTone={diff === 0 ? "ok" : diff > 0 ? "over" : "under"}
+					/>
 					<StatCard
 						label='Pace médio'
 						value={
@@ -1263,74 +1592,77 @@ export function PaceCalculator() {
 								? `${formatTime(toDisplayPace(avgPace, unitSystem))} ${paceUnitLabel(unitSystem)}`
 								: "--"
 						}
-					/>
-					{targetMode === "pace" ? (
-						<StatCard
-							label='Diferença do alvo'
-							value={
-								Math.round(paceDiff) === 0
+						detail={
+							targetMode === "pace"
+								? Math.round(paceDiff) === 0
 									? "no alvo"
 									: `${paceDiff > 0 ? "+" : "-"}${formatTime(
 											toDisplayPace(Math.abs(paceDiff), unitSystem),
-										)} ${paceUnitLabel(unitSystem)}`
-							}
-							tone={
-								Math.round(paceDiff) === 0
-									? "ok"
-									: paceDiff > 0
-										? "over"
-										: "under"
-							}
-							className='col-span-2 sm:col-span-1'
-						/>
-					) : (
-						<StatCard
-							label='Diferença do alvo'
-							value={
-								diff === 0
-									? "no alvo"
-									: `${diff > 0 ? "+" : "-"}${formatTime(Math.abs(diff))}`
-							}
-							tone={diff === 0 ? "ok" : diff > 0 ? "over" : "under"}
-							className='col-span-2 sm:col-span-1'
-						/>
-					)}
+										)} ${paceUnitLabel(unitSystem)} do alvo`
+								: undefined
+						}
+						detailTone={
+							Math.round(paceDiff) === 0
+								? "ok"
+								: paceDiff > 0
+									? "over"
+									: "under"
+						}
+					/>
 				</div>
 
 				<Card className='flex flex-col overflow-hidden p-0'>
 					<div className='flex shrink-0 flex-wrap items-center gap-2 border-b border-border px-5 py-4'>
 						<Timer className='size-4 text-primary' />
 						<h2 className='font-semibold'>Trecho a trecho</h2>
-						{canCollapse && (
+						<div className='ml-auto flex flex-wrap items-center justify-end gap-2'>
 							<Button
 								variant='outline'
 								size='sm'
-								onClick={() => {
-									markHistoryChange();
-									setCollapseEmpty(v => !v);
-								}}
-								className='ml-auto h-7 gap-1.5 px-2.5 text-xs'
+								onClick={() => setShowLapDivisionOptions(value => !value)}
+								className='h-7 gap-1.5 px-2.5 text-xs'
 							>
-								{collapsed ? (
+								{showLapDivisionOptions ? (
 									<>
-										<Eye className='size-3.5' />
-										Mostrar todos
+										<EyeOff className='size-3.5' />
+										Ocultar divisões
 									</>
 								) : (
 									<>
-										<EyeOff className='size-3.5' />
-										Só trechos com ação
+										<Eye className='size-3.5' />
+										Mostrar divisões
 									</>
 								)}
 							</Button>
-						)}
-						<span
-							className={`text-sm text-muted-foreground ${canCollapse ? "" : "ml-auto"}`}
-						>
-							{collapsed
-								? `${hiddenCount} ocultos`
-								: `${laps.length} ${laps.length === 1 ? "trecho" : "trechos"}`}
-						</span>
+							{canCollapse && (
+								<Button
+									variant='outline'
+									size='sm'
+									onClick={() => {
+										markHistoryChange();
+										setCollapseEmpty(v => !v);
+									}}
+									className='h-7 gap-1.5 px-2.5 text-xs'
+								>
+									{collapsed ? (
+										<>
+											<Eye className='size-3.5' />
+											Mostrar todos
+										</>
+									) : (
+										<>
+											<EyeOff className='size-3.5' />
+											Só trechos com ação
+										</>
+									)}
+								</Button>
+							)}
+							<span className='text-sm text-muted-foreground'>
+								{collapsed
+									? `${hiddenCount} ocultos`
+									: `${laps.length} ${laps.length === 1 ? "trecho" : "trechos"}`}
+							</span>
+						</div>
 					</div>
 
 					<div className='relative'>
@@ -1351,41 +1683,91 @@ export function PaceCalculator() {
 								</p>
 							) : (
 								<ul className='divide-y divide-border'>
-									{renderItems.map((item, pos) =>
-										item.type === "gap" ? (
-											<SuppressedRow key={`gap-${pos}`} count={item.count} />
-										) : (
-											<LapRow
-												key={item.index}
-												index={item.index}
-												lap={laps[item.index]}
-												cumulative={laps
-													.slice(0, item.index + 1)
-													.reduce((a, l) => a + l.time, 0)}
-												totalLaps={laps.length}
-												onCommit={raw => commitLap(item.index, raw)}
-												onRepeatNext={count =>
-													repeatLapValueNext(item.index, count)
-												}
-												onRepeatToEnd={() => repeatLapValueToEnd(item.index)}
-												onCopyPreviousAverage={count =>
-													copyPreviousAverageToLap(item.index, count)
-												}
-												showActions={showActions}
-												canAddMultipleActions={canUseMultipleActionsPerLap}
-												canAddMorePlanActions={canAddMorePlanActions}
-												consumables={consumables}
-												availableConsumables={selectedConsumables}
-												lapActions={actions[item.index] ?? []}
-												onAddAction={id => addAction(item.index, id)}
-												onRemoveAction={actionIndex =>
-													removeAction(item.index, actionIndex)
-												}
-												onRequestUpgrade={() => setUpgradeDialogOpen(true)}
-												paidMode={canUseUnlimitedPlanActions}
-											/>
-										),
-									)}
+									<LapBlockHeader
+										block={lapDivisionSummaries.initial}
+										description={normalizedLapDivisions.descriptions[0] ?? ""}
+										onDescriptionFocus={rememberFieldHistorySnapshot}
+										onDescriptionChange={value =>
+											updateLapDivisionDescription(0, value)
+										}
+										onDescriptionBlur={commitFocusedFieldHistorySnapshot}
+									/>
+									{renderItems.map((item, pos) => {
+										if (item.type === "gap") {
+											return (
+												<SuppressedRow key={`gap-${pos}`} count={item.count} />
+											);
+										}
+
+										const block = lapDivisionSummaries.byBreakIndex.get(
+											item.index,
+										);
+										const hasBoundaryAfter = item.index < laps.length - 1;
+										const isDivisionBoundary = lapDivisionBreakSet.has(
+											item.index,
+										);
+
+										return (
+											<Fragment key={item.index}>
+												<LapRow
+													index={item.index}
+													lap={laps[item.index]}
+													cumulative={laps
+														.slice(0, item.index + 1)
+														.reduce((a, l) => a + l.time, 0)}
+													totalLaps={laps.length}
+													onCommit={raw => commitLap(item.index, raw)}
+													onRepeatNext={count =>
+														repeatLapValueNext(item.index, count)
+													}
+													onRepeatToEnd={() => repeatLapValueToEnd(item.index)}
+													onCopyPreviousAverage={count =>
+														copyPreviousAverageToLap(item.index, count)
+													}
+													showActions={showActions}
+													canAddMultipleActions={canUseMultipleActionsPerLap}
+													canAddMorePlanActions={canAddMorePlanActions}
+													consumables={consumables}
+													availableConsumables={selectedConsumables}
+													lapActions={actions[item.index] ?? []}
+													onAddAction={id => addAction(item.index, id)}
+													onRemoveAction={actionIndex =>
+														removeAction(item.index, actionIndex)
+													}
+													onRequestUpgrade={() => setUpgradeDialogOpen(true)}
+													paidMode={canUseUnlimitedPlanActions}
+												/>
+												{block && !collapsed ? (
+													<LapBlockHeader
+														block={block}
+														description={
+															normalizedLapDivisions.descriptions[
+																block.index
+															] ?? ""
+														}
+														onDescriptionFocus={rememberFieldHistorySnapshot}
+														onDescriptionChange={value =>
+															updateLapDivisionDescription(block.index, value)
+														}
+														onDescriptionBlur={
+															commitFocusedFieldHistorySnapshot
+														}
+													/>
+												) : null}
+												{hasBoundaryAfter &&
+												!collapsed &&
+												showLapDivisionOptions ? (
+													<LapDivisionBoundary
+														isActive={isDivisionBoundary}
+														canAdd={canAddMoreLapDivisions}
+														onAdd={() => addLapDivision(item.index)}
+														onRemove={() => removeLapDivision(item.index)}
+														onRequestUpgrade={() => setUpgradeDialogOpen(true)}
+													/>
+												) : null}
+											</Fragment>
+										);
+									})}
 								</ul>
 							)}
 						</div>

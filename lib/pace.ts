@@ -118,18 +118,68 @@ export const DEFAULT_SPREAD = 0.08;
  * O gradiente é aplicado de forma linear pela posição do trecho e depois
  * normalizado para que a soma dos tempos seja exatamente o tempo alvo.
  */
-export function deriveFinalPaceFromInitialPace(
+function normalizeInitialPaceSegmentCount(
+	distances: number[],
+	initialPaceSegmentCount: number = 1,
+) {
+	if (distances.length < 2) return null;
+	const parsed = Math.floor(initialPaceSegmentCount);
+	if (!Number.isFinite(parsed)) return null;
+	if (parsed < 1 || parsed > distances.length - 1) return null;
+	return parsed;
+}
+
+export function deriveConstantPaceAfterInitialSegments(
 	distances: number[],
 	targetSeconds: number,
 	initialPaceSecondsPerKm: number,
+	initialPaceSegmentCount: number = 1,
 ): number | null {
 	if (distances.length < 2) return null;
 	if (targetSeconds <= 0 || initialPaceSecondsPerKm <= 0) return null;
 
-	const lastIndex = distances.length - 1;
+	const fixedSegmentCount = normalizeInitialPaceSegmentCount(
+		distances,
+		initialPaceSegmentCount,
+	);
+	if (fixedSegmentCount == null) return null;
+
+	const fixedDistance = distances
+		.slice(0, fixedSegmentCount)
+		.reduce((sum, distance) => sum + distance, 0);
+	const remainingDistance = distances
+		.slice(fixedSegmentCount)
+		.reduce((sum, distance) => sum + distance, 0);
+	if (remainingDistance <= 0) return null;
+
+	const remainingTime = targetSeconds - fixedDistance * initialPaceSecondsPerKm;
+	return remainingTime > 0 ? remainingTime / remainingDistance : null;
+}
+
+export function deriveFinalPaceFromInitialPace(
+	distances: number[],
+	targetSeconds: number,
+	initialPaceSecondsPerKm: number,
+	initialPaceSegmentCount: number = 1,
+): number | null {
+	if (distances.length < 2) return null;
+	if (targetSeconds <= 0 || initialPaceSecondsPerKm <= 0) return null;
+
+	const fixedSegmentCount = normalizeInitialPaceSegmentCount(
+		distances,
+		initialPaceSegmentCount,
+	);
+	if (fixedSegmentCount == null) return null;
+	const variableSegmentCount = distances.length - fixedSegmentCount;
+	if (variableSegmentCount <= 0) return null;
+
 	const weights = distances.reduce(
 		(acc, distance, index) => {
-			const progress = index / lastIndex;
+			if (index < fixedSegmentCount) {
+				return {start: acc.start + distance, end: acc.end};
+			}
+
+			const progress = (index - fixedSegmentCount + 1) / variableSegmentCount;
 			return {
 				start: acc.start + distance * (1 - progress),
 				end: acc.end + distance * progress,
@@ -149,19 +199,53 @@ function buildLapsFromInitialPace(
 	targetSeconds: number,
 	strategy: Strategy,
 	initialPaceSecondsPerKm: number,
+	initialPaceSegmentCount: number = 1,
 ): Lap[] {
+	const fixedSegmentCount = normalizeInitialPaceSegmentCount(
+		distances,
+		initialPaceSegmentCount,
+	);
+	if (fixedSegmentCount == null) return [];
+	if (strategy === "constant") {
+		const remainingPace = deriveConstantPaceAfterInitialSegments(
+			distances,
+			targetSeconds,
+			initialPaceSecondsPerKm,
+			fixedSegmentCount,
+		);
+		if (remainingPace == null) return [];
+
+		return distances.map((distance, index) => ({
+			distance,
+			time: Math.round(
+				distance *
+					(index < fixedSegmentCount
+						? initialPaceSecondsPerKm
+						: remainingPace),
+			),
+		}));
+	}
+
 	const finalPace = deriveFinalPaceFromInitialPace(
 		distances,
 		targetSeconds,
 		initialPaceSecondsPerKm,
+		fixedSegmentCount,
 	);
 	if (finalPace == null) return [];
 	if (strategy === "negative" && finalPace >= initialPaceSecondsPerKm) return [];
 	if (strategy === "positive" && finalPace <= initialPaceSecondsPerKm) return [];
 
-	const lastIndex = distances.length - 1;
+	const variableSegmentCount = distances.length - fixedSegmentCount;
 	return distances.map((distance, index) => {
-		const progress = index / lastIndex;
+		if (index < fixedSegmentCount) {
+			return {
+				distance,
+				time: Math.round(distance * initialPaceSecondsPerKm),
+			};
+		}
+
+		const progress = (index - fixedSegmentCount + 1) / variableSegmentCount;
 		const pace =
 			initialPaceSecondsPerKm + (finalPace - initialPaceSecondsPerKm) * progress;
 		return {
@@ -177,21 +261,19 @@ export function buildLaps(
 	strategy: Strategy = "constant",
 	spread: number = DEFAULT_SPREAD,
 	initialPaceSecondsPerKm?: number | null,
+	initialPaceSegmentCount: number = 1,
 ): Lap[] {
 	const distances = buildDistances(distanceKm);
 	const total = distances.reduce((a, b) => a + b, 0);
 	if (total === 0) return [];
 
-	if (
-		strategy !== "constant" &&
-		initialPaceSecondsPerKm != null &&
-		initialPaceSecondsPerKm > 0
-	) {
+	if (initialPaceSecondsPerKm != null && initialPaceSecondsPerKm > 0) {
 		return buildLapsFromInitialPace(
 			distances,
 			targetSeconds,
 			strategy,
 			initialPaceSecondsPerKm,
+			initialPaceSegmentCount,
 		);
 	}
 
@@ -257,6 +339,7 @@ export type Consumable = {
 
 function slugify(value: string) {
 	return value
+		.replace(/\+/g, " plus ")
 		.normalize("NFD")
 		.replace(/[\u0300-\u036f]/g, "")
 		.toLowerCase()

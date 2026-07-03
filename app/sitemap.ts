@@ -19,6 +19,10 @@ const routes = [
     path: "/calculadoras/distancia-por-pace-e-tempo",
     priority: 0.8,
   },
+  {
+    path: "/politica-de-privacidade",
+    priority: 0.4,
+  },
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {

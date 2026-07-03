@@ -42,6 +42,7 @@ Funcionalidades grátis e pagas a serem implementadas seguindo a lógica:
 - (Paga) Voltar a qualquer ponto do histórico;
 - Adicionar a estratégia quando nao for constante, em qual pace quero começar a corrida e calcular a partir dai. Exemplo: split negativo para correr 10km em 57min, começando em 07:00 min/km;
 - Importar geis, Dobro, Z2, Paceit;
+- Adicionar campo para informar quantos trechos serão com o pace inicial para split nao constante;
 
 https://www.ativo.com/calculadoras-de-performance/tabela-de-ritmo/
 https://www.ativo.com/calculadoras-de-performance/km-a-km/
