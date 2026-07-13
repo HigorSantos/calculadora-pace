@@ -1,16 +1,16 @@
-# Graph Report - calculadora-pace  (2026-07-02)
+# Graph Report - calculadora-pace  (2026-07-13)
 
 ## Corpus Check
-- 80 files · ~25,569 words
+- 88 files · ~33,847 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 480 nodes · 1168 edges · 27 communities (21 shown, 6 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 6 edges (avg confidence: 0.8)
+- 552 nodes · 1397 edges · 27 communities (20 shown, 7 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 6 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `12c85591`
+- Built from commit: `f1616016`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -40,11 +40,11 @@
 - [[_COMMUNITY_Community 23|Community 23]]
 - [[_COMMUNITY_Community 24|Community 24]]
 - [[_COMMUNITY_Community 25|Community 25]]
-- [[_COMMUNITY_Community 26|Community 26]]
+- [[_COMMUNITY_Community 27|Community 27]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `cn()` - 63 edges
-2. `PaceCalculator()` - 21 edges
+2. `PaceCalculator()` - 25 edges
 3. `useUnitSystem()` - 17 edges
 4. `compilerOptions` - 17 edges
 5. `PaceByDistanceTimeCalculator()` - 16 edges
@@ -55,29 +55,29 @@
 10. `formatTime()` - 14 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `POST()` --calls--> `activateCustomer()`  [EXTRACTED]
-  app/api/admin/activate/route.ts → lib/customer.ts
-- `AuthMenuAction()` --calls--> `cn()`  [EXTRACTED]
-  components/auth-menu-action.tsx → lib/utils.ts
-- `CalculatorShell()` --calls--> `cn()`  [EXTRACTED]
-  components/calculators/calculator-shell.tsx → lib/utils.ts
-- `presetLabel()` --calls--> `formatDisplayDistance()`  [EXTRACTED]
-  components/calculators/pace-by-distance-time-calculator.tsx → lib/units.ts
-- `presetLabel()` --calls--> `formatDisplayDistance()`  [EXTRACTED]
-  components/calculators/time-by-distance-pace-calculator.tsx → lib/units.ts
+- `CardHeader()` --calls--> `cn()`  [EXTRACTED]
+  components/ui/card.tsx → lib/utils.ts
+- `CardTitle()` --calls--> `cn()`  [EXTRACTED]
+  components/ui/card.tsx → lib/utils.ts
+- `CardDescription()` --calls--> `cn()`  [EXTRACTED]
+  components/ui/card.tsx → lib/utils.ts
+- `CardAction()` --calls--> `cn()`  [EXTRACTED]
+  components/ui/card.tsx → lib/utils.ts
+- `CardContent()` --calls--> `cn()`  [EXTRACTED]
+  components/ui/card.tsx → lib/utils.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (27 total, 6 thin omitted)
+## Communities (27 total, 7 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.12
-Nodes (20): ConsumiveisPorMarca, ConsumivelCatalogItem, applyLapEdit(), BRANDED_CONSUMABLES, buildDistances(), buildEqualLaps(), buildLaps(), buildLapsFromInitialPace() (+12 more)
+Cohesion: 0.13
+Nodes (20): ConsumiveisPorMarca, ConsumivelCatalogItem, applyLapEdit(), BRANDED_CONSUMABLES, buildEqualLaps(), buildLaps(), buildLapsFromDistances(), buildLapsFromInitialPace() (+12 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.24
-Nodes (4): CalculatorShell(), metadata, metadata, metadata
+Cohesion: 0.07
+Nodes (67): DEFAULT_EXPORT_OPTIONS, buildDistances(), Consumable, DEFAULT_CONSUMABLES, Lap, Strategy, isRaceConsumableId(), UnitSystem (+59 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.06
@@ -96,12 +96,12 @@ Cohesion: 0.12
 Nodes (16): Acesse a Aplicação, Benefícios, Calculadora de Pace, Calculadora de Pace, Casos de Uso, Contribuições, Funcionalidades, Licença (+8 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.16
-Nodes (43): CalculatorResultCard(), DistanceByPaceTimeCalculator(), PRESETS, formatDisplayDistanceInput(), formatPresetDistanceInput(), PaceByDistanceTimeCalculator(), presetLabel(), PRESETS (+35 more)
+Cohesion: 0.14
+Nodes (47): CalculatorResultCard(), DistanceByPaceTimeCalculator(), PRESETS, formatDisplayDistanceInput(), formatPresetDistanceInput(), PaceByDistanceTimeCalculator(), presetLabel(), PRESETS (+39 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.10
-Nodes (15): LapDivisionConfig, PaceHistorySnapshot, PaceHistoryState, PaceQueryValues, StoredPaceHistory, Consumable, Strategy, SuppressedRow() (+7 more)
+Cohesion: 0.26
+Nodes (11): canAddCustomConsumable(), canAddFreePlanDivision(), canAddPlanAction(), ConsumableIdentifier, countActionsWithinLaps(), countCustomConsumables(), LapActions, limitFreeRedoHistory() (+3 more)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.33
@@ -116,8 +116,8 @@ Cohesion: 0.33
 Nodes (5): Core Pattern, Expected Behavior, Implementation Steps, Parametros Config, Project Conventions
 
 ### Community 17 - "Community 17"
-Cohesion: 0.16
-Nodes (14): geistMono, ManropeSans, metadata, viewport, BillingAccessContext, BillingAccessContextValue, BillingAccessProvider(), SiteFooter() (+6 more)
+Cohesion: 0.15
+Nodes (15): geistMono, ManropeSans, metadata, viewport, BillingAccessContext, BillingAccessContextValue, BillingAccessProvider(), PREMIUM_ANUAL_PLAN (+7 more)
 
 ### Community 18 - "Community 18"
 Cohesion: 0.12
@@ -132,44 +132,40 @@ Cohesion: 0.07
 Nodes (59): POST(), clearAuthCookies(), findAuth0Customer(), GET(), redirectToRegistrar(), setCustomerCookie(), POST(), centsValue() (+51 more)
 
 ### Community 22 - "Community 22"
-Cohesion: 0.14
-Nodes (29): AuthMenuAction(), AuthMenuActionProps, AuthMenuDropdownSection(), accessModes, BillingAccessMockSelector(), useBillingAccess(), iconsByName, MobileHeaderMenu() (+21 more)
+Cohesion: 0.08
+Nodes (55): AuthMenuAction(), AuthMenuActionProps, AuthMenuDropdownSection(), accessModes, BillingAccessMockSelector(), useBillingAccess(), iconsByName, MobileHeaderMenu() (+47 more)
 
 ### Community 23 - "Community 23"
-Cohesion: 0.07
-Nodes (42): cn(), LapBlock, LapBlockHeader(), LapBlockHeaderProps, LapDivisionBoundary(), LapDivisionBoundaryProps, StatCard(), premiumBenefits (+34 more)
+Cohesion: 0.17
+Nodes (17): buildRaceActions(), findLapIndexForDistance(), formatRaceDate(), formatRaceDistance(), isRaceConfigurationVisible(), RACE_CONFIGURATIONS, raceActionConsumableId(), raceActionDescription() (+9 more)
 
 ### Community 24 - "Community 24"
-Cohesion: 0.26
-Nodes (11): canAddCustomConsumable(), canAddFreePlanDivision(), canAddPlanAction(), ConsumableIdentifier, countActionsWithinLaps(), countCustomConsumables(), LapActions, limitFreeRedoHistory() (+3 more)
+Cohesion: 0.12
+Nodes (12): CalculatorShell(), metadata, StatCard(), metadata, metadata, Card(), CardAction(), CardContent() (+4 more)
 
-### Community 25 - "Community 25"
-Cohesion: 0.38
-Nodes (6): perHour(), formatDisplayMass(), massUnitLabel(), toDisplayMass(), NutritionSummary(), consumableSummaryForUnit()
-
-### Community 26 - "Community 26"
-Cohesion: 0.47
-Nodes (6): defaultLapDivisions(), isPaceHistorySnapshot(), isPaceQueryValues(), isRecord(), normalizeLapDivisions(), parseStoredPaceHistory()
+### Community 27 - "Community 27"
+Cohesion: 0.13
+Nodes (14): AnalyticsParams, useUmami(), Window, premiumBenefits, UpgradeDialog(), RegistrarAnalytics(), RegistrarAnalyticsProps, Dialog() (+6 more)
 
 ## Knowledge Gaps
-- **150 isolated node(s):** `PREMIUM_ITEM`, `InfinitePayWebhookPayload`, `metadata`, `metadata`, `metadata` (+145 more)
+- **157 isolated node(s):** `PREMIUM_ITEM`, `InfinitePayWebhookPayload`, `metadata`, `metadata`, `metadata` (+152 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `cn()` connect `Community 23` to `Community 8`, `Community 1`, `Community 22`, `Community 6`?**
-  _High betweenness centrality (0.068) - this node is a cross-community bridge._
-- **Why does `Button()` connect `Community 22` to `Community 8`, `Community 6`, `Community 23`?**
+- **Why does `cn()` connect `Community 22` to `Community 24`, `Community 1`, `Community 27`, `Community 6`?**
+  _High betweenness centrality (0.055) - this node is a cross-community bridge._
+- **Why does `useUmami()` connect `Community 27` to `Community 1`, `Community 6`?**
+  _High betweenness centrality (0.011) - this node is a cross-community bridge._
+- **Why does `useBillingAccess()` connect `Community 22` to `Community 17`, `Community 1`, `Community 6`?**
   _High betweenness centrality (0.006) - this node is a cross-community bridge._
-- **Why does `useBillingAccess()` connect `Community 22` to `Community 8`, `Community 17`, `Community 6`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **What connects `PREMIUM_ITEM`, `InfinitePayWebhookPayload`, `metadata` to the rest of the system?**
-  _150 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _157 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.12333333333333334 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12666666666666668 - nodes in this community are weakly interconnected._
+- **Should `Community 1` be split into smaller, more focused modules?**
+  _Cohesion score 0.06596491228070175 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.058823529411764705 - nodes in this community are weakly interconnected._
-- **Should `Community 3` be split into smaller, more focused modules?**
-  _Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected._

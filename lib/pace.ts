@@ -219,9 +219,7 @@ function buildLapsFromInitialPace(
 			distance,
 			time: Math.round(
 				distance *
-					(index < fixedSegmentCount
-						? initialPaceSecondsPerKm
-						: remainingPace),
+					(index < fixedSegmentCount ? initialPaceSecondsPerKm : remainingPace),
 			),
 		}));
 	}
@@ -233,8 +231,10 @@ function buildLapsFromInitialPace(
 		fixedSegmentCount,
 	);
 	if (finalPace == null) return [];
-	if (strategy === "negative" && finalPace >= initialPaceSecondsPerKm) return [];
-	if (strategy === "positive" && finalPace <= initialPaceSecondsPerKm) return [];
+	if (strategy === "negative" && finalPace >= initialPaceSecondsPerKm)
+		return [];
+	if (strategy === "positive" && finalPace <= initialPaceSecondsPerKm)
+		return [];
 
 	const variableSegmentCount = distances.length - fixedSegmentCount;
 	return distances.map((distance, index) => {
@@ -247,7 +247,8 @@ function buildLapsFromInitialPace(
 
 		const progress = (index - fixedSegmentCount + 1) / variableSegmentCount;
 		const pace =
-			initialPaceSecondsPerKm + (finalPace - initialPaceSecondsPerKm) * progress;
+			initialPaceSecondsPerKm +
+			(finalPace - initialPaceSecondsPerKm) * progress;
 		return {
 			distance,
 			time: Math.round(distance * pace),
@@ -255,21 +256,21 @@ function buildLapsFromInitialPace(
 	});
 }
 
-export function buildLaps(
-	distanceKm: number,
+export function buildLapsFromDistances(
+	distances: number[],
 	targetSeconds: number,
 	strategy: Strategy = "constant",
 	spread: number = DEFAULT_SPREAD,
 	initialPaceSecondsPerKm?: number | null,
 	initialPaceSegmentCount: number = 1,
 ): Lap[] {
-	const distances = buildDistances(distanceKm);
-	const total = distances.reduce((a, b) => a + b, 0);
+	const normalizedDistances = distances.filter(distance => distance > 0);
+	const total = normalizedDistances.reduce((a, b) => a + b, 0);
 	if (total === 0) return [];
 
 	if (initialPaceSecondsPerKm != null && initialPaceSecondsPerKm > 0) {
 		return buildLapsFromInitialPace(
-			distances,
+			normalizedDistances,
 			targetSeconds,
 			strategy,
 			initialPaceSecondsPerKm,
@@ -279,7 +280,7 @@ export function buildLaps(
 
 	// Tempo "bruto" de cada trecho com o fator de pace da estratégia.
 	let covered = 0;
-	const raw = distances.map(distance => {
+	const raw = normalizedDistances.map(distance => {
 		// posição central do trecho (0 = início, 1 = fim)
 		const center = total > 1 ? (covered + distance / 2) / total : 0.5;
 		covered += distance;
@@ -291,10 +292,28 @@ export function buildLaps(
 
 	const rawSum = raw.reduce((a, b) => a + b, 0);
 	const scale = rawSum > 0 ? targetSeconds / rawSum : 0;
-	return distances.map((distance, i) => ({
+	return normalizedDistances.map((distance, i) => ({
 		distance,
 		time: Math.round(raw[i] * scale),
 	}));
+}
+
+export function buildLaps(
+	distanceKm: number,
+	targetSeconds: number,
+	strategy: Strategy = "constant",
+	spread: number = DEFAULT_SPREAD,
+	initialPaceSecondsPerKm?: number | null,
+	initialPaceSegmentCount: number = 1,
+): Lap[] {
+	return buildLapsFromDistances(
+		buildDistances(distanceKm),
+		targetSeconds,
+		strategy,
+		spread,
+		initialPaceSecondsPerKm,
+		initialPaceSegmentCount,
+	);
 }
 
 /** Divide o tempo alvo igualmente entre os trechos (proporcional à distância). */
@@ -303,6 +322,50 @@ export function buildEqualLaps(
 	targetSeconds: number,
 ): Lap[] {
 	return buildLaps(distanceKm, targetSeconds, "constant");
+}
+
+function roundDistance(value: number) {
+	return Number(value.toFixed(3));
+}
+
+export function splitLapAtDistance(
+	laps: Lap[],
+	afterLapIndex: number,
+	splitDistanceKm: number,
+): {laps: Lap[]; targetIndex: number; insertIndex: number} | null {
+	const targetIndex = afterLapIndex + 1;
+	const targetLap = laps[targetIndex];
+	if (!targetLap || targetLap.distance <= 0) return null;
+
+	const startDistance = laps
+		.slice(0, targetIndex)
+		.reduce((sum, lap) => sum + lap.distance, 0);
+	const endDistance = startDistance + targetLap.distance;
+	const epsilon = 0.000001;
+	if (
+		!Number.isFinite(splitDistanceKm) ||
+		splitDistanceKm <= startDistance + epsilon ||
+		splitDistanceKm >= endDistance - epsilon
+	) {
+		return null;
+	}
+
+	const firstDistance = roundDistance(splitDistanceKm - startDistance);
+	const secondDistance = roundDistance(endDistance - splitDistanceKm);
+	if (firstDistance <= 0 || secondDistance <= 0) return null;
+
+	const pace = targetLap.time / targetLap.distance;
+	const firstTime = Math.round(firstDistance * pace);
+	const secondTime = Math.max(0, targetLap.time - firstTime);
+	const nextLaps = laps.map(lap => ({...lap}));
+	nextLaps.splice(
+		targetIndex,
+		1,
+		{distance: firstDistance, time: firstTime},
+		{distance: secondDistance, time: secondTime},
+	);
+
+	return {laps: nextLaps, targetIndex, insertIndex: targetIndex + 1};
 }
 
 /**
@@ -382,7 +445,7 @@ const GENERIC_CONSUMABLES: Consumable[] = [
 		carbs: 0,
 		sodium: 300,
 		caffeine: 0,
-		paid: true,
+		paid: false,
 	},
 ];
 

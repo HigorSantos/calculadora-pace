@@ -23,6 +23,10 @@ const routes = [
     path: "/politica-de-privacidade",
     priority: 0.4,
   },
+  {
+    path: "/termos-de-uso",
+    priority: 0.4,
+  },
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {

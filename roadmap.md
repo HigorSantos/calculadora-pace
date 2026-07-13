@@ -9,7 +9,9 @@ Funcionalidades grátis e pagas a serem implementadas seguindo a lógica:
 
 ## Muito Próximo
 
-- Exportar configuração básica (adicionar botao exporta que gera url);
+- Passar prova selecionada para url (se a prova já passou ou nao existe, avisar por dialog);
+- (Correção) Provas com nome grande estão quebrando select;
+- Exibir acoes por trecho a partir de 10km;
 
 ## Médio próxima
 
@@ -17,13 +19,11 @@ Funcionalidades grátis e pagas a serem implementadas seguindo a lógica:
 - Adicionar configuracao para mudança nos split não constantes. Gradual (atual) Não gradual, metade num pace e metade noutro pace;
 - (Paga) Exportar toda a configuração. Config básica e todas as ações e pace por trecho;
 - Exportar trechos para app TimeR MAchine [https://f-droid.org/packages/io.github.deweyreed.timer.other/] [https://toolsina.com/pt/paste-share-text/p/cmqw6yhzf0ce5abc2pqmo0016/];
-- Adicionar divisão dos trechos. Em cada divisão dar o tempo acumulado até ali e o tempo só da divisao. O bloco "0" pode ter uma descrição iniciao; Os demais tem uma descrição tambem. Não pode ter divisão depois do último trecho. Exemplo: (bloco0) 1-7 só aquecimento abaixo do ritmo, (divisão 1) 7-18 ritmo estimado; (divisão 2) 18-21 se aguentar dar tudo de si;
 
 ## Sem prazo
 
 - Tradução do site para outras linguas;
 - Tabela de ritmo
-- Adicionar trecho manualmente em qualquer ponto;
 
 ### Já implementado
 
@@ -43,6 +43,9 @@ Funcionalidades grátis e pagas a serem implementadas seguindo a lógica:
 - Adicionar a estratégia quando nao for constante, em qual pace quero começar a corrida e calcular a partir dai. Exemplo: split negativo para correr 10km em 57min, começando em 07:00 min/km;
 - Importar geis, Dobro, Z2, Paceit;
 - Adicionar campo para informar quantos trechos serão com o pace inicial para split nao constante;
+- Adicionar divisão dos trechos. Em cada divisão dar o tempo acumulado até ali e o tempo só da divisao. O bloco "0" pode ter uma descrição iniciao; Os demais tem uma descrição tambem. Não pode ter divisão depois do último trecho. Exemplo: (bloco0) 1-7 só aquecimento abaixo do ritmo, (divisão 1) 7-18 ritmo estimado; (divisão 2) 18-21 se aguentar dar tudo de si;
+- Exportar configuração básica (adicionar botao exporta que gera url);
+- Adicionar trecho manualmente em qualquer ponto;
 
 https://www.ativo.com/calculadoras-de-performance/tabela-de-ritmo/
 https://www.ativo.com/calculadoras-de-performance/km-a-km/

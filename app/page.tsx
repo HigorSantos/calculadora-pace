@@ -1,4 +1,4 @@
-import {Footprints} from "lucide-react";
+import { SportShoeIcon} from "lucide-react";
 import {PaceCalculator} from "@/components/pace-calculator";
 
 export default function Page() {
@@ -14,6 +14,21 @@ export default function Page() {
 						trecho. Ajuste qualquer parcial e deixe o plano se adaptar
 						automaticamente.
 					</p>
+
+					<div className='mt-5 flex max-w-3xl items-start gap-3 rounded-lg border border-primary/25 bg-primary/5 p-3 text-sm sm:items-center sm:p-4'>
+						<span className='mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary sm:mt-0'>
+							<SportShoeIcon className='size-4' />
+						</span>
+						<div className='space-y-1'>
+							<p className='font-semibold text-foreground'>
+								Monte sua estratégia completa enquanto o Premium está aberto
+							</p>
+							<p className='text-muted-foreground'>
+								Monte sua estratégia completa e teste ações, ritmo e nutrição
+								sem limites enquanto a oferta de lançamento está ativa.
+							</p>
+						</div>
+					</div>
 				</header>
 
 				<PaceCalculator />

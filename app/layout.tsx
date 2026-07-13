@@ -74,6 +74,11 @@ export default function RootLayout({
 		>
 			<head>
 				<script dangerouslySetInnerHTML={{__html: themeInitializer}} />
+				<script
+					defer
+					src='https://cloud.umami.is/script.js'
+					data-website-id='632cb03e-6be7-4157-ace1-17ca416b0596'
+				></script>
 			</head>
 			<body className='font-sans antialiased'>
 				<BillingAccessProvider>

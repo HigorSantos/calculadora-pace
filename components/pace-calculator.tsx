@@ -1,14 +1,34 @@
 "use client";
 
-import {Fragment, useEffect, useMemo, useRef, useState} from "react";
-import {Eye, EyeOff, Redo2, RotateCcw, Timer, Undo2} from "lucide-react";
+import {
+	Fragment,
+	type ChangeEvent,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
+import {
+	Check,
+	CreditCard,
+	DownloadIcon,
+	Heart,
+	Eye,
+	EyeOff,
+	Redo2,
+	RotateCcw,
+	Share2Icon,
+	Timer,
+	Undo2,
+	UploadIcon,
+	CoffeeIcon,
+} from "lucide-react";
 
 import {useBillingAccess} from "@/components/billing-access-provider";
 import {ConsumableManager} from "@/components/pace-calculator-parts/consumable-manager";
 import {
 	LapBlockHeader,
 	LapDivisionBoundary,
-	type LapBlock,
 } from "@/components/pace-calculator-parts/lap-division";
 import {
 	LapRow,
@@ -17,6 +37,48 @@ import {
 import {NutritionSummary} from "@/components/pace-calculator-parts/nutrition-summary";
 import {StatCard} from "@/components/pace-calculator-parts/stat-card";
 import {UpgradeDialog} from "@/components/pace-calculator-parts/upgrade-dialog";
+import {
+	buildLapDistanceRanges,
+	buildLapDivisionSummaries,
+	cloneHistoryValue,
+	areHistorySnapshotsEqual,
+	arePaceQueryValuesEqual,
+	defaultLapDivisions,
+	defaultSelectedConsumableIds,
+	filterActionsByLapCount,
+	mergeLapActions,
+	normalizeLapDivisions,
+	isRecord,
+	parseStoredPaceHistory,
+	parseStoredSelectedConsumables,
+	sameDistance,
+	shiftActionsAfterLapInsertion,
+	shiftActionsAfterLapRemoval,
+	withoutRaceActions,
+} from "@/components/pace-calculator-parts/history";
+import {
+	buildPaceCalculatorExport,
+	countImportedActions,
+	countImportedDivisions,
+	downloadJsonFile,
+	formatImportDateTime,
+	getImportValidationMessage,
+	hasManualLapSplits,
+	isValidDateString,
+	numberValue,
+	parseImportedPaceCalculatorExport,
+	safeExportFilename,
+	type PaceCalculatorExportOptions,
+} from "@/components/pace-calculator-parts/import-export";
+import {
+	PACE_HISTORY_STORAGE_KEY,
+	SELECTED_CONSUMABLES_STORAGE_KEY,
+	type ImportDialogState,
+	type LapDivisionConfig,
+	type PaceHistorySnapshot,
+	type PaceHistoryState,
+	type StoredPaceHistory,
+} from "@/components/pace-calculator-parts/types";
 import {
 	DEFAULT_DISTANCE_INPUT,
 	DEFAULT_PACE_VALUE,
@@ -34,18 +96,38 @@ import {
 } from "@/components/pace-calculator-parts/utils";
 import {Button} from "@/components/ui/button";
 import {Card} from "@/components/ui/card";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {
 	Select,
 	SelectContent,
+	SelectGroup,
 	SelectItem,
 	SelectTrigger,
+	SelectValue,
 } from "@/components/ui/select";
 import {Slider} from "@/components/ui/slider";
 import {Switch} from "@/components/ui/switch";
 import {useUnitSystem} from "@/components/unit-system-provider";
 import {useQueryStringState} from "@/hooks/use-query-string-state";
+import {
+	NO_RACE_CONFIG_ID,
+	RACE_CONFIGURATIONS,
+	buildRaceActions,
+	formatRaceDate,
+	formatRaceDistance,
+	isRaceConfigurationVisible,
+	isRaceConsumableId,
+	raceConsumables,
+} from "@/lib/race-configurations";
 import {
 	canAddCustomConsumable,
 	canAddFreePlanDivision,
@@ -60,6 +142,7 @@ import {
 	applyLapEdit,
 	buildDistances,
 	buildLaps,
+	buildLapsFromDistances,
 	computeNutrition,
 	DEFAULT_CONSUMABLES,
 	DEFAULT_SPREAD,
@@ -67,6 +150,7 @@ import {
 	deriveFinalPaceFromInitialPace,
 	formatTime,
 	parseTime,
+	splitLapAtDistance,
 	type Consumable,
 	type Lap,
 	type Strategy,
@@ -82,305 +166,15 @@ import {
 	toDisplayDistance,
 	toDisplayPace,
 } from "@/lib/units";
+import {useUmami} from "@/hooks/use-umami";
 
-type PaceQueryValues = {
-	distance: string;
-	targetType: TargetMode;
-	targetValue: string;
-	strategy: Strategy;
-	initialPace: string;
-	initialPaceSegments: string;
+const DEFAULT_EXPORT_OPTIONS: PaceCalculatorExportOptions = {
+	includeInitialPace: true,
+	includeCustomSplitSpread: true,
+	includeLapActions: true,
+	includeLapDivisions: true,
+	includeManualLapSplits: true,
 };
-
-type LapDivisionConfig = {
-	breaks: number[];
-	descriptions: Record<number, string>;
-};
-
-type PaceHistorySnapshot = {
-	values: PaceQueryValues;
-	storedTargetValues: {time: string; pace: string};
-	recalc: boolean;
-	spreadPct: number;
-	spreadInput: string;
-	initialPaceInput?: string;
-	laps: Lap[];
-	lapDivisions?: LapDivisionConfig;
-	showActions: boolean;
-	consumables: Consumable[];
-	selectedConsumableIds: string[];
-	actions: Record<number, string[]>;
-	collapseEmpty: boolean;
-};
-
-type PaceHistoryState = {
-	past: PaceHistorySnapshot[];
-	future: PaceHistorySnapshot[];
-};
-
-type StoredPaceHistory = {
-	version: 1;
-	current: PaceHistorySnapshot;
-	history: PaceHistoryState;
-};
-
-const PACE_HISTORY_STORAGE_KEY = "arsenal-pace-calculator-history:v1";
-const SELECTED_CONSUMABLES_STORAGE_KEY = "arsenal-selected-consumables:v1";
-
-function cloneHistoryValue<T>(value: T): T {
-	return JSON.parse(JSON.stringify(value)) as T;
-}
-
-function areHistorySnapshotsEqual(
-	left: PaceHistorySnapshot,
-	right: PaceHistorySnapshot,
-) {
-	return JSON.stringify(left) === JSON.stringify(right);
-}
-
-function arePaceQueryValuesEqual(
-	left: PaceQueryValues,
-	right: PaceQueryValues,
-) {
-	return (
-		left.distance === right.distance &&
-		left.targetType === right.targetType &&
-		left.targetValue === right.targetValue &&
-		left.strategy === right.strategy &&
-		left.initialPace === right.initialPace &&
-		left.initialPaceSegments === right.initialPaceSegments
-	);
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-	return typeof value === "object" && value !== null && !Array.isArray(value);
-}
-
-function isPaceQueryValues(value: unknown): value is PaceQueryValues {
-	return (
-		isRecord(value) &&
-		typeof value.distance === "string" &&
-		typeof value.targetType === "string" &&
-		typeof value.targetValue === "string" &&
-		typeof value.strategy === "string" &&
-		(value.initialPace === undefined ||
-			typeof value.initialPace === "string") &&
-		(value.initialPaceSegments === undefined ||
-			typeof value.initialPaceSegments === "string")
-	);
-}
-
-function isPaceHistorySnapshot(value: unknown): value is PaceHistorySnapshot {
-	return (
-		isRecord(value) &&
-		isPaceQueryValues(value.values) &&
-		isRecord(value.storedTargetValues) &&
-		typeof value.storedTargetValues.time === "string" &&
-		typeof value.storedTargetValues.pace === "string" &&
-		typeof value.recalc === "boolean" &&
-		typeof value.spreadPct === "number" &&
-		typeof value.spreadInput === "string" &&
-		(value.initialPaceInput === undefined ||
-			typeof value.initialPaceInput === "string") &&
-		Array.isArray(value.laps) &&
-		(value.lapDivisions === undefined || isRecord(value.lapDivisions)) &&
-		typeof value.showActions === "boolean" &&
-		Array.isArray(value.consumables) &&
-		(value.selectedConsumableIds === undefined ||
-			Array.isArray(value.selectedConsumableIds)) &&
-		isRecord(value.actions) &&
-		typeof value.collapseEmpty === "boolean"
-	);
-}
-
-function restoreConsumablesFromSnapshot(snapshot: PaceHistorySnapshot) {
-	const defaultIds = new Set(
-		DEFAULT_CONSUMABLES.map(consumable => consumable.id),
-	);
-	const customConsumables = snapshot.consumables.filter(
-		consumable =>
-			consumable.id.startsWith("custom-") && !defaultIds.has(consumable.id),
-	);
-
-	return [...DEFAULT_CONSUMABLES, ...customConsumables];
-}
-
-function filterIdsByConsumables(ids: string[], consumables: Consumable[]) {
-	const validIds = new Set(consumables.map(consumable => consumable.id));
-	return ids.filter(id => validIds.has(id));
-}
-
-function defaultLapDivisions(): LapDivisionConfig {
-	return {breaks: [], descriptions: {0: ""}};
-}
-
-function normalizeLapDivisions(
-	value: unknown,
-	lapCount: number,
-): LapDivisionConfig {
-	if (!isRecord(value)) return defaultLapDivisions();
-
-	const maxBreakIndex = lapCount - 2;
-	const breaks = Array.isArray(value.breaks)
-		? Array.from(
-				new Set(
-					value.breaks.filter(
-						(item): item is number =>
-							Number.isInteger(item) && item >= 0 && item <= maxBreakIndex,
-					),
-				),
-			).sort((a, b) => a - b)
-		: [];
-	const blockCount = breaks.length + 1;
-	const descriptions: Record<number, string> = {0: ""};
-
-	if (isRecord(value.descriptions)) {
-		for (const [key, description] of Object.entries(value.descriptions)) {
-			const index = Number(key);
-			if (
-				Number.isInteger(index) &&
-				index >= 0 &&
-				index < blockCount &&
-				typeof description === "string"
-			) {
-				descriptions[index] = description;
-			}
-		}
-	}
-
-	for (let index = 0; index < blockCount; index += 1) {
-		descriptions[index] ??= "";
-	}
-
-	return {breaks, descriptions};
-}
-
-function buildLapDivisionSummaries(
-	laps: Lap[],
-	breaks: number[],
-): {initial: LapBlock; byBreakIndex: Map<number, LapBlock>} {
-	const byBreakIndex = new Map<number, LapBlock>();
-	const initial = {index: 0, isInitial: true};
-	if (laps.length === 0) return {initial, byBreakIndex};
-
-	let previousBreakIndex: number | null = null;
-	breaks.forEach((breakIndex, position) => {
-		const startIndex = previousBreakIndex == null ? 0 : previousBreakIndex + 1;
-		const startLabel = previousBreakIndex == null ? 1 : previousBreakIndex + 1;
-		const endExclusive = breakIndex + 1;
-		const blockSeconds = laps
-			.slice(startIndex, endExclusive)
-			.reduce((sum, lap) => sum + lap.time, 0);
-		const cumulativeSeconds = laps
-			.slice(0, endExclusive)
-			.reduce((sum, lap) => sum + lap.time, 0);
-
-		byBreakIndex.set(breakIndex, {
-			index: position + 1,
-			startLabel,
-			endLabel: breakIndex + 1,
-			blockSeconds,
-			cumulativeSeconds,
-		});
-		previousBreakIndex = breakIndex;
-	});
-
-	return {initial, byBreakIndex};
-}
-
-function filterActionsByConsumables(
-	actions: Record<number, string[]>,
-	consumables: Consumable[],
-) {
-	const validIds = new Set(consumables.map(consumable => consumable.id));
-	const filteredActions: Record<number, string[]> = {};
-
-	for (const [key, ids] of Object.entries(actions)) {
-		const validActionIds = ids.filter(id => validIds.has(id));
-		if (validActionIds.length > 0)
-			filteredActions[Number(key)] = validActionIds;
-	}
-
-	return filteredActions;
-}
-
-function parseStoredPaceHistory(raw: string | null): StoredPaceHistory | null {
-	if (!raw) return null;
-
-	try {
-		const parsed = JSON.parse(raw) as unknown;
-		if (!isRecord(parsed) || parsed.version !== 1) return null;
-		if (!isPaceHistorySnapshot(parsed.current)) return null;
-		if (!isRecord(parsed.history)) return null;
-		if (!Array.isArray(parsed.history.past)) return null;
-		if (!Array.isArray(parsed.history.future)) return null;
-
-		const normalizeSnapshot = (snapshot: PaceHistorySnapshot) => {
-			const values = {
-				...snapshot.values,
-				initialPace:
-					snapshot.values.initialPace ?? snapshot.initialPaceInput ?? "",
-				initialPaceSegments: snapshot.values.initialPaceSegments ?? "1",
-			};
-			const consumables = restoreConsumablesFromSnapshot(snapshot);
-			const selectedConsumableIds = Array.isArray(
-				snapshot.selectedConsumableIds,
-			)
-				? snapshot.selectedConsumableIds.filter(
-						(id): id is string => typeof id === "string",
-					)
-				: defaultSelectedConsumableIds(DEFAULT_CONSUMABLES);
-
-			return {
-				...snapshot,
-				values,
-				lapDivisions: normalizeLapDivisions(
-					snapshot.lapDivisions,
-					snapshot.laps.length,
-				),
-				consumables,
-				selectedConsumableIds: filterIdsByConsumables(
-					selectedConsumableIds,
-					consumables,
-				),
-				actions: filterActionsByConsumables(snapshot.actions, consumables),
-			};
-		};
-
-		return {
-			version: 1,
-			current: normalizeSnapshot(parsed.current),
-			history: {
-				past: parsed.history.past
-					.filter(isPaceHistorySnapshot)
-					.map(normalizeSnapshot),
-				future: parsed.history.future
-					.filter(isPaceHistorySnapshot)
-					.map(normalizeSnapshot),
-			},
-		};
-	} catch {
-		return null;
-	}
-}
-
-function defaultSelectedConsumableIds(consumables: Consumable[]) {
-	return consumables
-		.filter(consumable => consumable.brand === "Genéricos")
-		.map(consumable => consumable.id);
-}
-
-function parseStoredSelectedConsumables(raw: string | null) {
-	if (!raw) return null;
-
-	try {
-		const parsed = JSON.parse(raw) as unknown;
-		if (!Array.isArray(parsed)) return null;
-		return parsed.filter((id): id is string => typeof id === "string");
-	} catch {
-		return null;
-	}
-}
 
 export function PaceCalculator() {
 	const {
@@ -388,8 +182,23 @@ export function PaceCalculator() {
 		canAccess,
 		isHydrated: isBillingAccessHydrated,
 	} = useBillingAccess();
+
+	const {trackEvent} = useUmami();
+
 	const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
-	const {unitSystem} = useUnitSystem();
+	const [exportDialogOpen, setExportDialogOpen] = useState(false);
+	const [exportOptions, setExportOptions] =
+		useState<PaceCalculatorExportOptions>(() => ({...DEFAULT_EXPORT_OPTIONS}));
+	const [importDialogOpen, setImportDialogOpen] = useState(false);
+	const [importDialogState, setImportDialogState] = useState<ImportDialogState>(
+		{
+			status: "empty",
+		},
+	);
+	const [shareCopied, setShareCopied] = useState(false);
+	const shareFeedbackTimeoutRef = useRef<number | null>(null);
+	const importInputRef = useRef<HTMLInputElement | null>(null);
+	const {unitSystem, setUnitSystem} = useUnitSystem();
 	const {values, setValue, setValues, isHydrated} = useQueryStringState({
 		distance: DEFAULT_DISTANCE_INPUT,
 		targetType: DEFAULT_TARGET_MODE,
@@ -431,6 +240,7 @@ export function PaceCalculator() {
 	const [selectedConsumableIds, setSelectedConsumableIds] = useState<string[]>(
 		() => defaultSelectedConsumableIds(DEFAULT_CONSUMABLES),
 	);
+	const [selectedRaceId, setSelectedRaceId] = useState(NO_RACE_CONFIG_ID);
 	// índice do trecho -> lista de ids de consumíveis (pode repetir)
 	const [actions, setActions] = useState<Record<number, string[]>>({});
 	// esconder trechos sem ação quando a lista fica longa
@@ -444,6 +254,7 @@ export function PaceCalculator() {
 	const focusedFieldSnapshotRef = useRef<PaceHistorySnapshot | null>(null);
 	const isRestoringHistoryRef = useRef(false);
 	const skipNextRegenerateRef = useRef(false);
+	const manualDistanceEditRef = useRef(false);
 	const historyStorageRestoredRef = useRef(false);
 	const skipNextHistoryStoragePersistRef = useRef(false);
 
@@ -461,6 +272,7 @@ export function PaceCalculator() {
 		() => laps.reduce((a, l) => a + l.distance, 0),
 		[laps],
 	);
+	const lapDistanceRanges = useMemo(() => buildLapDistanceRanges(laps), [laps]);
 	const diff = totalTime - targetSeconds;
 	const avgPace = totalDistance > 0 ? totalTime / totalDistance : 0;
 	// No modo pace, a diferença exibida é de ritmo, não de tempo total.
@@ -492,8 +304,22 @@ export function PaceCalculator() {
 			),
 		[consumables, selectedConsumableIdSet],
 	);
+	const availableRaceConfigurations = useMemo(
+		() =>
+			RACE_CONFIGURATIONS.filter(race => isRaceConfigurationVisible(race)).sort(
+				(a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+			),
+		[],
+	);
+	const selectedRace = useMemo(
+		() =>
+			availableRaceConfigurations.find(race => race.id === selectedRaceId) ??
+			null,
+		[availableRaceConfigurations, selectedRaceId],
+	);
 	const actionLimit = maxActionsForLapCount(laps.length);
-	const actionCount = countActionsWithinLaps(actions, laps.length);
+	const limitedActions = useMemo(() => withoutRaceActions(actions), [actions]);
+	const actionCount = countActionsWithinLaps(limitedActions, laps.length);
 	const normalizedLapDivisions = useMemo(
 		() => normalizeLapDivisions(lapDivisions, laps.length),
 		[lapDivisions, laps.length],
@@ -557,6 +383,32 @@ export function PaceCalculator() {
 		[normalizedLapDivisions.breaks],
 	);
 
+	const hasExportInitialPaceConfig =
+		values.initialPace.trim().length > 0 || values.initialPaceSegments !== "1";
+	const hasExportCustomSplitSpread =
+		canUseCustomSplitSpread && strategy !== "constant";
+	const hasExportLapActions = hasAnyAction;
+	const hasExportLapDivisions =
+		normalizedLapDivisions.breaks.length > 0 ||
+		Object.values(normalizedLapDivisions.descriptions).some(
+			description => description.trim().length > 0,
+		);
+	const hasExportManualLapSplits = useMemo(
+		() => hasManualLapSplits(laps, totalDistance),
+		[laps, totalDistance],
+	);
+	const selectedExportOptions: PaceCalculatorExportOptions = {
+		includeInitialPace:
+			exportOptions.includeInitialPace && hasExportInitialPaceConfig,
+		includeCustomSplitSpread:
+			exportOptions.includeCustomSplitSpread && hasExportCustomSplitSpread,
+		includeLapActions: exportOptions.includeLapActions && hasExportLapActions,
+		includeLapDivisions:
+			exportOptions.includeLapDivisions && hasExportLapDivisions,
+		includeManualLapSplits:
+			exportOptions.includeManualLapSplits && hasExportManualLapSplits,
+	};
+
 	const hiddenCount = useMemo(
 		() =>
 			collapsed
@@ -575,7 +427,13 @@ export function PaceCalculator() {
 		initialDisplayPace == null
 			? null
 			: fromDisplayPace(initialDisplayPace, unitSystem);
-	const strategyDistances = useMemo(() => buildDistances(distance), [distance]);
+	const strategyDistances = useMemo(() => {
+		if (sameDistance(totalDistance, distance)) {
+			return laps.map(lap => lap.distance);
+		}
+
+		return buildDistances(distance);
+	}, [distance, laps, totalDistance]);
 	const parsedInitialPaceSegments = Number.parseInt(
 		initialPaceSegmentInput,
 		10,
@@ -632,6 +490,7 @@ export function PaceCalculator() {
 			showActions,
 			consumables,
 			selectedConsumableIds,
+			selectedRaceId,
 			actions,
 			collapseEmpty,
 		});
@@ -690,6 +549,7 @@ export function PaceCalculator() {
 		setShowActions(snapshot.showActions);
 		setConsumables(snapshot.consumables);
 		setSelectedConsumableIds(snapshot.selectedConsumableIds);
+		setSelectedRaceId(snapshot.selectedRaceId ?? NO_RACE_CONFIG_ID);
 		setActions(snapshot.actions);
 		setCollapseEmpty(snapshot.collapseEmpty);
 		window.setTimeout(() => {
@@ -748,9 +608,13 @@ export function PaceCalculator() {
 			displayInitialPace == null
 				? null
 				: fromDisplayPace(displayInitialPace, unitSystem);
+		const nextDistances = sameDistance(totalDistance, nextDistance)
+			? laps.map(lap => lap.distance)
+			: buildDistances(nextDistance);
+
 		setLaps(
-			buildLaps(
-				nextDistance,
+			buildLapsFromDistances(
+				nextDistances,
 				secs,
 				nextStrategy,
 				nextSpreadPct / 100,
@@ -875,6 +739,7 @@ export function PaceCalculator() {
 		showActions,
 		consumables,
 		selectedConsumableIds,
+		selectedRaceId,
 		actions,
 		collapseEmpty,
 	]);
@@ -924,8 +789,32 @@ export function PaceCalculator() {
 		pushHistorySnapshot(before);
 	});
 
+	useEffect(() => {
+		if (!manualDistanceEditRef.current) return;
+		manualDistanceEditRef.current = false;
+		clearRaceSelection({clearAllActions: true});
+	}, [distanceInput]);
+
+	function clearRaceSelection(options?: {clearAllActions?: boolean}) {
+		setSelectedRaceId(NO_RACE_CONFIG_ID);
+		setConsumables(currentConsumables =>
+			currentConsumables.filter(
+				consumable => !isRaceConsumableId(consumable.id),
+			),
+		);
+		setSelectedConsumableIds(currentIds =>
+			currentIds.filter(id => !isRaceConsumableId(id)),
+		);
+		setActions(currentActions =>
+			options?.clearAllActions ? {} : withoutRaceActions(currentActions),
+		);
+	}
+
 	function handleDistanceChange(value: string) {
+		manualDistanceEditRef.current = true;
+		markHistoryChange();
 		setValue("distance", value);
+		clearRaceSelection({clearAllActions: true});
 	}
 
 	function handleTargetChange(value: string) {
@@ -951,12 +840,14 @@ export function PaceCalculator() {
 			targetType: value,
 			targetValue: storedTargetValues[value],
 		});
+		trackEvent("change_target_mode", {targetMode});
 	}
 
 	function handleStrategyChange(value: Strategy | null) {
 		if (!value || value === strategy) return;
 		markHistoryChange();
 		setValue("strategy", value);
+		trackEvent("change_strategy", {strategy: value});
 	}
 
 	function applySpread(pct: number) {
@@ -1003,6 +894,7 @@ export function PaceCalculator() {
 
 	function applyPreset(preset: Preset) {
 		markHistoryChange();
+		clearRaceSelection({clearAllActions: true});
 		setValues({
 			distance: formatDisplayNumber(
 				toDisplayDistance(preset.distance, unitSystem),
@@ -1012,6 +904,81 @@ export function PaceCalculator() {
 			).replace(".", ","),
 			targetType: "time",
 			targetValue: preset.time,
+		});
+		trackEvent("apply_preset", {preset: preset.distance});
+	}
+
+	function applyRaceConfiguration(raceId: string | null) {
+		const nextRaceId = raceId || NO_RACE_CONFIG_ID;
+		const race =
+			availableRaceConfigurations.find(item => item.id === nextRaceId) ?? null;
+		const baseConsumables = consumables.filter(
+			consumable => !isRaceConsumableId(consumable.id),
+		);
+		const baseSelectedConsumableIds = selectedConsumableIds.filter(
+			id => !isRaceConsumableId(id),
+		);
+		const baseActions = withoutRaceActions(actions);
+
+		markHistoryChange();
+		setSelectedRaceId(race?.id ?? NO_RACE_CONFIG_ID);
+
+		if (!race) {
+			clearRaceSelection();
+			return;
+		}
+
+		const nextDistance = race.distanceKm;
+		const nextDistanceInput = formatDisplayNumber(
+			toDisplayDistance(nextDistance, unitSystem),
+			{maximumFractionDigits: 3},
+		).replace(".", ",");
+		const nextTargetSeconds = resolveTargetSeconds(
+			targetMode,
+			nextDistance,
+			targetInput,
+			paceInput,
+			unitSystem,
+		);
+		const displayInitialPace =
+			initialPaceInput.trim() === "" ? null : parseTime(initialPaceInput);
+		const nextInitialPace =
+			displayInitialPace == null
+				? null
+				: fromDisplayPace(displayInitialPace, unitSystem);
+		const nextLaps =
+			nextTargetSeconds == null || nextTargetSeconds <= 0
+				? []
+				: buildLaps(
+						nextDistance,
+						nextTargetSeconds,
+						strategy,
+						spreadPct / 100,
+						nextInitialPace,
+						initialPaceSegments,
+					);
+		const nextRaceConsumables = raceConsumables(race);
+		const nextRaceConsumableIds = nextRaceConsumables.map(item => item.id);
+		const nextActions = mergeLapActions(
+			filterActionsByLapCount(baseActions, nextLaps.length),
+			buildRaceActions(race, nextLaps),
+		);
+
+		skipNextRegenerateRef.current = true;
+		setValues({distance: nextDistanceInput});
+		setLaps(nextLaps);
+		setShowActions(true);
+		setConsumables([...baseConsumables, ...nextRaceConsumables]);
+		setSelectedConsumableIds(
+			Array.from(
+				new Set([...baseSelectedConsumableIds, ...nextRaceConsumableIds]),
+			),
+		);
+		setActions(nextActions);
+		trackEvent("apply_race_configuration", {
+			race_id: race.id,
+			race_nam: race.name,
+			race_distance: race.distanceKm,
 		});
 	}
 
@@ -1050,6 +1017,7 @@ export function PaceCalculator() {
 					: lap,
 			);
 		});
+		trackEvent("repeat_lap_to_end", {distance: totalDistance});
 	}
 
 	function copyPreviousAverageToLap(index: number, count: number) {
@@ -1075,6 +1043,7 @@ export function PaceCalculator() {
 					: lap,
 			);
 		});
+		trackEvent("copy_average_laps", {distance: totalDistance});
 	}
 
 	function reset() {
@@ -1084,15 +1053,35 @@ export function PaceCalculator() {
 
 	function addAction(lapIndex: number, consumableId: string) {
 		const consumable = consumables.find(item => item.id === consumableId);
-		if (!consumable || !selectedConsumableIdSet.has(consumableId)) return;
-		if (!canUsePaidConsumables && consumable.paid) return;
+		if (!consumable || !selectedConsumableIdSet.has(consumableId)) {
+			return;
+		}
+		trackEvent("add_action", {
+			type: "init",
+			consumable_brand: consumable.brand,
+			distance: totalDistance,
+		});
+		if (!canUsePaidConsumables && consumable.paid) {
+			trackEvent("block_paid_consumable", {consumable: consumable.name});
+
+			return;
+		}
 
 		const current = actions[lapIndex] ?? [];
-		if (!canAddLapAction(accessMode, current.length)) return;
+		const currentLimitedActionCount = current.filter(
+			id => !isRaceConsumableId(id),
+		).length;
+		if (!canAddLapAction(accessMode, currentLimitedActionCount)) {
+			trackEvent("block_lap_action", {accessMode: accessMode});
+
+			return;
+		}
 		if (
 			!canUseUnlimitedPlanActions &&
-			!canAddPlanAction(actions, laps.length)
+			!canAddPlanAction(limitedActions, laps.length)
 		) {
+			trackEvent("block_plan_action", {accessMode: accessMode});
+
 			return;
 		}
 
@@ -1101,6 +1090,63 @@ export function PaceCalculator() {
 			...prev,
 			[lapIndex]: [...(prev[lapIndex] ?? []), consumableId],
 		}));
+		trackEvent("add_action", {
+			type: "add",
+			consumable_brand: consumable.brand,
+			distance: totalDistance,
+		});
+	}
+
+	function removeLap(index: number) {
+		if (laps.length <= 1 || !laps[index]) return;
+
+		const mergeTargetIndex = index < laps.length - 1 ? index + 1 : index - 1;
+		const firstIndex = Math.min(index, mergeTargetIndex);
+		const secondIndex = Math.max(index, mergeTargetIndex);
+		const firstLap = laps[firstIndex];
+		const secondLap = laps[secondIndex];
+		if (!firstLap || !secondLap) return;
+
+		const nextLaps = laps.map(lap => ({...lap}));
+		nextLaps.splice(firstIndex, 2, {
+			distance: Number((firstLap.distance + secondLap.distance).toFixed(3)),
+			time: firstLap.time + secondLap.time,
+		});
+		const removedBoundaryIndex = firstIndex;
+
+		markHistoryChange();
+		setLaps(nextLaps);
+		setActions(currentActions =>
+			shiftActionsAfterLapRemoval(currentActions, index, mergeTargetIndex),
+		);
+		setLapDivisions(currentDivisions => {
+			const current = normalizeLapDivisions(currentDivisions, laps.length);
+			const keptBreaks = current.breaks.filter(
+				breakIndex => breakIndex !== removedBoundaryIndex,
+			);
+			const nextBreaks = keptBreaks.map(breakIndex =>
+				breakIndex > removedBoundaryIndex ? breakIndex - 1 : breakIndex,
+			);
+			const descriptions: Record<number, string> = {
+				0: current.descriptions[0] ?? "",
+			};
+
+			for (const breakIndex of keptBreaks) {
+				const oldPosition = current.breaks.indexOf(breakIndex) + 1;
+				const newBreakIndex =
+					breakIndex > removedBoundaryIndex ? breakIndex - 1 : breakIndex;
+				const newPosition = nextBreaks.indexOf(newBreakIndex) + 1;
+				if (newPosition > 0) {
+					descriptions[newPosition] = current.descriptions[oldPosition] ?? "";
+				}
+			}
+
+			return normalizeLapDivisions(
+				{breaks: nextBreaks, descriptions},
+				nextLaps.length,
+			);
+		});
+		trackEvent("remove_lap", {distance: totalDistance});
 	}
 
 	function addLapDivision(afterLapIndex: number) {
@@ -1108,6 +1154,8 @@ export function PaceCalculator() {
 		if (normalizedLapDivisions.breaks.includes(afterLapIndex)) return;
 		if (!canAddMoreLapDivisions) {
 			setUpgradeDialogOpen(true);
+			trackEvent("block_add_lap_division", {distance: totalDistance});
+
 			return;
 		}
 
@@ -1134,6 +1182,45 @@ export function PaceCalculator() {
 				laps.length,
 			);
 		});
+
+		trackEvent("add_lap_division", {distance: totalDistance});
+	}
+
+	function formatSplitDistanceInput(distanceKm: number) {
+		return formatDisplayNumber(toDisplayDistance(distanceKm, unitSystem), {
+			maximumFractionDigits: 3,
+		}).replace(".", ",");
+	}
+
+	function addLapSplit(afterLapIndex: number, rawDistance: string) {
+		const splitDistance = parseDisplayDistance(rawDistance, unitSystem);
+		if (splitDistance == null) return false;
+
+		const result = splitLapAtDistance(laps, afterLapIndex, splitDistance);
+		if (!result) {
+			return false;
+		}
+
+		markHistoryChange();
+		setLaps(result.laps);
+		setActions(currentActions =>
+			shiftActionsAfterLapInsertion(currentActions, result.insertIndex),
+		);
+		setLapDivisions(currentDivisions => {
+			const current = normalizeLapDivisions(currentDivisions, laps.length);
+			return normalizeLapDivisions(
+				{
+					breaks: current.breaks.map(breakIndex =>
+						breakIndex >= result.targetIndex ? breakIndex + 1 : breakIndex,
+					),
+					descriptions: current.descriptions,
+				},
+				result.laps.length,
+			);
+		});
+		trackEvent("add_lap_split", {distance: totalDistance});
+
+		return true;
 	}
 
 	function removeLapDivision(afterLapIndex: number) {
@@ -1160,6 +1247,7 @@ export function PaceCalculator() {
 				laps.length,
 			);
 		});
+		trackEvent("remove_lap_division", {distance: totalDistance});
 	}
 
 	function updateLapDivisionDescription(index: number, description: string) {
@@ -1173,7 +1261,9 @@ export function PaceCalculator() {
 	}
 
 	function removeAction(lapIndex: number, actionIndex: number) {
-		if (!actions[lapIndex]?.[actionIndex]) return;
+		if (!actions[lapIndex]?.[actionIndex]) {
+			return;
+		}
 		markHistoryChange();
 		setActions(prev => {
 			const current = prev[lapIndex] ?? [];
@@ -1183,6 +1273,7 @@ export function PaceCalculator() {
 			else copy[lapIndex] = next;
 			return copy;
 		});
+		trackEvent("remove_action", {distance: totalDistance});
 	}
 
 	function addConsumable(c: Omit<Consumable, "id">) {
@@ -1200,6 +1291,7 @@ export function PaceCalculator() {
 			{...c, brand: c.brand || "Genéricos", id},
 		]);
 		setSelectedConsumableIds(prev => [...prev, id]);
+		trackEvent("add_consumable", {distance: totalDistance, consumable_id: id});
 	}
 
 	function toggleSelectedConsumable(id: string, selected: boolean) {
@@ -1209,6 +1301,14 @@ export function PaceCalculator() {
 			return prev.filter(item => item !== id);
 		});
 	}
+
+	useEffect(() => {
+		return () => {
+			if (shareFeedbackTimeoutRef.current) {
+				window.clearTimeout(shareFeedbackTimeoutRef.current);
+			}
+		};
+	}, []);
 
 	function removeConsumable(id: string) {
 		const consumable = consumables.find(item => item.id === id);
@@ -1226,60 +1326,385 @@ export function PaceCalculator() {
 			}
 			return copy;
 		});
+
+		trackEvent("remove_consumable", {
+			distance: totalDistance,
+			consumable_id: id,
+		});
 	}
+
+	function showShareCopiedFeedback() {
+		setShareCopied(true);
+		if (shareFeedbackTimeoutRef.current) {
+			window.clearTimeout(shareFeedbackTimeoutRef.current);
+		}
+		shareFeedbackTimeoutRef.current = window.setTimeout(() => {
+			setShareCopied(false);
+			shareFeedbackTimeoutRef.current = null;
+		}, 2400);
+	}
+
+	const handleShare = async () => {
+		if (typeof window === "undefined") {
+			trackEvent("error_copy_link", {
+				distance: totalDistance,
+				error: "window undefined",
+			});
+
+			return;
+		}
+
+		const url = new URL(window.location.href);
+
+		for (const [key, value] of Object.entries(values)) {
+			if (value.trim() === "") {
+				url.searchParams.delete(key);
+			} else {
+				url.searchParams.set(key, value);
+			}
+		}
+
+		const shareUrl = url.toString();
+
+		if (navigator.clipboard?.writeText) {
+			const copied = await navigator.clipboard.writeText(shareUrl).then(
+				() => true,
+				() => false,
+			);
+
+			if (copied) {
+				showShareCopiedFeedback();
+				trackEvent("copy_link", {distance: totalDistance});
+
+				return;
+			}
+		}
+
+		const textArea = document.createElement("textarea");
+		textArea.value = shareUrl;
+		textArea.style.position = "fixed";
+		textArea.style.opacity = "0";
+		document.body.appendChild(textArea);
+		textArea.select();
+		const copied = document.execCommand("copy");
+		document.body.removeChild(textArea);
+
+		if (copied) {
+			showShareCopiedFeedback();
+		}
+
+		trackEvent("copy_link", {distance: totalDistance});
+	};
+
+	const updateExportOption = (
+		key: keyof PaceCalculatorExportOptions,
+		checked: boolean,
+	) => {
+		setExportOptions(current => ({...current, [key]: checked}));
+	};
+
+	const handleDownload = (options: PaceCalculatorExportOptions) => {
+		if (typeof window === "undefined") {
+			trackEvent("error_download_config", {
+				distance: totalDistance,
+				error: "window undefined",
+			});
+			return;
+		}
+
+		const exportedAt = new Date();
+		const payload = buildPaceCalculatorExport({
+			exportedAt,
+			unitSystem,
+			values: {...values},
+			storedTargetValues: {...storedTargetValues},
+			recalc,
+			spreadPct,
+			spreadInput,
+			targetSeconds,
+			totalDistance,
+			totalTime,
+			averagePace: avgPace,
+			selectedRaceId,
+			consumables,
+			selectedConsumableIds,
+			laps,
+			actions,
+			normalizedLapDivisions,
+			lapDivisionSummaries,
+			options,
+		});
+
+		downloadJsonFile(safeExportFilename(exportedAt), payload);
+		setExportDialogOpen(false);
+		trackEvent("download_config", {
+			distance: totalDistance,
+			includeInitialPace: options.includeInitialPace,
+			includeCustomSplitSpread: options.includeCustomSplitSpread,
+			includeLapActions: options.includeLapActions,
+			includeLapDivisions: options.includeLapDivisions,
+			includeManualLapSplits: options.includeManualLapSplits,
+		});
+	};
+
+	function closeImportDialog() {
+		setImportDialogOpen(false);
+		setImportDialogState({status: "empty"});
+	}
+
+	function confirmImport() {
+		if (importDialogState.status !== "ready") {
+			return;
+		}
+
+		const {imported} = importDialogState.review;
+		const before = captureHistorySnapshot();
+		pushHistorySnapshot(before, imported.snapshot);
+
+		if (imported.unitSystem) {
+			setUnitSystem(imported.unitSystem);
+		}
+
+		restoreHistorySnapshot(imported.snapshot);
+
+		trackEvent("import_config", {
+			status: "complete",
+		});
+
+		closeImportDialog();
+	}
+
+	async function handleImportFile(event: ChangeEvent<HTMLInputElement>) {
+		const file = event.currentTarget.files?.[0];
+		event.currentTarget.value = "";
+		if (!file) return;
+
+		setImportDialogOpen(true);
+
+		try {
+			const parsed = JSON.parse(await file.text()) as unknown;
+			const validationMessage = getImportValidationMessage(parsed);
+			if (validationMessage) {
+				setImportDialogState({
+					status: "error",
+					fileName: file.name,
+					message: validationMessage,
+				});
+				trackEvent("error_import_config", {
+					message: validationMessage,
+				});
+				return;
+			}
+
+			const imported = parseImportedPaceCalculatorExport(parsed);
+			if (
+				!imported ||
+				!isRecord(parsed) ||
+				!isValidDateString(parsed.exportedAt)
+			) {
+				setImportDialogState({
+					status: "error",
+					fileName: file.name,
+					message:
+						"A configuração é compatível, mas os dados internos não puderam ser lidos com segurança.",
+				});
+				trackEvent("error_import_config", {
+					message: "configuração compatível",
+				});
+				return;
+			}
+
+			setImportDialogState({
+				status: "ready",
+				review: {
+					fileName: file.name,
+					loadedAt: new Date().toISOString(),
+					version: numberValue(parsed.version),
+					exportedAt: parsed.exportedAt,
+					lapCount: Array.isArray(parsed.laps) ? parsed.laps.length : 0,
+					actionCount: countImportedActions(parsed),
+					divisionCount: countImportedDivisions(parsed),
+					imported,
+				},
+			});
+		} catch {
+			setImportDialogState({
+				status: "error",
+				fileName: file.name,
+				message:
+					"Não foi possível ler o arquivo. Selecione um JSON exportado pela calculadora.",
+			});
+			trackEvent("error_import_config", {
+				message: "Não foi possível ler o arquivo",
+			});
+		}
+	}
+
 	return (
 		<div className='grid items-start gap-6 lg:grid-cols-[380px_1fr]'>
 			{/* Painel de configuração */}
-			<Card className='h-fit p-6 lg:sticky lg:top-6'>
-				<div className='flex items-center justify-between gap-3'>
+			<Card className='h-fit p-6'>
+				<div className='flex items-center justify-between gap-4'>
 					<h2 className='text-lg font-semibold'>Configuração</h2>
-					<div className='flex items-center gap-1'>
-						<Button
-							type='button'
-							variant='outline'
-							size='icon-sm'
-							onClick={undoHistory}
-							disabled={!canUndo}
-							aria-label='Desfazer alteração'
-							title='Desfazer'
+					<div className='relative flex items-center'>
+						<div
+							className={cn(
+								"flex items-center gap-4 transition-transform duration-200 ease-out",
+								shareCopied ? "-translate-x-16" : "translate-x-0",
+							)}
 						>
-							<Undo2 className='size-4' />
-						</Button>
-						<Button
-							type='button'
-							variant='outline'
-							size='icon-sm'
-							onClick={redoHistory}
-							disabled={!canRedo}
-							aria-label='Refazer alteração'
-							title='Refazer'
+							<div className='flex items-center gap-1'>
+								<Button
+									type='button'
+									variant='outline'
+									size='icon-sm'
+									onClick={undoHistory}
+									disabled={!canUndo}
+									aria-label='Desfazer alteração'
+									title='Desfazer'
+								>
+									<Undo2 className='size-4' />
+								</Button>
+								<Button
+									type='button'
+									variant='outline'
+									size='icon-sm'
+									onClick={redoHistory}
+									disabled={!canRedo}
+									aria-label='Refazer alteração'
+									title='Refazer'
+								>
+									<Redo2 className='size-4' />
+								</Button>
+							</div>
+							<div className='flex items-center gap-1'>
+								<Button
+									onClick={() => handleShare()}
+									title={shareCopied ? "Configuração copiada" : "Compartilhar"}
+									size='icon-sm'
+									variant='outline'
+									aria-label={
+										shareCopied
+											? "Configuração copiada"
+											: "Compartilhar configuração"
+									}
+								>
+									{shareCopied ? <Check className='size-4' /> : <Share2Icon />}
+								</Button>
+								<Button
+									onClick={() => setExportDialogOpen(true)}
+									title='Exportar'
+									size='icon-sm'
+									variant='outline'
+									aria-label='Exportar configuração'
+								>
+									<DownloadIcon />
+								</Button>
+								<Button
+									type='button'
+									onClick={() => setImportDialogOpen(true)}
+									title='Importar'
+									size='icon-sm'
+									variant='outline'
+									aria-label='Importar configuração'
+								>
+									<UploadIcon />
+								</Button>
+							</div>
+						</div>
+						<span
+							className={cn(
+								"pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 whitespace-nowrap text-xs font-medium text-primary transition-all duration-200 ease-out",
+								shareCopied
+									? "translate-x-0 opacity-100"
+									: "translate-x-2 opacity-0",
+							)}
+							aria-live='polite'
 						>
-							<Redo2 className='size-4' />
-						</Button>
+							{shareCopied ? "Copiada" : ""}
+						</span>
 					</div>
 				</div>
 				<p className='mt-1 text-sm text-muted-foreground text-pretty'>
-					Informe a distância e o tempo alvo. O ritmo é dividido igualmente
-					entre os trechos.
+					Informe a distância, tempo ou pace alvo e estratégia. O plano se
+					adapta automaticamente.
 				</p>
-				<div className='mt-4 space-y-2'>
-					<span className='text-xs font-medium text-muted-foreground'>
-						Distâncias rápidas
-					</span>
-					<div className='flex flex-wrap gap-2'>
-						{PRESETS.map(preset => (
-							<Button
-								key={preset.distance}
-								variant='outline'
-								size='sm'
-								onClick={() => applyPreset(preset)}
+				<div className='mt-2 space-y-5'>
+					<div className='flex flex-col items-start gap-6 rounded-lg border border-border p-4'>
+						<div className='space-y-2'>
+							<span className='text-xs font-medium text-muted-foreground'>
+								Distâncias rápidas
+							</span>
+							<div className='flex flex-wrap gap-2'>
+								{PRESETS.map(preset => (
+									<Button
+										key={preset.distance}
+										variant='outline'
+										size='sm'
+										onClick={() => applyPreset(preset)}
+									>
+										{formatDisplayDistance(preset.distance, unitSystem)}
+									</Button>
+								))}
+							</div>
+						</div>
+						<div className='flex w-full min-w-0 flex-col gap-2 overflow-hidden'>
+							<Label htmlFor='race-configuration'>
+								Importar dados de prova
+							</Label>
+							<p className='text-xs text-muted-foreground text-pretty'>
+								Selecione uma prova para carregar distância e pontos de apoio.{" "}
+								<strong className='underline'>Atenção:</strong> sempre confira
+								as informações oficiais junto ao organizador.
+							</p>
+							<Select
+								value={selectedRaceId}
+								onValueChange={applyRaceConfiguration}
 							>
-								{formatDisplayDistance(preset.distance, unitSystem)}
-							</Button>
-						))}
+								<SelectTrigger
+									id='race-configuration'
+									className='w-full min-w-0 max-w-full [&>span]:w-0 [&>span]:min-w-0 [&>span]:flex-1 [&>span]:truncate'
+								>
+									<SelectValue
+										className='w-0 min-w-0 flex-1 truncate'
+										placeholder='Selecione uma prova'
+									>
+										{availableRaceConfigurations.find(
+											r => r.id === selectedRaceId,
+										)?.name || "Selecione uma prova"}
+									</SelectValue>
+								</SelectTrigger>
+								<SelectContent>
+									<SelectGroup>
+										<SelectItem value={NO_RACE_CONFIG_ID}>
+											Nenhuma prova
+										</SelectItem>
+										{availableRaceConfigurations.map(race => (
+											<SelectItem key={race.id} value={race.id}>
+												<span className='block min-w-0 truncate'>
+													{race.name}
+												</span>
+												{/* <p className='text-xs text-muted-foreground'>
+													{formatRaceDate(race.date)}
+												</p> */}
+											</SelectItem>
+										))}
+									</SelectGroup>
+								</SelectContent>
+							</Select>
+							{selectedRace && (
+								<>
+									<p className='text-xs text-muted-foreground text-pretty'>
+										{formatRaceDate(selectedRace.date)} ·{" "}
+										{formatRaceDistance(selectedRace.distanceKm)} ·{" "}
+										{selectedRace.items.length}{" "}
+										{selectedRace.items.length === 1 ? "item" : "itens"} de
+										prova
+									</p>
+								</>
+							)}
+						</div>
 					</div>
-				</div>
-				<div className='mt-6 space-y-5'>
 					<div className='space-y-2'>
 						<Label htmlFor='distance'>
 							Distância ({distanceUnitLabel(unitSystem)})
@@ -1572,6 +1997,51 @@ export function PaceCalculator() {
 
 			{/* Resultado */}
 			<div className='flex flex-col gap-4'>
+				{true && (
+					// accessMode !== "paid"
+					<div className='grid gap-3 rounded-lg border border-border bg-card p-4 sm:grid-cols-[1fr_auto] sm:items-center'>
+						<div className='space-y-1'>
+							<p className='text-sm font-semibold text-foreground'>
+								Apoie o Arsenal da Corrida
+							</p>
+							<p className='text-xs leading-6 text-muted-foreground'>
+								O Buy Me a Coffee é só um apoio ao site para manter toda a
+								estrutura do site e <strong>não libera</strong> o Premium.
+								{false && (
+									<span>
+										{" "}
+										Para desbloquear ações ilimitadas, e todos os recursos
+										pagos, assine o plano anual.
+									</span>
+								)}
+							</p>
+						</div>
+
+						<div className='grid gap-2 sm:min-w-56'>
+							{false && (
+								<Button
+									id='comprar-premium'
+									type='button'
+									className='h-10 w-full gap-2'
+									onClick={() => setUpgradeDialogOpen(true)}
+								>
+									<CreditCard className='size-4' />
+									Assinar Premium
+								</Button>
+							)}
+							<a
+								id='buymeacoffee'
+								href='https://www.buymeacoffee.com/higorsantos'
+								target='_blank'
+								rel='noreferrer'
+								className='inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-border bg-background px-3 text-sm font-medium transition-colors hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none'
+							>
+								<CoffeeIcon className='size-4 text-primary' />
+								Apoiar o site (Buy Me a Coffee)
+							</a>
+						</div>
+					</div>
+				)}
 				<div className='grid shrink-0 gap-4 grid-cols-2'>
 					<StatCard
 						label='Tempo total'
@@ -1612,10 +2082,19 @@ export function PaceCalculator() {
 				</div>
 
 				<Card className='flex flex-col overflow-hidden p-0'>
-					<div className='flex shrink-0 flex-wrap items-center gap-2 border-b border-border px-5 py-4'>
-						<Timer className='size-4 text-primary' />
-						<h2 className='font-semibold'>Trecho a trecho</h2>
-						<div className='ml-auto flex flex-wrap items-center justify-end gap-2'>
+					<div className='flex flex-col shrink-0 flex-wrap items-center gap-2 border-b border-border px-5 py-4'>
+						<div className='flex flex-col items-center gap-0'>
+							<div className='flex'>
+								<Timer className='size-4 text-primary' />
+								<h2 className='font-semibold'>Trecho a trecho</h2>
+							</div>
+							<span className='text-xs text-muted-foreground'>
+								{collapsed
+									? `${hiddenCount} ocultos`
+									: `${laps.length} ${laps.length === 1 ? "trecho" : "trechos"}`}
+							</span>
+						</div>
+						<div className='w-full flex flex-row items-center justify-center gap-4'>
 							<Button
 								variant='outline'
 								size='sm'
@@ -1657,11 +2136,6 @@ export function PaceCalculator() {
 									)}
 								</Button>
 							)}
-							<span className='text-sm text-muted-foreground'>
-								{collapsed
-									? `${hiddenCount} ocultos`
-									: `${laps.length} ${laps.length === 1 ? "trecho" : "trechos"}`}
-							</span>
 						</div>
 					</div>
 
@@ -1706,12 +2180,19 @@ export function PaceCalculator() {
 										const isDivisionBoundary = lapDivisionBreakSet.has(
 											item.index,
 										);
+										const range = lapDistanceRanges[item.index] ?? {
+											start: item.index,
+											end: item.index + laps[item.index].distance,
+										};
+										const nextRange = lapDistanceRanges[item.index + 1];
 
 										return (
 											<Fragment key={item.index}>
 												<LapRow
 													index={item.index}
 													lap={laps[item.index]}
+													startDistanceKm={range.start}
+													endDistanceKm={range.end}
 													cumulative={laps
 														.slice(0, item.index + 1)
 														.reduce((a, l) => a + l.time, 0)}
@@ -1724,6 +2205,7 @@ export function PaceCalculator() {
 													onCopyPreviousAverage={count =>
 														copyPreviousAverageToLap(item.index, count)
 													}
+													onRemoveLap={() => removeLap(item.index)}
 													showActions={showActions}
 													canAddMultipleActions={canUseMultipleActionsPerLap}
 													canAddMorePlanActions={canAddMorePlanActions}
@@ -1763,6 +2245,27 @@ export function PaceCalculator() {
 														onAdd={() => addLapDivision(item.index)}
 														onRemove={() => removeLapDivision(item.index)}
 														onRequestUpgrade={() => setUpgradeDialogOpen(true)}
+														splitPlaceholder={
+															nextRange
+																? formatSplitDistanceInput(
+																		range.end + (nextRange.end - range.end) / 2,
+																	)
+																: undefined
+														}
+														splitRangeLabel={
+															nextRange
+																? `${formatDisplayDistance(
+																		range.end,
+																		unitSystem,
+																	)} e ${formatDisplayDistance(nextRange.end, unitSystem)}`
+																: undefined
+														}
+														onAddLapSplit={
+															nextRange
+																? rawDistance =>
+																		addLapSplit(item.index, rawDistance)
+																: undefined
+														}
 													/>
 												) : null}
 											</Fragment>
@@ -1778,6 +2281,317 @@ export function PaceCalculator() {
 					<NutritionSummary nutrition={nutrition} totalSeconds={totalTime} />
 				)}
 			</div>
+
+			<Dialog open={exportDialogOpen} onOpenChange={setExportDialogOpen}>
+				<DialogContent className='max-h-[calc(100svh-1rem)] w-[calc(100vw-1rem)] max-w-lg overflow-y-auto sm:w-full'>
+					<DialogHeader className='pr-7'>
+						<DialogTitle>Exportar configuração</DialogTitle>
+						<DialogDescription>
+							Escolha quais dados opcionais entram no arquivo JSON. Distância,
+							alvo e estratégia serão incluídos sempre.
+						</DialogDescription>
+					</DialogHeader>
+
+					<div className='flex flex-col gap-4'>
+						<div className='rounded-md border border-border bg-muted/35 p-3 text-sm'>
+							<p className='font-medium text-foreground'>Incluído sempre</p>
+							<p className='mt-1 text-muted-foreground'>
+								Distância, tipo de alvo, pace ou tempo alvo e estratégia.
+							</p>
+						</div>
+
+						<div className='flex flex-col gap-2'>
+							<label
+								className={cn(
+									"flex gap-3 rounded-md border border-border p-3 text-sm transition-colors",
+									!hasExportInitialPaceConfig && "opacity-55",
+								)}
+							>
+								<input
+									type='checkbox'
+									className='mt-1 size-4 accent-primary'
+									checked={exportOptions.includeInitialPace}
+									onChange={event =>
+										updateExportOption(
+											"includeInitialPace",
+											event.target.checked,
+										)
+									}
+								/>
+								<span>
+									<span className='block font-medium text-foreground'>
+										Pace inicial e trechos iniciais
+									</span>
+									<span className='text-muted-foreground'>
+										{hasExportInitialPaceConfig
+											? "Inclui a configuração de largada quando preenchida."
+											: "Sem configuração de largada preenchida agora."}
+									</span>
+								</span>
+							</label>
+
+							<label
+								className={cn(
+									"flex gap-3 rounded-md border border-border p-3 text-sm transition-colors",
+									!hasExportCustomSplitSpread && "opacity-55",
+								)}
+							>
+								<input
+									type='checkbox'
+									className='mt-1 size-4 accent-primary'
+									checked={exportOptions.includeCustomSplitSpread}
+									onChange={event =>
+										updateExportOption(
+											"includeCustomSplitSpread",
+											event.target.checked,
+										)
+									}
+								/>
+								<span>
+									<span className='block font-medium text-foreground'>
+										Variação máxima do split
+									</span>
+									<span className='text-muted-foreground'>
+										{hasExportCustomSplitSpread
+											? "Inclui a variação personalizada do split."
+											: "Disponível para split positivo ou negativo no plano pago."}
+									</span>
+								</span>
+							</label>
+
+							<label
+								className={cn(
+									"flex gap-3 rounded-md border border-border p-3 text-sm transition-colors",
+									!hasExportLapActions && "opacity-55",
+								)}
+							>
+								<input
+									type='checkbox'
+									className='mt-1 size-4 accent-primary'
+									checked={exportOptions.includeLapActions}
+									onChange={event =>
+										updateExportOption(
+											"includeLapActions",
+											event.target.checked,
+										)
+									}
+								/>
+								<span>
+									<span className='block font-medium text-foreground'>
+										Ações dos trechos
+									</span>
+									<span className='text-muted-foreground'>
+										{hasExportLapActions
+											? "Inclui as ações e apenas os consumíveis usados nelas."
+											: "Sem ações adicionadas aos trechos agora."}
+									</span>
+								</span>
+							</label>
+
+							<label
+								className={cn(
+									"flex gap-3 rounded-md border border-border p-3 text-sm transition-colors",
+									!hasExportLapDivisions && "opacity-55",
+								)}
+							>
+								<input
+									type='checkbox'
+									className='mt-1 size-4 accent-primary'
+									checked={exportOptions.includeLapDivisions}
+									onChange={event =>
+										updateExportOption(
+											"includeLapDivisions",
+											event.target.checked,
+										)
+									}
+								/>
+								<span>
+									<span className='block font-medium text-foreground'>
+										Divisões de trecho
+									</span>
+									<span className='text-muted-foreground'>
+										{hasExportLapDivisions
+											? "Inclui descrições e tempos dos blocos configurados."
+											: "Sem divisões configuradas agora."}
+									</span>
+								</span>
+							</label>
+
+							<label
+								className={cn(
+									"flex gap-3 rounded-md border border-border p-3 text-sm transition-colors",
+									!hasExportManualLapSplits && "opacity-55",
+								)}
+							>
+								<input
+									type='checkbox'
+									className='mt-1 size-4 accent-primary'
+									checked={exportOptions.includeManualLapSplits}
+									onChange={event =>
+										updateExportOption(
+											"includeManualLapSplits",
+											event.target.checked,
+										)
+									}
+								/>
+								<span>
+									<span className='block font-medium text-foreground'>
+										Trechos adicionados manualmente
+									</span>
+									<span className='text-muted-foreground'>
+										{hasExportManualLapSplits
+											? "Sem isso, os trechos são exportados nos marcos padrão da distância."
+											: "Sem trechos manuais adicionados agora."}
+									</span>
+								</span>
+							</label>
+						</div>
+					</div>
+
+					<DialogFooter className='pt-2'>
+						<Button
+							type='button'
+							variant='outline'
+							onClick={() => setExportDialogOpen(false)}
+						>
+							Cancelar
+						</Button>
+						<Button
+							type='button'
+							onClick={() => handleDownload(selectedExportOptions)}
+						>
+							Exportar JSON
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
+
+			<Dialog
+				open={importDialogOpen}
+				onOpenChange={nextOpen => {
+					if (nextOpen) {
+						setImportDialogOpen(true);
+						return;
+					}
+					closeImportDialog();
+				}}
+			>
+				<DialogContent className='max-h-[calc(100svh-1rem)] w-[calc(100vw-1rem)] max-w-lg overflow-y-auto sm:w-full'>
+					<DialogHeader className='pr-7'>
+						<DialogTitle>Importar configuração</DialogTitle>
+						<DialogDescription>
+							Selecione um JSON exportado pela calculadora para validar a versão
+							antes de substituir os dados atuais.
+						</DialogDescription>
+					</DialogHeader>
+
+					<div className='flex flex-col gap-4'>
+						<input
+							ref={importInputRef}
+							type='file'
+							accept='.json,application/json'
+							className='hidden'
+							onChange={handleImportFile}
+						/>
+						<Button
+							type='button'
+							variant='outline'
+							onClick={() => importInputRef.current?.click()}
+							className='w-full justify-center'
+						>
+							<UploadIcon />
+							Selecionar arquivo JSON
+						</Button>
+
+						{importDialogState.status === "empty" ? (
+							<p className='text-sm text-muted-foreground'>
+								Nenhum arquivo selecionado ainda.
+							</p>
+						) : null}
+
+						{importDialogState.status === "error" ? (
+							<div className='flex flex-col gap-2 rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm'>
+								<span className='font-medium text-foreground'>
+									{importDialogState.fileName}
+								</span>
+								<p className='text-muted-foreground'>
+									{importDialogState.message}
+								</p>
+							</div>
+						) : null}
+
+						{importDialogState.status === "ready" ? (
+							<div className='flex flex-col gap-3 rounded-md border border-border bg-muted/40 p-3 text-sm'>
+								<div>
+									<p className='font-medium text-foreground'>
+										{importDialogState.review.fileName}
+									</p>
+									<p className='text-muted-foreground'>
+										Versão compatível: {importDialogState.review.version}
+									</p>
+								</div>
+								<div className='grid gap-2 sm:grid-cols-2'>
+									<div>
+										<span className='text-xs font-medium uppercase tracking-wide text-muted-foreground'>
+											Exportado em
+										</span>
+										<p>
+											{formatImportDateTime(
+												importDialogState.review.exportedAt ?? "",
+											)}
+										</p>
+									</div>
+									<div>
+										<span className='text-xs font-medium uppercase tracking-wide text-muted-foreground'>
+											Lido em
+										</span>
+										<p>
+											{formatImportDateTime(importDialogState.review.loadedAt)}
+										</p>
+									</div>
+								</div>
+								<div className='grid grid-cols-3 gap-2 text-center'>
+									<div className='rounded-md bg-background px-2 py-2'>
+										<p className='text-base font-semibold'>
+											{importDialogState.review.lapCount}
+										</p>
+										<p className='text-xs text-muted-foreground'>trechos</p>
+									</div>
+									<div className='rounded-md bg-background px-2 py-2'>
+										<p className='text-base font-semibold'>
+											{importDialogState.review.actionCount}
+										</p>
+										<p className='text-xs text-muted-foreground'>ações</p>
+									</div>
+									<div className='rounded-md bg-background px-2 py-2'>
+										<p className='text-base font-semibold'>
+											{importDialogState.review.divisionCount}
+										</p>
+										<p className='text-xs text-muted-foreground'>divisões</p>
+									</div>
+								</div>
+								<p className='text-muted-foreground'>
+									Ao confirmar, os dados preenchidos na tela serão perdidos e
+									substituídos por esta configuração.
+								</p>
+							</div>
+						) : null}
+					</div>
+
+					<DialogFooter className='pt-2'>
+						<Button type='button' variant='outline' onClick={closeImportDialog}>
+							Cancelar
+						</Button>
+						<Button
+							type='button'
+							onClick={confirmImport}
+							disabled={importDialogState.status !== "ready"}
+						>
+							Importar configuração
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
 
 			<UpgradeDialog
 				open={upgradeDialogOpen}

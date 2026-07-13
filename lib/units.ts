@@ -43,8 +43,13 @@ export function toDisplayPace(secondsPerKm: number, unitSystem: UnitSystem) {
 	return unitSystem === "imperial" ? secondsPerKm / KM_TO_MILES : secondsPerKm;
 }
 
-export function fromDisplayPace(secondsPerUnit: number, unitSystem: UnitSystem) {
-	return unitSystem === "imperial" ? secondsPerUnit * KM_TO_MILES : secondsPerUnit;
+export function fromDisplayPace(
+	secondsPerUnit: number,
+	unitSystem: UnitSystem,
+) {
+	return unitSystem === "imperial"
+		? secondsPerUnit * KM_TO_MILES
+		: secondsPerUnit;
 }
 
 export function toDisplaySpeed(speedKmh: number, unitSystem: UnitSystem) {
@@ -70,7 +75,10 @@ export function massUnitLabel(
 
 export function formatDisplayNumber(
 	value: number,
-	options: {maximumFractionDigits?: number; minimumFractionDigits?: number} = {},
+	options: {
+		maximumFractionDigits?: number;
+		minimumFractionDigits?: number;
+	} = {},
 ) {
 	return value.toLocaleString("pt-BR", {
 		maximumFractionDigits: options.maximumFractionDigits ?? 2,
@@ -81,21 +89,35 @@ export function formatDisplayNumber(
 export function formatDisplayDistance(
 	distanceKm: number,
 	unitSystem: UnitSystem,
+	reverse?: boolean,
 ) {
 	const value = toDisplayDistance(distanceKm, unitSystem);
-	return `${formatDisplayNumber(value, {
-		maximumFractionDigits: 2,
-		minimumFractionDigits: value % 1 === 0 ? 0 : 1,
-	})} ${distanceUnitLabel(unitSystem)}`;
+	if (!reverse) {
+		return `${formatDisplayNumber(value, {
+			maximumFractionDigits: 2,
+			minimumFractionDigits: value % 1 === 0 ? 0 : 1,
+		})} ${distanceUnitLabel(unitSystem)}`;
+	} else {
+		return `${distanceUnitLabel(unitSystem)} ${formatDisplayNumber(value, {
+			maximumFractionDigits: 2,
+			minimumFractionDigits: value % 1 === 0 ? 0 : 1,
+		})}`;
+	}
 }
 
-export function formatDisplayPace(secondsPerKm: number, unitSystem: UnitSystem) {
+export function formatDisplayPace(
+	secondsPerKm: number,
+	unitSystem: UnitSystem,
+) {
 	return `${formatUnitTime(toDisplayPace(secondsPerKm, unitSystem))} ${paceUnitLabel(
 		unitSystem,
 	)}`;
 }
 
-export function formatDisplaySpeed(speedKmh: number | null, unitSystem: UnitSystem) {
+export function formatDisplaySpeed(
+	speedKmh: number | null,
+	unitSystem: UnitSystem,
+) {
 	if (speedKmh == null) return "--";
 	return `${formatDisplayNumber(toDisplaySpeed(speedKmh, unitSystem), {
 		maximumFractionDigits: 2,

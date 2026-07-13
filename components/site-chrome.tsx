@@ -168,18 +168,39 @@ export function SiteFooter() {
 						Construído para corredores que querem trocar improviso por plano,
 						sem transformar a rotina em planilha infinita.
 					</p>
-					<Link
-						href='/politica-de-privacidade'
-						className='mt-3 inline-flex text-sm font-medium text-primary hover:underline'
-					>
-						Política de privacidade
-					</Link>
+					<div className='mt-3 flex flex-col items-start gap-2'>
+						<Link
+							href='/politica-de-privacidade'
+							className='inline-flex text-sm font-medium text-primary hover:underline'
+						>
+							Política de privacidade
+						</Link>
+						<Link
+							href='/termos-de-uso'
+							className='inline-flex text-sm font-medium text-primary hover:underline'
+						>
+							Termos de uso
+						</Link>
+					</div>
+					<div>
+						<p className='mt-3 text-sm leading-6 text-muted-foreground'>
+							{" "}
+							Fale comigo no Threads
+						</p>
+						<Link
+							href='https://www.threads.com/@higoros'
+							className='mt-3 inline-flex text-sm font-medium text-primary hover:underline'
+							target='_blank'
+						>
+							@higoros
+						</Link>
+					</div>
 				</div>
 			</div>
 			<div className='mx-auto grid w-full max-w-6xl gap-8 px-4 py-8 sm:px-6'>
 				<p className='text-xs text-muted-foreground'>
-					Todos os nomes de marcas, logotipos e marcas comerciais mencionados
-					neste site, como Z2, Pace It, Dobro®, pertencem aos seus respectivos
+					Todos os logos e marcas comerciais mencionados neste site, como Z2,
+					Pace It, Dobro®, ou nome de provas pertencem aos seus respectivos
 					donos. O site Arsenal do Corredor não possui associação, afiliação ou
 					endosso destas marcas.
 				</p>
