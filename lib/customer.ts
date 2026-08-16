@@ -1,5 +1,7 @@
 import {randomUUID} from "crypto";
+
 import {getDb} from "@/lib/mongodb";
+import {normalizeOrderNsuLookupValue} from "./order-nsu";
 
 export type IdentifierType =
 	| "email"
@@ -29,7 +31,20 @@ export type Customer = {
 	installments: number | null;
 	orderNsu: string | null;
 	transactionNsu: string | null;
+	registeredAtBrasilia: string | null;
+	clientIp: string | null;
+	clientPort: string | null;
 };
+
+export class CustomerEmailAlreadyExistsError extends Error {
+	readonly email: string;
+
+	constructor(email: string) {
+		super("Email já cadastrado");
+		this.name = "CustomerEmailAlreadyExistsError";
+		this.email = email;
+	}
+}
 
 async function collection() {
 	const db = await getDb();
@@ -58,7 +73,16 @@ export async function findByOrderNsu(
 	orderNsu: string,
 ): Promise<Customer | null> {
 	const col = await collection();
-	return col.findOne({orderNsu}, {projection: {_id: 0}});
+	const normalizedOrderNsu = normalizeOrderNsuLookupValue(orderNsu);
+	const orderNsuCandidates =
+		normalizedOrderNsu === orderNsu
+			? [orderNsu]
+			: [orderNsu, normalizedOrderNsu];
+
+	return col.findOne(
+		{orderNsu: {$in: orderNsuCandidates}},
+		{projection: {_id: 0}},
+	);
 }
 
 export async function createCustomer(
@@ -78,6 +102,9 @@ export async function createCustomer(
 		installments: null,
 		orderNsu: null,
 		transactionNsu: null,
+		registeredAtBrasilia: null,
+		clientIp: null,
+		clientPort: null,
 	};
 	await col.insertOne(customer);
 	return customer;
@@ -100,6 +127,9 @@ export type CreateInfinitePayCheckoutCustomerInput = {
 	name: string;
 	email: string;
 	orderNsu?: string | null;
+	registeredAtBrasilia?: string | null;
+	clientIp?: string | null;
+	clientPort?: string | null;
 };
 
 export async function createInfinitePayCheckoutCustomer(
@@ -109,26 +139,15 @@ export async function createInfinitePayCheckoutCustomer(
 	const name = input.name.trim().replace(/\s+/g, " ");
 	const email = input.email.trim().toLowerCase();
 	const existing = await findByIdentifier("email", email);
-	const orderNsu = input.orderNsu ?? existing?.orderNsu ?? randomUUID();
+	if (existing) {
+		throw new CustomerEmailAlreadyExistsError(email);
+	}
+
+	const orderNsu = input.orderNsu ?? randomUUID();
 	const identifiers: CustomerIdentifier[] = [
 		{type: "email", value: email},
 		{type: "infinite_pay_order_nsu", value: orderNsu},
 	];
-
-	if (existing) {
-		await col.updateOne(
-			{customerId: existing.customerId},
-			{
-				$set: {
-					name,
-					paymentPlatform: existing.paymentPlatform ?? "infinite-pay",
-					orderNsu,
-				},
-				$addToSet: {identifiers: {$each: identifiers}},
-			},
-		);
-		return (await findByCustomerId(existing.customerId))!;
-	}
 
 	const customer: Customer = {
 		customerId: randomUUID(),
@@ -143,6 +162,9 @@ export async function createInfinitePayCheckoutCustomer(
 		installments: null,
 		orderNsu,
 		transactionNsu: null,
+		registeredAtBrasilia: input.registeredAtBrasilia ?? null,
+		clientIp: input.clientIp ?? null,
+		clientPort: input.clientPort ?? null,
 	};
 	await col.insertOne(customer);
 	return customer;

@@ -85,6 +85,11 @@ export default function TermosDeUsoPage() {
 								O não pagamento na data de vencimento poderá acarretar a
 								suspensão do uso das funcionalidades Premium.
 							</li>
+							<li>
+								Doações realizadas pelo Buy Me a Coffee não configuram compra do
+								plano Premium; elas são consideradas ajudas voluntárias para
+								manter o site.
+							</li>
 						</ul>
 					</div>
 

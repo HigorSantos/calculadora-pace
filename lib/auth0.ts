@@ -105,6 +105,10 @@ export type CreateAuth0UserResult = {
 	userId: string | null;
 };
 
+type Auth0ManagementUser = {
+	email?: string;
+};
+
 async function getAuth0ManagementToken() {
 	const config = auth0Config();
 	const response = await fetch(`https://${config.domain}/oauth/token`, {
@@ -134,6 +138,27 @@ function generateTemporaryPassword() {
 	return `${randomBytes(24).toString("base64url")}Aa1!`;
 }
 
+export async function auth0UserEmailExists(email: string) {
+	const config = auth0Config();
+	const accessToken = await getAuth0ManagementToken();
+	const normalizedEmail = email.trim().toLowerCase();
+	const url = new URL(`https://${config.domain}/api/v2/users-by-email`);
+	url.searchParams.set("email", normalizedEmail);
+
+	const response = await fetch(url, {
+		headers: {Authorization: `Bearer ${accessToken}`},
+	});
+
+	if (!response.ok) {
+		throw new Error("Falha ao consultar usuário na Auth0");
+	}
+
+	const users = (await response.json()) as Auth0ManagementUser[];
+	return users.some(
+		user => user.email?.trim().toLowerCase() === normalizedEmail,
+	);
+}
+
 export async function createAuth0DatabaseUser(
 	email: string,
 ): Promise<CreateAuth0UserResult> {
@@ -151,7 +176,7 @@ export async function createAuth0DatabaseUser(
 			connection: config.connection,
 			email: normalizedEmail,
 			// password: generateTemporaryPassword(),
-			email_verified: false,
+			email_verified: true,
 			// verify_email: true,
 			user_metadata: {
 				criacao: new Date().toISOString(),

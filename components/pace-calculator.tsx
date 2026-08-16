@@ -23,6 +23,7 @@ import {
 	UploadIcon,
 	CoffeeIcon,
 } from "lucide-react";
+import {useRouter} from "next/navigation";
 
 import {useBillingAccess} from "@/components/billing-access-provider";
 import {ConsumableManager} from "@/components/pace-calculator-parts/consumable-manager";
@@ -36,7 +37,6 @@ import {
 } from "@/components/pace-calculator-parts/lap-row";
 import {NutritionSummary} from "@/components/pace-calculator-parts/nutrition-summary";
 import {StatCard} from "@/components/pace-calculator-parts/stat-card";
-import {UpgradeDialog} from "@/components/pace-calculator-parts/upgrade-dialog";
 import {
 	buildLapDistanceRanges,
 	buildLapDivisionSummaries,
@@ -184,8 +184,8 @@ export function PaceCalculator() {
 	} = useBillingAccess();
 
 	const {trackEvent} = useUmami();
+	const router = useRouter();
 
-	const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
 	const [exportDialogOpen, setExportDialogOpen] = useState(false);
 	const [exportOptions, setExportOptions] =
 		useState<PaceCalculatorExportOptions>(() => ({...DEFAULT_EXPORT_OPTIONS}));
@@ -282,6 +282,15 @@ export function PaceCalculator() {
 			? 0
 			: fromDisplayPace(targetDisplayPace, unitSystem);
 	const paceDiff = avgPace > 0 && targetPace > 0 ? avgPace - targetPace : 0;
+
+	function openPremiumPage(source: string) {
+		trackEvent("premium_cta_click", {
+			source,
+			distance: totalDistance,
+			accessMode,
+		});
+		router.push(`/premium?source=${encodeURIComponent(source)}`);
+	}
 
 	const canUsePaidConsumables = canAccess("consumable-paid-presets");
 	const canUseMultipleActionsPerLap = canAccess("multiple-actions-per-lap");
@@ -1153,8 +1162,8 @@ export function PaceCalculator() {
 		if (afterLapIndex < 0 || afterLapIndex >= laps.length - 1) return;
 		if (normalizedLapDivisions.breaks.includes(afterLapIndex)) return;
 		if (!canAddMoreLapDivisions) {
-			setUpgradeDialogOpen(true);
 			trackEvent("block_add_lap_division", {distance: totalDistance});
+			openPremiumPage("lap-division-limit");
 
 			return;
 		}
@@ -1914,7 +1923,7 @@ export function PaceCalculator() {
 						{!canUseCustomSplitSpread && (
 							<Button
 								variant={"link"}
-								onClick={() => setUpgradeDialogOpen(true)}
+								onClick={() => openPremiumPage("custom-split-spread")}
 							>
 								Desbloquear controle de ritmo
 							</Button>
@@ -2023,7 +2032,7 @@ export function PaceCalculator() {
 									id='comprar-premium'
 									type='button'
 									className='h-10 w-full gap-2'
-									onClick={() => setUpgradeDialogOpen(true)}
+									onClick={() => openPremiumPage("premium-button")}
 								>
 									<CreditCard className='size-4' />
 									Assinar Premium
@@ -2216,7 +2225,7 @@ export function PaceCalculator() {
 													onRemoveAction={actionIndex =>
 														removeAction(item.index, actionIndex)
 													}
-													onRequestUpgrade={() => setUpgradeDialogOpen(true)}
+													onRequestUpgrade={() => openPremiumPage("lap-action-limit")}
 													paidMode={canUseUnlimitedPlanActions}
 												/>
 												{block && !collapsed ? (
@@ -2244,7 +2253,7 @@ export function PaceCalculator() {
 														canAdd={canAddMoreLapDivisions}
 														onAdd={() => addLapDivision(item.index)}
 														onRemove={() => removeLapDivision(item.index)}
-														onRequestUpgrade={() => setUpgradeDialogOpen(true)}
+														onRequestUpgrade={() => openPremiumPage("lap-division-limit")}
 														splitPlaceholder={
 															nextRange
 																? formatSplitDistanceInput(
@@ -2593,10 +2602,6 @@ export function PaceCalculator() {
 				</DialogContent>
 			</Dialog>
 
-			<UpgradeDialog
-				open={upgradeDialogOpen}
-				onClose={() => setUpgradeDialogOpen(false)}
-			/>
 		</div>
 	);
 }

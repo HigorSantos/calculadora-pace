@@ -73,12 +73,15 @@ export default function RootLayout({
 			className={`${ManropeSans.variable} ${geistMono.variable} bg-background`}
 		>
 			<head>
+				<meta name='msvalidate.01' content='D4C574E834000FE2EB06C965402A5902' />
 				<script dangerouslySetInnerHTML={{__html: themeInitializer}} />
-				<script
-					defer
-					src='https://cloud.umami.is/script.js'
-					data-website-id='632cb03e-6be7-4157-ace1-17ca416b0596'
-				></script>
+				{process.env.NODE_ENV !== "development" && (
+					<script
+						defer
+						src='https://cloud.umami.is/script.js'
+						data-website-id='632cb03e-6be7-4157-ace1-17ca416b0596'
+					></script>
+				)}
 			</head>
 			<body className='font-sans antialiased'>
 				<BillingAccessProvider>

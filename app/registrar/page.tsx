@@ -56,19 +56,20 @@ export default async function RegistrarPage({
 				transactionId={transactionId}
 				amountPaidCents={customer?.amountPaidCents ?? null}
 			/>
-			<div className='mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-10 sm:px-6 sm:py-14'>
+			<div className='mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-8 sm:px-6 sm:py-14'>
 				<header>
 					<p className='text-sm font-medium text-primary'>Área paga</p>
 					<h1 className='mt-3 text-3xl font-bold tracking-tight text-balance sm:text-4xl'>
 						Finalize seu acesso
 					</h1>
 					<p className='mt-3 max-w-2xl text-sm leading-6 text-muted-foreground'>
-						Depois da confirmação do pagamento, entre ou crie sua conta pela
-						Auth0 para liberar seu plano no Arsenal do Corredor.
+						Depois da confirmação do pagamento, você receberá um email com
+						instruções para criar sua conta pela Auth0 e liberar seu plano no
+						Arsenal do Corredor.
 					</p>
 				</header>
 
-				<section className=' p-5 sm:p-6'>
+				<section className=''>
 					{canRegister ? (
 						<div className='space-y-4'>
 							<div>
@@ -76,8 +77,14 @@ export default async function RegistrarPage({
 									Pagamento confirmado
 								</h2>
 								<p className='mt-2 text-sm leading-6 text-muted-foreground'>
-									Seu plano foi localizado. Continue para entrar ou criar sua
-									conta.
+									Seu plano foi localizado. Siga as instruções enviadas por
+									e-mail. Se não recebeu, verifique sua caixa de spam ou aguarde
+									alguns minutos. Caso não receba, entre em contato com o
+									suporte.
+								</p>
+								<p className='mt-2 text-sm leading-6 text-muted-foreground'>
+									Se já criou a sua senha clique no botão abaixo para fazer
+									login.
 								</p>
 							</div>
 							<Link

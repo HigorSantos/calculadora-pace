@@ -1,7 +1,7 @@
 {
   "app/layout.tsx": {
-    "mtime": 1783782514.5990071,
-    "ast_hash": "2998f37b242ac0b30398234ba3528f7a",
+    "mtime": 1784576366.3757877,
+    "ast_hash": "3e3030565ba2b09ac29ef1bcd56b436e",
     "semantic_hash": ""
   },
   "app/page.tsx": {
@@ -15,8 +15,8 @@
     "semantic_hash": ""
   },
   "components/pace-calculator.tsx": {
-    "mtime": 1783801597.2259526,
-    "ast_hash": "6d32c9644bc96a2ba17006e907415fb9",
+    "mtime": 1784040284.5563734,
+    "ast_hash": "a4622b8fc3dfa13d72437eaaf9b9b8ea",
     "semantic_hash": ""
   },
   "components/ui/badge.tsx": {
@@ -80,8 +80,8 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1783037480.0532722,
-    "ast_hash": "0bcfb046662f21b303edd037dc9e1a82",
+    "mtime": 1783949019.5094461,
+    "ast_hash": "d8328676da667c9ccba972675653de4d",
     "semantic_hash": ""
   },
   "postcss.config.mjs": {
@@ -340,8 +340,8 @@
     "semantic_hash": ""
   },
   "lib/customer.ts": {
-    "mtime": 1783188031.5926678,
-    "ast_hash": "7c6270d20b5eaefb58a5a3aa27141d04",
+    "mtime": 1785586477.3385763,
+    "ast_hash": "9513d5eb14feaac80dec2a9cffc930dd",
     "semantic_hash": ""
   },
   "lib/mongodb.ts": {
@@ -350,13 +350,13 @@
     "semantic_hash": ""
   },
   "app/api/checkout/infinite-pay/start/route.ts": {
-    "mtime": 1783188031.5967398,
-    "ast_hash": "bd4f4018a5eb6a812097015cb1b142c9",
+    "mtime": 1785586387.520381,
+    "ast_hash": "ec7e677234e58112e449dc011b185d9b",
     "semantic_hash": ""
   },
   "app/politica-de-privacidade/page.tsx": {
-    "mtime": 1783947679.42234,
-    "ast_hash": "5cbaef3df980eb3a9807907a174a8816",
+    "mtime": 1783948994.9622748,
+    "ast_hash": "186694899132b435a39d4eaaf405cef2",
     "semantic_hash": ""
   },
   "lib/customer-cookie.test.ts": {
@@ -375,13 +375,13 @@
     "semantic_hash": ""
   },
   "app/registrar/page.tsx": {
-    "mtime": 1783794418.1120846,
-    "ast_hash": "c3c01486b43247cd8c2f3814e7a7785f",
+    "mtime": 1785584448.3806603,
+    "ast_hash": "d9ec2e9b94f03213a4f084d78f3ed3cc",
     "semantic_hash": ""
   },
   "lib/auth0.ts": {
-    "mtime": 1783195705.9068766,
-    "ast_hash": "87db891e9a87cb60b463270ca32ab2d1",
+    "mtime": 1785585326.6400573,
+    "ast_hash": "2daba2a537d42b127d821c8afe78822d",
     "semantic_hash": ""
   },
   "public/full.svg": {
@@ -460,8 +460,33 @@
     "semantic_hash": ""
   },
   "app/termos-de-uso/page.tsx": {
-    "mtime": 1783948704.4430292,
-    "ast_hash": "527e8b3e7cd5daed72322445adc74bb2",
+    "mtime": 1783968624.9081352,
+    "ast_hash": "c3ab65876d11c889ab01e8e62657bae2",
+    "semantic_hash": ""
+  },
+  "app/premium/page.tsx": {
+    "mtime": 1784040321.400898,
+    "ast_hash": "df568c2355bcc406e043ab34f2321e2b",
+    "semantic_hash": ""
+  },
+  "components/premium-upgrade-page.tsx": {
+    "mtime": 1784049379.5284455,
+    "ast_hash": "45530312549687744fda4bd0d7342dad",
+    "semantic_hash": ""
+  },
+  "lib/auth0.test.ts": {
+    "mtime": 1785585106.057702,
+    "ast_hash": "c8019059a980629a79ffa0f114be9def",
+    "semantic_hash": ""
+  },
+  "lib/customer.test.ts": {
+    "mtime": 1785586477.338725,
+    "ast_hash": "f1bf63a1fc1dd6c5c0eb23d8ff146da2",
+    "semantic_hash": ""
+  },
+  "lib/order-nsu.ts": {
+    "mtime": 1785586477.3384175,
+    "ast_hash": "008db5ea024651e987f3e964e6272bf1",
     "semantic_hash": ""
   }
 }

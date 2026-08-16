@@ -1,7 +1,11 @@
 import {randomUUID} from "crypto";
 import {NextRequest, NextResponse} from "next/server";
 
-import {createInfinitePayCheckoutCustomer} from "@/lib/customer";
+import {auth0UserEmailExists} from "@/lib/auth0";
+import {
+	createInfinitePayCheckoutCustomer,
+	CustomerEmailAlreadyExistsError,
+} from "@/lib/customer";
 import {PAYMENT_AUTH_ENABLED} from "@/lib/payment-auth";
 
 const INFINITE_PAY_LINKS_URL = "https://api.checkout.infinitepay.io/links";
@@ -29,6 +33,32 @@ function infinitePayHandle() {
 	return handle && handle.length > 0 ? handle : null;
 }
 
+function brasiliaTimestamp(date = new Date()) {
+	const brasiliaOffsetMs = -3 * 60 * 60 * 1000;
+	return new Date(date.getTime() + brasiliaOffsetMs)
+		.toISOString()
+		.replace("Z", "-03:00");
+}
+
+function forwardedClientIp(req: NextRequest) {
+	const forwardedFor =
+		req.headers.get("x-forwarded-for") ??
+		req.headers.get("x-vercel-forwarded-for") ??
+		req.headers.get("x-real-ip");
+	return forwardedFor?.split(",")[0]?.trim() || null;
+}
+
+function forwardedClientPort(req: NextRequest) {
+	return req.headers.get("x-forwarded-port")?.trim() || null;
+}
+
+function emailAlreadyRegisteredResponse() {
+	return NextResponse.json(
+		{error: "Este e-mail já está cadastrado."},
+		{status: 409},
+	);
+}
+
 export async function POST(req: NextRequest) {
 	if (!PAYMENT_AUTH_ENABLED) {
 		return NextResponse.json({error: "Checkout disponível somente em desenvolvimento"}, {status: 404});
@@ -52,8 +82,30 @@ export async function POST(req: NextRequest) {
 		);
 	}
 
-	const orderNsu = `${randomUUID()}+${email}`;
-	const customer = await createInfinitePayCheckoutCustomer({name, email, orderNsu});
+	const auth0EmailAlreadyExists = await auth0UserEmailExists(email);
+	if (auth0EmailAlreadyExists) {
+		return emailAlreadyRegisteredResponse();
+	}
+
+	const orderNsu = randomUUID();
+	const customer = await createInfinitePayCheckoutCustomer({
+		name,
+		email,
+		orderNsu,
+		registeredAtBrasilia: brasiliaTimestamp(),
+		clientIp: forwardedClientIp(req),
+		clientPort: forwardedClientPort(req),
+	}).catch(error => {
+		if (error instanceof CustomerEmailAlreadyExistsError) {
+			return null;
+		}
+		throw error;
+	});
+
+	if (!customer) {
+		return emailAlreadyRegisteredResponse();
+	}
+
 	const payload = {
 		handle,
 		items: [PREMIUM_ITEM],
